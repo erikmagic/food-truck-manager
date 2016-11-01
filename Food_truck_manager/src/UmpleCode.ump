@@ -1,0 +1,25 @@
+namespace ca.mcgill.ecse321.foodtruckmanagement;
+
+
+class FoodTruckManager 
+{
+  singleton;
+  1 -> * Staff staff;
+}
+
+class Staff 
+{
+  name;
+  role;
+}
+//$?[End_of_model]$?
+
+class Staff
+{
+  position 50 30 109 45;
+}
+
+class FoodTruckManager
+{
+  position 50 30 109 45;
+}
