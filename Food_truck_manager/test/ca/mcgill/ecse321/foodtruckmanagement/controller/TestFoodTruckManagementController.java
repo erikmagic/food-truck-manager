@@ -10,15 +10,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ca.mcgill.ecse321.foodtruckmanagement.FoodTruckManager;
-import ca.mcgill.ecse321.foodtruckmanagement.Staff;
+import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 import ca.mcgill.ecse321.foodtruckmanagement.persistence.PersistenceXStream;
 
 public class TestFoodTruckManagementController {
-
+	
+	// once at the beginning 
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception
-	{
+	public static void setUpBeforeClass() throws Exception {
 		// ---- set filname (data.xml ) and directory
 		PersistenceXStream.setFileName("test"+File.separator
 				+"ca"+File.separator+"mcgill"+File.separator
@@ -33,29 +32,64 @@ public class TestFoodTruckManagementController {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception
-	{
 		
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		
+	}
+
+	// after each tests
 	@After
-	public void tearDown() throws Exception
-	{
+	public void tearDown() throws Exception {
 		// clear everything in the management system
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		ftm.delete();
 	}
 	
+	// ------------------ REMOVE STAFF -------------------------- //
+	// check that nothing happens if the user tries to remove a staff that does not exist
+	@Test
+	public void removeStaffDoesNotExist(){
+		// create new instance of food manager
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// check that there is no staff already here
+		assertEquals(0, ftm.getStaff().size());
+		
+		
+		// initialize with a random name
+		String name = "Joseph";
+		
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		// add two bogus staffs
+		 
+		
+
+	
+		
+		// set up error to null
+		String error = null;
+		
+		// remove staff
+		try {
+			ftmc.removeStaff(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+	}
+	
+	
+	// ------------------- ADD STAFF --------------------------- //
 	// checks that the name of staff is not null
 	@Test
-	public void testCreateStaffNameNull()
-	{
+	public void testCreateStaffNameNull() {
 		// creates new instance of food truck manager
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
-		// checks that there is not staff already there
+		// checks that there is no staff already there
 		assertEquals(0, ftm.getStaff().size());
 		
 		// initialize name to null
@@ -84,8 +118,7 @@ public class TestFoodTruckManagementController {
 	
 	// check that the role of staff is not set to null
 	@Test
-	public void testCreateStaffRoleNull()
-	{
+	public void testCreateStaffRoleNull() {
 		// creates new instance of food truck manager
 				FoodTruckManager ftm = FoodTruckManager.getInstance();
 				// checks that there is not staff already there
@@ -116,8 +149,7 @@ public class TestFoodTruckManagementController {
 	}
 	
 	@Test
-	public void testCreateStaffNameEmpty()
-	{
+	public void testCreateStaffNameEmpty() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		// checks that there is not staff already there
 		assertEquals(0, ftm.getStaff().size());
@@ -147,8 +179,7 @@ public class TestFoodTruckManagementController {
 	}
 	
 	@Test
-	public void testCreateStaffRoleEmpty()
-	{
+	public void testCreateStaffRoleEmpty() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		// checks that there is not staff already there
 		assertEquals(0, ftm.getStaff().size());
@@ -178,8 +209,7 @@ public class TestFoodTruckManagementController {
 	}
 	
 	@Test
-	public void testCreateStaffNameSpaces()
-	{
+	public void testCreateStaffNameSpaces() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		// checks that there is not staff already there
 		assertEquals(0, ftm.getStaff().size());
@@ -209,8 +239,7 @@ public class TestFoodTruckManagementController {
 	}
 	
 	@Test
-	public void testCreateStaffRoleSpaces()
-	{
+	public void testCreateStaffRoleSpaces() {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		// checks that there is not staff already there
 		assertEquals(0, ftm.getStaff().size());
@@ -240,8 +269,7 @@ public class TestFoodTruckManagementController {
 	}
 	
 	@Test
-	public void testCreateStaff()
-	{
+	public void testCreateStaff() {
 		// creates new instance of food truck manager
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		// asserts that there is no staff in the instance

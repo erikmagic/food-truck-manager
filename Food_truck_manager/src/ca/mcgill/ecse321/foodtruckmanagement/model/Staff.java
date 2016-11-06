@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
-package ca.mcgill.ecse321.foodtruckmanagement;
+package ca.mcgill.ecse321.foodtruckmanagement.model;
 
-// line 10 "../../../../UmpleCode.ump"
-// line 17 "../../../../UmpleCode.ump"
+// line 5 "../../../../../food_truck_management.ump"
+// line 79 "../../../../../food_truck_management.ump"
 public class Staff
 {
 

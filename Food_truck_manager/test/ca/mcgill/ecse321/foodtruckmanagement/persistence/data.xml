@@ -5,4 +5,6 @@
       <role>Cook</role>
     </staff>
   </staff>
+  <supply id="4"/>
+  <order id="5"/>
 </manager>

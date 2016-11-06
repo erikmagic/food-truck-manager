@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.XStream;
 public class PersistenceXStream {
 	
 	private static XStream xstream = new XStream();
-	private static String filename = "desktop.xml";
+	private static String filename = "manager.xml"; // default name
 	
 	public static boolean saveToXMLwithXStream(Object o)
 	{
@@ -32,10 +32,10 @@ public class PersistenceXStream {
 	{
 		xstream.setMode(XStream.ID_REFERENCES);
 		try {
-			FileReader file_reader = new FileReader(filename); // laod xml
+			FileReader file_reader = new FileReader(filename); // load xml
 			return xstream.fromXML(file_reader);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("error here");
 			e.printStackTrace();
 			return null;
 		}
@@ -49,6 +49,9 @@ public class PersistenceXStream {
 	public static void setFileName(String fn)
 	{
 		filename = fn;
+	}
+	public static String getFileName(){
+		return filename;
 	}
 	
 }

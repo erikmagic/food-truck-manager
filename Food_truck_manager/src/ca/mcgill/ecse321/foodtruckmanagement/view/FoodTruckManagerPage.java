@@ -45,7 +45,7 @@ public class FoodTruckManagerPage extends JFrame {
 	 */
 	public void initComponents()
 	{
-		// elements for error messagee
+		// elements for error message
 		errorMessage = new JLabel();
 		errorMessage.setForeground(Color.RED);
 		

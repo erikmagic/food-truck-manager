@@ -2,15 +2,15 @@ package ca.mcgill.ecse321.foodtruckmanagement.persistence;
 
 import static org.junit.Assert.*;
 
+
 import java.io.File;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.mcgill.ecse321.foodtruckmanagement.FoodTruckManager;
-import ca.mcgill.ecse321.foodtruckmanagement.Staff;
 
+import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 public class TestPersistence {
 
 	@Before	
