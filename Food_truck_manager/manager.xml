@@ -1,10 +1,5 @@
 <manager id="1">
-  <staff id="2">
-    <staff id="3">
-      <name>Juan</name>
-      <role>Cook</role>
-    </staff>
-  </staff>
-  <supply id="4"/>
-  <order id="5"/>
+  <staff id="2"/>
+  <supply id="3"/>
+  <order id="4"/>
 </manager>

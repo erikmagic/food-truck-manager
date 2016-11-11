@@ -22,8 +22,8 @@ public class Staff
 
   public Staff(String aName, String aRole)
   {
-    name = aName;
-    role = aRole;
+    name = aName.trim();
+    role = aRole.trim();
   }
 
   //------------------------
@@ -58,6 +58,16 @@ public class Staff
 
   public void delete()
   {}
+  
+  
+  public boolean equals(Staff aStaff){
+	  if (this.name.equals(aStaff.getName()) && this.role.equals(aStaff.getRole())){
+		  return true;
+	  } else {
+		  return false;
+	  }
+  }
+  
 
 
   public String toString()

@@ -49,6 +49,210 @@ public class TestFoodTruckManagementController {
 	}
 	
 	// ------------------ REMOVE STAFF -------------------------- //
+	
+	/*
+	// check that nothing happens if the user tries to remove a staff with the name null
+	@Test
+	public void removeStaffNameNull(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// assert that there is no staff in memory
+		assertEquals(0, ftm.getStaff().size());
+		
+		// set name to be removed to null
+		String name = null;
+		String role = "Cashier";
+		// initialize controller and error message
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		String error = null;
+		
+		try {
+			ftmc.deleteStaff(name, role);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		// check that the correct error shows up
+		assertEquals(error, "Staff name to be removed cannot be empty or null!");
+		
+		// check that there was no change in model memory
+		assertEquals(0, ftm.getStaff().size());
+		
+	}
+	// check that nothing happens if the user tries to remove a staff with a null role
+	@Test
+	public void removeStaffRoleNull(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// assert that there is no staff in memory
+		assertEquals(0, ftm.getStaff().size());
+		
+		// set name to be removed to null
+		String name = "Juan";
+		String role = null;
+		// initialize controller and error message
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		String error = null;
+		
+		try {
+			ftmc.deleteStaff(name, role);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		// check that the correct error shows up
+		assertEquals(error, "Staff name to be removed cannot be empty or null!");
+		
+		// check that there was no change in model memory
+		assertEquals(0, ftm.getStaff().size());
+	}
+	
+	// check that nothing happens if the user tries to remove a staff with only spaces
+	@Test
+	public void removeStaffNameSpaces(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// assert that there is no staff in memory
+		assertEquals(0, ftm.getStaff().size());
+		
+		// set name to be removed to null
+		String name = "	";
+		String role = "Cashier";
+		
+		// initialize controller and error message
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		String error = null;
+		
+		try {
+			ftmc.deleteStaff(name, role);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		// check that the correct error shows up
+		assertEquals(error, "Staff name to be removed cannot be empty or null!");
+		
+		// check that there was no change in model memory
+		assertEquals(0, ftm.getStaff().size());
+	}
+	
+	// check that nothing happens if the user tries to remove a staff with a role that is only spaces
+	@Test
+	public void removeStaffRoleSpaces(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// assert that there is no staff in memory
+		assertEquals(0, ftm.getStaff().size());
+		
+		// set name to be removed to null
+		String name = "Juan";
+		String role = "  ";
+		
+		// initialize controller and error message
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		String error = null;
+		
+		try {
+			ftmc.deleteStaff(name, role);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		// check that the correct error shows up
+		assertEquals(error, "Staff name to be removed cannot be empty or null!");
+		
+		// check that there was no change in model memory
+		assertEquals(0, ftm.getStaff().size());
+	}
+	
+	// check that nothing happens if the user tries to remove an empty staff
+	@Test
+	public void removeStaffNameEmpty(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// assert that there is no staff in memory
+		assertEquals(0, ftm.getStaff().size());
+		
+		// set name to be removed to null
+		String name = "";
+		String role = "cook";
+		
+		// initialize controller and error message
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		String error = null;
+		
+		try {
+			ftmc.deleteStaff(name, role);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		// check that the correct error shows up
+		assertEquals(error, "Staff name to be removed cannot be empty or null!");
+		
+		// check that there was no change in model memory
+		assertEquals(0, ftm.getStaff().size());
+	}
+	
+	// check that nothing happens if the user tries to remove a staff with an empty role
+	@Test
+	public void removeStaffRoleEmpty(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// assert that there is no staff in memory
+		assertEquals(0, ftm.getStaff().size());
+		
+		// set name to be removed to null
+		String name = "Francis";
+		String role = "";
+		
+		// initialize controller and error message
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		String error = null;
+		
+		try {
+			ftmc.deleteStaff(name,role);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		// check that the correct error shows up
+		assertEquals(error, "Staff name to be removed cannot be empty or null!");
+		
+		// check that there was no change in model memory
+		assertEquals(0, ftm.getStaff().size());
+	}
+	*/
+	// check that nothing happens if the user tries to remove a staff when there is no staff
+	@Test
+	public void removeStaffNoStaff(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// assert that there is no staff already here
+		assertEquals(0, ftm.getStaff().size());
+		
+		// initialize a staff
+		String name = "Francis";
+		String role = "Cook";
+		Staff wrongStaff = new Staff(name, role);
+		
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+			
+		
+		// set up error
+		String error = null;
+		
+		
+		// try removing the staff
+		try {
+			ftmc.deleteStaff(wrongStaff);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		// check that the error is showed
+		assertEquals(error, "Staff to be removed was not found!");
+		
+		// check that there is no change in memory
+		assertEquals(0, ftm.getStaff().size());
+		
+		
+	}
+	
 	// check that nothing happens if the user tries to remove a staff that does not exist
 	@Test
 	public void removeStaffDoesNotExist(){
@@ -60,28 +264,122 @@ public class TestFoodTruckManagementController {
 		
 		// initialize with a random name
 		String name = "Joseph";
+		String role = "Cook";
+		Staff wrongStaff = new Staff(name, role);
 		
 		// initialize controller
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
 		
-		// add two bogus staffs
-		 
-		
-
-	
-		
 		// set up error to null
 		String error = null;
 		
-		// remove staff
+		// add bogus staff
+		String name1 = "Juan";
+		String role1 = "Cook";
+		
+		String name2 = "Francis";
+		String role2 = "Cashier";
+		
 		try {
-			ftmc.removeStaff(name);
+			ftmc.createStaff(name1, role1);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
 		
+		try {
+			ftmc.createStaff(name2, role2);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals(2, ftm.getStaff().size());
+		
+		// remove staff
+		try {
+			ftmc.deleteStaff(wrongStaff);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		// check that the error has been detected
+		assertEquals(error, "Staff to be removed was not found!");
+		// check that there is no change in memory
+		assertEquals(2, ftm.getStaff().size());
+		
+		// TODO assert with all classes in memory
 	}
 	
+	// check that remove an existing staff works
+	@Test
+	public void testRemoveStaff(){
+		// create new instance of food manager
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// check that there is no staff already here
+		assertEquals(0, ftm.getStaff().size());
+		
+		
+		// initialize with a random name
+		String name_to_be_deleted = "Francis";
+		String role_to_be_deleted = "Cashier";
+		Staff staff_to_be_deleted = new Staff(name_to_be_deleted, role_to_be_deleted);
+		
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		// set up error to null
+		String error = null;
+		
+		// add bogus staff
+		String name1 = "Juan";
+		String role1 = "Cook";
+		
+		String name2 = "Francis";
+		String role2 = "Cashier";
+		
+		try {
+			ftmc.createStaff(name1, role1);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		assertEquals(error, null);
+		
+		try {
+			ftmc.createStaff(name2, role2);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, null);
+		assertEquals(2, ftm.getStaff().size());
+		assertEquals(name1, ftm.getStaff(0).getName());
+		assertEquals(role1, ftm.getStaff(0).getRole());
+		assertEquals(name2, ftm.getStaff(1).getName());
+		assertEquals(role2, ftm.getStaff(1).getRole());
+		
+		// remove staff
+		try {
+			ftmc.deleteStaff(staff_to_be_deleted)	;
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+	
+		assertEquals(error, null);
+		
+		// check that the staff was correctly removed
+		assertEquals(1, ftm.getStaff().size());
+		
+		assertEquals("Juan", ftm.getStaff(0).getName());
+		assertEquals("Cook", ftm.getStaff(0).getRole());
+		
+		// check that the model in memory was correctly updated
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		assertEquals(ftm.getStaff().size(), ftm2.getStaff().size());
+		
+		assertEquals(ftm.getStaff(0).getName(), ftm2.getStaff(0).getName());
+		assertEquals(ftm.getStaff(0).getName(), ftm2.getStaff(0).getName());
+		
+		
+		
+	}
 	
 	// ------------------- ADD STAFF --------------------------- //
 	// checks that the name of staff is not null
@@ -110,7 +408,7 @@ public class TestFoodTruckManagementController {
 		}
 		
 		// check whether the error corresponds to the error expected in the controller
-		assertEquals(error, "name or role cannot be empty!");
+		assertEquals(error, "Staff name or role cannot be empty or null!");
 		
 		// check that error cause no changes in memory
 		assertEquals(0, ftm.getStaff().size());
@@ -142,7 +440,7 @@ public class TestFoodTruckManagementController {
 				}
 				
 				// check whether the error corresponds to the error expected in the controller
-				assertEquals(error, "name or role cannot be empty!");
+				assertEquals(error, "Staff name or role cannot be empty or null!");
 				
 				// check that error cause no changes in memory
 				assertEquals(0, ftm.getStaff().size());
@@ -172,7 +470,7 @@ public class TestFoodTruckManagementController {
 		}
 		
 		// check whether the error corresponds to the error expected in the controller
-		assertEquals(error, "name or role cannot be empty!");
+		assertEquals(error, "Staff name or role cannot be empty or null!");
 		
 		// check that error cause no changes in memory
 		assertEquals(0, ftm.getStaff().size());
@@ -202,7 +500,7 @@ public class TestFoodTruckManagementController {
 		}
 		
 		// check whether the error corresponds to the error expected in the controller
-		assertEquals(error, "name or role cannot be empty!");
+		assertEquals(error, "Staff name or role cannot be empty or null!");
 		
 		// check that error cause no changes in memory
 		assertEquals(0, ftm.getStaff().size());
@@ -232,7 +530,7 @@ public class TestFoodTruckManagementController {
 		}
 		
 		// check whether the error corresponds to the error expected in the controller
-		assertEquals(error, "name or role cannot be empty!");
+		assertEquals(error, "Staff name or role cannot be empty or null!");
 		
 		// check that error cause no changes in memory
 		assertEquals(0, ftm.getStaff().size());
@@ -262,7 +560,7 @@ public class TestFoodTruckManagementController {
 		}
 		
 		// check whether the error corresponds to the error expected in the controller
-		assertEquals(error, "name or role cannot be empty!");
+		assertEquals(error, "Staff name or role cannot be empty or null!");
 		
 		// check that error cause no changes in memory
 		assertEquals(0, ftm.getStaff().size());

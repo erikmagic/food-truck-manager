@@ -29,7 +29,7 @@ public class FoodTruckManagementController {
 		// check that the name or role entered is not null or empty
 		if (name == null || role == null || name.trim().length() == 0 || role.trim().length() == 0)
 		{
-			throw new InvalidInputException("name or role cannot be empty!");
+			throw new InvalidInputException("Staff name or role cannot be empty or null!");
 		}
 		
 		
@@ -43,24 +43,36 @@ public class FoodTruckManagementController {
 	/**Remove a staff, you only need the name to do so. 
 	 * @param name
 	 */
-	public void removeStaff(String name) throws InvalidInputException {
+	public void deleteStaff(Staff aStaff) throws InvalidInputException {
 		// check that the entered name is not empty or null
-		if (name == null | name.trim().length() == 0 ){
-			throw new InvalidInputException("name cannot be empty");
+		if (aStaff.getName() == null || aStaff.getName().trim().length() == 0 || aStaff.getRole() == null || aStaff.getRole().trim().length() == 0 ){
+			throw new InvalidInputException("Staff name to be removed cannot be empty or null!");
 		}
+		// initialize model
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
-		// loops to find the staff name
-		int keep_track_index = 0;
-		for (int i = 0; i < ftm.getStaff().size(); i++){
-			if (ftm.getStaff(i).getName().equals(name)) keep_track_index = i;
+		
+		
+		// loops to find the staff n
+		int keep_track_index = -1;
+		for(int i = 0; i < ftm.getStaff().size(); i++){
+			if ( ftm.getStaff(i).equals(aStaff)){
+				keep_track_index = i;
+			}
 		}
 		// if the specified staff name is not in the database, throw error
-		if (keep_track_index == 0){
-			throw new InvalidInputException("staff not found");
+		if (keep_track_index == -1){
+			throw new InvalidInputException("Staff to be removed was not found!");
 		}
 		
 		// remove the specified staff
-		ftm.getStaff(keep_track_index).delete();
+		if(!ftm.removeStaff(ftm.getStaff(keep_track_index))){
+			throw new InvalidInputException("Staff was not removed!");
+		}
+		
+		
+		
 		PersistenceXStream.saveToXMLwithXStream(ftm);
+
 	}
+	
 }

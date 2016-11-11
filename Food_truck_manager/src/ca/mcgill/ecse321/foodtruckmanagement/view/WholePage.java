@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.foodtruckmanagement.controller.FoodTruckManagementContr
 import ca.mcgill.ecse321.foodtruckmanagement.controller.InvalidInputException;
 import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 
+import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.List;
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.awt.event.ActionEvent;
 
 public class WholePage extends JFrame {
@@ -27,12 +30,21 @@ public class WholePage extends JFrame {
 	private JPanel contentPane;
 	private JTextField staffNameTextField;
 	private JTextField staffRoleTextField;
-	private String errorStaff = "";
 	private JLabel errorLabel;
+	private JLabel errorRemoveStaffLabel;
 	private JLabel staffRoletextLabel;
-	JLabel staffNameTextLabel;
+	private JLabel staffNameTextLabel;
 	private JComboBox removeStaffComboBox;
-	JButton removeStaffButton ;
+	private JButton removeStaffButton ;
+	private JButton addStaffButton;
+	
+	
+	// data elements
+	private String errorStaff = "";
+	private Integer selectedStaff = -1;
+	private HashMap<Integer, Staff> staffs;
+	private String errorRemoveStaff = "";
+	
 	
 	/**
 	 * Create the frame.
@@ -48,16 +60,16 @@ public class WholePage extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Add Staff");
-		btnNewButton.setBackground(Color.LIGHT_GRAY);
-		btnNewButton.setFont(new Font("Yu Gothic", Font.BOLD, 13));
-		btnNewButton.addActionListener(new java.awt.event.ActionListener() {
+		addStaffButton = new JButton("Add Staff");
+		addStaffButton.setBackground(Color.LIGHT_GRAY);
+		addStaffButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
+		addStaffButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				addStaffButtonActionPerformed(evt);
 			}
 		});
-		btnNewButton.setBounds(31, 71, 115, 23);
-		contentPane.add(btnNewButton);
+		addStaffButton.setBounds(10, 73, 140, 23);
+		contentPane.add(addStaffButton);
 		
 		staffNameTextField = new JTextField();
 		staffNameTextField.setToolTipText("Name");
@@ -72,11 +84,12 @@ public class WholePage extends JFrame {
 		staffRoleTextField.setColumns(10);
 		
 		errorLabel = new JLabel("");
+		errorLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
 		errorLabel.setVerticalAlignment(SwingConstants.TOP);
 		errorLabel.setToolTipText("");
 		errorLabel.setLabelFor(contentPane);
 		errorLabel.setForeground(Color.RED);
-		errorLabel.setBounds(10, 105, 159, 48);
+		errorLabel.setBounds(162, 11, 159, 48);
 		contentPane.add(errorLabel);
 		
 		staffNameTextLabel = new JLabel("Name:");
@@ -87,35 +100,86 @@ public class WholePage extends JFrame {
 		staffRoletextLabel.setBounds(8, 43, 46, 14);
 		contentPane.add(staffRoletextLabel);
 		
-		removeStaffComboBox = new JComboBox(showAllStaff());
+		
+		removeStaffComboBox = new JComboBox<String>();
+		// show staffs in the comboBox
+		initialData();
 		removeStaffComboBox.setToolTipText("");
-		removeStaffComboBox.setBounds(10, 180, 140, 20);
+		removeStaffComboBox.addActionListener(new java.awt.event.ActionListener(){
+			public void actionPerformed ( java.awt.event.ActionEvent evt) {
+				JComboBox<String> cb = (JComboBox<String>) evt.getSource();
+				selectedStaff = cb.getSelectedIndex();
+			}
+		});
+		removeStaffComboBox.setBounds(10, 106, 140, 20);
 		contentPane.add(removeStaffComboBox);
 		
 		removeStaffButton = new JButton("Remove Staff");
-		removeStaffButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		removeStaffButton.setBackground(Color.LIGHT_GRAY);
+		removeStaffButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
+		removeStaffButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				removeStaffButtonActionPerformed(evt);
 			}
 		});
-		removeStaffButton.setBounds(31, 211, 115, 23);
+		removeStaffButton.setBounds(10, 137, 140, 23);
 		contentPane.add(removeStaffButton);
+		
+		errorRemoveStaffLabel = new JLabel("");
+		errorRemoveStaffLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
+		errorRemoveStaffLabel.setForeground(Color.RED);
+		errorRemoveStaffLabel.setBounds(157, 108, 164, 52);
+		contentPane.add(errorRemoveStaffLabel);
 	}
 	
+	private void initialData(){
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		staffs = new HashMap<Integer, Staff>();
+		Iterator<Staff> sIt = ftm.getStaff().iterator();
+		Integer index = 0;
+		while (sIt.hasNext()){
+			Staff s = sIt.next();
+			staffs.put(index, s);
+			removeStaffComboBox.addItem(s.getName() + " ; " + s.getRole());
+			index++;
+		}
+		
+	}
 	private void refreshData()
-	{
+	{	
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		// error
 		errorLabel.setText("<html>" +errorStaff + "</html>"); // html tags make sure the text is displayed as 2 lines if needed
+		errorRemoveStaffLabel.setText("<html>" + errorRemoveStaff + "</html");
 		// staff
-		staffNameTextField.setText("");
-		staffRoleTextField.setText("");
+		if (errorStaff == null || errorStaff.length() == 0){
+			
+			staffs = new HashMap<Integer, Staff>();
+			removeStaffComboBox.removeAllItems();
+			Iterator<Staff> sIt = ftm.getStaff().iterator();
+			Integer index = 0;
+			while (sIt.hasNext()){
+				Staff s = sIt.next();
+				staffs.put(index, s);
+				removeStaffComboBox.addItem(s.getName() + " ; " + s.getRole());
+				index++;
+			}
+			selectedStaff = -1;
+			removeStaffComboBox.setSelectedItem(selectedStaff);
+			
+			staffNameTextField.setText("");
+			staffRoleTextField.setText("");
+			
+		}
 		
-		// size of the windows changes if error
-		// pack();
+		
+		
+	
 	}
 	private void addStaffButtonActionPerformed(java.awt.event.ActionEvent evt)
 	{
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
-		
+		errorStaff = "";
 		try {
 			ftmc.createStaff(staffNameTextField.getText(), staffRoleTextField.getText());
 		} catch (InvalidInputException e) {
@@ -126,15 +190,27 @@ public class WholePage extends JFrame {
 		refreshData();
 
 	}
-	private void removeStaffButtonActionPerformed(java.awt.event.ActionEvent evt){
-		FoodTruckManagementController ftmc = new 
-	}
-	private String[] showAllStaff(){
-		FoodTruckManager ftm = FoodTruckManager.getInstance();
-		String[] staffArrayNames = new String[ftm.getStaff().size()];
-		for (int i = 0; i < ftm.getStaff().size(); i++){
-			staffArrayNames[i] = ftm.getStaff(i).getName();
+	
+	
+	
+	private void removeStaffButtonActionPerformed( java.awt.event.ActionEvent evt ) {
+		
+		errorRemoveStaff = "";
+		if (selectedStaff < 0){
+			errorRemoveStaff = "Staff needs to be selected for removal!";
+			errorRemoveStaff = errorRemoveStaff.trim();
 		}
-		return staffArrayNames;
+		if ( errorRemoveStaff.length() == 0) {
+			FoodTruckManagementController ftmc = new FoodTruckManagementController();
+			
+			try {
+				ftmc.deleteStaff(staffs.get(selectedStaff));
+			} catch (InvalidInputException e) {
+				// TODO Auto-generated catch block
+				errorRemoveStaff = e.getMessage();
+			}
+		}
+		// update visuals
+		refreshData();
 	}
 }
