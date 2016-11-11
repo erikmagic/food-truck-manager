@@ -9,9 +9,11 @@ public class FoodTruckManagement {
 	public static void main(String[] args) {
 		
 		PersistenceFoodTruckManager.loadFoodTruckManagerModel("manager.xml");
+		
 		// start user interface
 		java.awt.EventQueue.invokeLater(new Runnable()
 				{
+				
 					public void run() 
 					{
 						new WholePage().setVisible(true);
@@ -20,7 +22,7 @@ public class FoodTruckManagement {
 				
 				);
 		
-		
+		//ffjs;dklfa;ldskfj;akldsfjl
 	}
 
 }
