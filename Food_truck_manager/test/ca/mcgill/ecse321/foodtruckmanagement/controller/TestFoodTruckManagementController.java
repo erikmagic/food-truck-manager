@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.foodtruckmanagement.controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.sql.Time;
+import java.util.Calendar;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -46,6 +48,328 @@ public class TestFoodTruckManagementController {
 		// clear everything in the management system
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		ftm.delete();
+	}
+	// tests enum
+	@Test
+	public void enumMap(){
+		int number_received = -1;
+		
+		// monday
+		number_received = DayMap.getNumberDay(Day.MONDAY);
+		assertEquals(1, number_received);
+		number_received = -1;
+		// tuesday
+		number_received = DayMap.getNumberDay(Day.TUESDAY);
+		assertEquals(2, number_received);
+		number_received = -1;
+		// wednesday
+		number_received = DayMap.getNumberDay(Day.WEDNESDAY);
+		assertEquals(3, number_received);
+		number_received = -1;
+		// thursday
+		number_received = DayMap.getNumberDay(Day.THURSDAY);
+		assertEquals(4, number_received);
+		number_received = -1;
+		// friday
+		number_received = DayMap.getNumberDay(Day.FRIDAY);
+		assertEquals(5, number_received);
+		number_received = -1;
+		// saturday
+		number_received = DayMap.getNumberDay(Day.SATURDAY);
+		assertEquals(6, number_received);
+		number_received = -1;
+		// sunday
+		number_received = DayMap.getNumberDay(Day.SUNDAY);
+		assertEquals(7, number_received);
+		number_received = -1;
+	}
+	// ------------------ ADD SHIFT ------------------------------ //
+	
+	// check that nothing happens when the staff entered is inexistent
+	@Test
+	public void addShiftBadStaff(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String badName = "Gregory";
+		String badRole = "Plumber";
+		
+		Staff badStaff = new Staff(badName, badRole);
+		
+		// correct times and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 12, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		try {
+			ftmc.createShift(badStaff, startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Staff to be removed was not found!");
+		assertEquals(0, ftm.getShift().size());
+		
+		
+		
+		
+	}
+	// check that nothing happens when the time entered is incorrect
+	@Test
+	public void addShiftEndBeforeStart(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// bad start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 8, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+	
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error =  e.getMessage();
+		}
+		
+		assertEquals(error,  "Start time cannot be after end time!");
+		assertEquals(0, ftm.getShift().size());
+		
+		
+		
+		
+	}
+	// check that nothing happens when the time entered is incorrect
+	@Test
+	public void addShift(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// good start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 10, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+	
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error =  e.getMessage();
+		}
+		
+		assertEquals(error,  "");
+		assertEquals(1, ftm.getShift().size());
+		assertEquals(startTime, ftm.getShift(0).getStartingHour());
+		assertEquals(endTime, ftm.getShift(0).getFinishingHour());
+		assertEquals(day, ftm.getShift(0).getDay());
+				
+	}
+	
+	// ------------------ REMOVE SHIFT --------------------------- //
+	
+	@Test
+	public void removeShift(){
+		
+
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// good start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 10, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+	
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error =  e.getMessage();
+		}
+		
+		assertEquals(error,  "");
+		assertEquals(1, ftm.getShift().size());
+		assertEquals(startTime, ftm.getShift(0).getStartingHour());
+		assertEquals(endTime, ftm.getShift(0).getFinishingHour());
+		assertEquals(day, ftm.getShift(0).getDay());
+		
+		// remove the shift just created
+		
+		Shift to_be_removed_shift = new Shift(startTime, endTime, day, ftm.getStaff(0));
+		
+		try {
+			ftmc.deleteShift(to_be_removed_shift);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals(error, "");
+		// assert that the shift has succesfully been removed
+		assertEquals(0, ftm.getShift().size());
+		
+		
+		
+	}
+	
+	@Test
+	public void removeInexistantShift(){
+		
+
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// good start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 10, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+	
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error =  e.getMessage();
+		}
+		
+		assertEquals(error,  "");
+		assertEquals(1, ftm.getShift().size());
+		assertEquals(startTime, ftm.getShift(0).getStartingHour());
+		assertEquals(endTime, ftm.getShift(0).getFinishingHour());
+		assertEquals(day, ftm.getShift(0).getDay());
+		
+		// create a new shift not in the database
+		
+		String randomName = "Pedro";
+		String randomRole = "Cook";
+		
+		try {
+			ftmc.createStaff(randomName, randomRole);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		
+		// asssert that the staff has been successfully created
+		assertEquals(2, ftm.getStaff().size());
+		
+		
+		c.set(2016, Calendar.MAY, 22, 12, 0, 0);
+		Time startTimeFake = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 14, 0, 0);
+		Time endTimeFake = new Time(c.getTimeInMillis());
+		
+		Day dayFake = Day.TUESDAY;
+		
+		Shift to_be_removed_shift = new Shift( startTimeFake, endTimeFake, dayFake, ftm.getStaff(0));
+		
+		try {
+			ftmc.deleteShift(to_be_removed_shift);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals(error, "Shift to be removed was not found!");
+		// assert that the shift has succesfully been removed
+		assertEquals(1, ftm.getShift().size());
+		
+		
+		
 	}
 	
 	// ------------------ REMOVE STAFF -------------------------- //
@@ -303,8 +627,7 @@ public class TestFoodTruckManagementController {
 		assertEquals(error, "Staff to be removed was not found!");
 		// check that there is no change in memory
 		assertEquals(2, ftm.getStaff().size());
-		
-		// TODO assert with all classes in memory
+				
 	}
 	
 	// check that remove an existing staff works
@@ -594,7 +917,7 @@ public class TestFoodTruckManagementController {
 		assertEquals(name, ftm.getStaff(0).getName());
 		// check if the role is good
 		assertEquals(role, ftm.getStaff(0).getRole());
-		// TODO add all the other classes while asserting that their size is 0
+		
 		
 		// ----- import model from memory ---
 		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
@@ -605,8 +928,7 @@ public class TestFoodTruckManagementController {
 		// check for the good name and role
 		assertEquals(name, ftm2.getStaff(0).getName());
 		assertEquals(role, ftm2.getStaff(0).getRole());
-		// TODO add all the other classes while asserting size 0
-		// TODO refractor
+		
 	}
 
 }

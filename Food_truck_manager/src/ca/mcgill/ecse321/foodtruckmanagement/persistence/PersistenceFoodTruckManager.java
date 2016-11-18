@@ -21,12 +21,20 @@ public class PersistenceFoodTruckManager {
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		PersistenceFoodTruckManager.initializeXStream(x);
 		
-			FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
 		
+			
+		// TODO add to all objects
 		if (ftm2 != null){
+			// load previous staff objects
 			Iterator<Staff> sIt = ftm2.getStaff().iterator();
 			while (sIt.hasNext()){
 				ftm.addStaff(sIt.next());
+			}
+			// load previous shift objects
+			Iterator<Shift> shIt = ftm2.getShift().iterator();
+			while ( shIt.hasNext()){
+				ftm.addShift(shIt.next());
 			}
 		}
 	}

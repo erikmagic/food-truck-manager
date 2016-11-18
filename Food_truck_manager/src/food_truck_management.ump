@@ -5,16 +5,16 @@ namespace ca.mcgill.ecse321.foodtruckmanagement.model;
 class Staff{
   name;
   role; 
+  1 -> * Shift shift;
   
 }
 
 
 class Shift{
-  int day;
+  * -> 1 Staff staff;
   Time startingHour;
   Time finishingHour;
-  1 -> 1 Staff staff;
-  
+  Day day;
 }
 
 class Schedule{
@@ -28,6 +28,11 @@ class FoodTruckManager{
   1 -> * Supply supply;
   1 -> * Order order;
   1 -> 1 Menu menu;
+  1 -> * Shift shift;
+  1 -> 1 Schedule schedule;
+  1 -> * Item item;
+  1 -> * Report report;
+
   
 }
       

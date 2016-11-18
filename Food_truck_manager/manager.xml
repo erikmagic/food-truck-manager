@@ -1,5 +1,26 @@
 <manager id="1">
-  <staff id="2"/>
-  <supply id="3"/>
-  <order id="4"/>
+  <staff id="2">
+    <staff id="3">
+      <name>erik</name>
+      <role>cook</role>
+      <shift id="4"/>
+    </staff>
+    <staff id="5">
+      <name>jack</name>
+      <role>cashier</role>
+      <shift id="6"/>
+    </staff>
+  </staff>
+  <supply id="7"/>
+  <order id="8"/>
+  <shift id="9">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="10">
+      <startingHour id="11">11:11:00</startingHour>
+      <finishingHour id="12">12:12:00</finishingHour>
+      <day>MONDAY</day>
+      <staff reference="5"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+  </shift>
+  <item id="13"/>
+  <report id="14"/>
 </manager>
