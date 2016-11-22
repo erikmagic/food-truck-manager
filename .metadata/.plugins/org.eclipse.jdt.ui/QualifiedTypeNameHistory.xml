@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.swing.ComboBoxEditor"/>
+<fullyQualifiedTypeName name="lejos.hardware.motor.EV3LargeRegulatedMotor"/>
+<fullyQualifiedTypeName name="lejos.hardware.Sound"/>
+<fullyQualifiedTypeName name="lejos.hardware.ev3.LocalEV3"/>
+<fullyQualifiedTypeName name="lejos.hardware.sensor.EV3UltrasonicSensor"/>
+<fullyQualifiedTypeName name="primary.LCDInfo"/>
+<fullyQualifiedTypeName name="org.freedesktop.dbus.test.profile.Log"/>
+<fullyQualifiedTypeName name="java.lang.InterruptedException"/>
+<fullyQualifiedTypeName name="lejos.utility.Delay"/>
+<fullyQualifiedTypeName name="lejos.hardware.Brick"/>
+<fullyQualifiedTypeName name="java.awt.Button"/>
+<fullyQualifiedTypeName name="primary.Localization"/>
+<fullyQualifiedTypeName name="javax.swing.JComboBox"/>
+<fullyQualifiedTypeName name="java.util.EnumMap"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.controller.DayMap"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.model.Staff"/>
+<fullyQualifiedTypeName name="java.util.Calendar"/>
+<fullyQualifiedTypeName name="java.sql.Time"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.controller.InvalidInputException"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.persistence.PersistenceFoodTruckManager"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.persistence.PersistenceXStream"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.model.FoodTruckManager"/>
+<fullyQualifiedTypeName name="java.awt.Event"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
+<fullyQualifiedTypeName name="Outside.Inside"/>
+<fullyQualifiedTypeName name="lejos.hardware.Button"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.controller.Day"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.controller.FoodTruckManagementController"/>
+<fullyQualifiedTypeName name="ca.mcgill.ecse321.foodtruckmanagement.model.Shift"/>
+<fullyQualifiedTypeName name="java.awt.ActiveEvent"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.lang.NullPointerException"/>
+<fullyQualifiedTypeName name="java.lang.Object"/>
+<fullyQualifiedTypeName name="java.io.FileNotFoundException"/>
+<fullyQualifiedTypeName name="primary.Logger"/>
+<fullyQualifiedTypeName name="primary.WifiReceiver"/>
+<fullyQualifiedTypeName name="primary.Initialization"/>
+<fullyQualifiedTypeName name="Logger"/>
+<fullyQualifiedTypeName name="test.USSensor"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="test.Logger"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+</qualifiedTypeNameHistroy>
