@@ -1,26 +1,63 @@
 <manager id="1">
   <staff id="2">
     <staff id="3">
-      <name>erik</name>
-      <role>cook</role>
+      <name>jack</name>
+      <role>boss</role>
       <shift id="4"/>
     </staff>
-    <staff id="5">
-      <name>jack</name>
-      <role>cashier</role>
-      <shift id="6"/>
-    </staff>
   </staff>
-  <supply id="7"/>
-  <order id="8"/>
-  <shift id="9">
-    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="10">
-      <startingHour id="11">11:11:00</startingHour>
-      <finishingHour id="12">12:12:00</finishingHour>
-      <day>MONDAY</day>
-      <staff reference="5"/>
+  <supply id="5"/>
+  <order id="6"/>
+  <shift id="7">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="8">
+      <startingHour id="9">10:10:00</startingHour>
+      <finishingHour id="10">11:10:00</finishingHour>
+      <day>THURSDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="11">
+      <startingHour id="12">18:27:00</startingHour>
+      <finishingHour id="13">19:21:00</finishingHour>
+      <day>SATURDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="14">
+      <startingHour id="15">12:12:00</startingHour>
+      <finishingHour id="16">18:18:00</finishingHour>
+      <day>SATURDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="17">
+      <startingHour id="18">12:19:00</startingHour>
+      <finishingHour id="19">19:23:00</finishingHour>
+      <day>SATURDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="20">
+      <startingHour id="21">18:18:00</startingHour>
+      <finishingHour id="22">19:11:00</finishingHour>
+      <day>FRIDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="23">
+      <startingHour id="24">12:12:00</startingHour>
+      <finishingHour id="25">13:13:00</finishingHour>
+      <day>TUESDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="26">
+      <startingHour id="27">13:13:00</startingHour>
+      <finishingHour id="28">14:14:00</finishingHour>
+      <day>SUNDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="29">
+      <startingHour id="30">19:19:00</startingHour>
+      <finishingHour id="31">20:20:00</finishingHour>
+      <day>FRIDAY</day>
+      <staff reference="3"/>
     </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
   </shift>
-  <item id="13"/>
-  <report id="14"/>
+  <item id="32"/>
+  <report id="33"/>
 </manager>

@@ -499,7 +499,7 @@ public class WholePage extends JFrame {
 			c.set(2016, Calendar.MAY, 22, endHoursValue, endMinsValue, 0);
 			Time endTime = new Time(c.getTimeInMillis());
 			
-			Day day = DayMap.getDayFromNumber(selectedDay);
+			Day day = DayMap.getDayFromNumber(selectedDay+1);
 			
 			// initialize controller
 			FoodTruckManagementController ftmc = new FoodTruckManagementController();
@@ -551,26 +551,26 @@ public class WholePage extends JFrame {
 			errors += "Enter time in the following format -> hh:mm!";
 		} else {
 		
-				// hours first digit can only be 0-2 , mins first digit can only be 0-5
+				/*// hours first digit can only be 0-2 , mins first digit can only be 0-5
 				if (!((startHours.charAt(0) >= 48 && startHours.charAt(0) <= 50)
 						&& (startMins.charAt(0) >= 48 && startMins.charAt(0) <= 53) 
 						&& (endHours.charAt(0) >= 48 && endHours.charAt(0) <= 50)
 						&& (endMins.charAt(0) >= 48 && endMins.charAt(0) <= 53))){
-					errors += " Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
+					errors += " 0 Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
 				}
 				// hours second digit between 0 and 3 , mins second digit between 0 and 9
 				else if ( startHours.length() == 2 && (!( startHours.charAt(1) >= 48 && startHours.charAt(1) <= 57))){
-					errors += " Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
+					errors += " 1 Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
 				} 
 				else if ( startMins.length() == 2 && (!( startMins.charAt(1) >= 48 && startMins.charAt(1) <= 57))){
-					errors += " Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
+					errors += " 2 Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
 				}
 				else if ( endHours.length() == 2 && (!( endHours.charAt(1) >= 48 && endHours.charAt(1) <= 57))){
-					errors += " Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
+					errors += " 3 Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
 				} 
 				else if ( endMins.length() == 2 && (!( endMins.charAt(1) >= 48 && endMins.charAt(1) <= 57))){
-					errors += " Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
-				} 
+					errors += " 4 Times can only be numerical values!, hours between 0 and 23, mins between 0 and 59";
+				} */
 				
 			
 		}
