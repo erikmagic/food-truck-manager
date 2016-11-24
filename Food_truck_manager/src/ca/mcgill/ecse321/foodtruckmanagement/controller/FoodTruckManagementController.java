@@ -120,8 +120,21 @@ public class FoodTruckManagementController {
 			throw new InvalidInputException("Day cannot be empty!");
 		}
 		
+		// check that the shift does not already exist
+		
+		
+		Iterator<Shift> shIt = ftm.getShift().iterator();
 		
 		Shift sh = new Shift(startTime, endTime, day, staff_for_shift);
+		
+		while (shIt.hasNext()){
+			Shift tempShift = shIt.next();
+			if (tempShift.equals(sh)) {
+				throw new InvalidInputException("Shift already exists!");
+			} 
+		}
+		
+		
 		
 		ftm.addShift(sh);
 		PersistenceXStream.saveToXMLwithXStream(ftm);
@@ -168,22 +181,25 @@ public class FoodTruckManagementController {
 		// find the closest first day of the week to create a new schedule from the new weed
 		
 		Calendar c = Calendar.getInstance();
+		
 		c.setTime(startWeek);
+		int firstDayWeek = c.getFirstDayOfWeek();
+		
+		int todayDay = c.get(Calendar.DAY_OF_WEEK);
+				
+		c.set(Calendar.DAY_OF_WEEK, (firstDayWeek - todayDay));
 		Date day = new Date(c.getTimeInMillis());
-		while ( c.getFirstDayOfWeek() != Calendar.DAY_OF_WEEK){
-			c.set(Calendar.DATE, -1);	
-		}
 		
-		// create new schedule
 		
+		
+				
 		// date.sql
-		Schedule sch = new Schedule( startWeek);
+		Schedule sch = new Schedule( day);
 		
 		
 		// check if the schedule already exists
 		
 		Iterator it = ftm.getSchedule().iterator();
-		
 		while ( it.hasNext()){
 			Schedule toCompare = (Schedule) it.next();
 			if (toCompare.equals(sch)){
@@ -236,18 +252,95 @@ public class FoodTruckManagementController {
 			throw new InvalidInputException("Shift not found in the database!");
 		}
 		
+		Iterator<Shift> shIt = ftm.getSchedule(scheduleIndex).getShift().iterator();
+		
+		while( shIt.hasNext()){
+			Shift tempShift = shIt.next();
+			if ( tempShift.equals(aShift)){
+				throw new InvalidInputException("Shift already exists in the current schedule!");
+			}
+		}
+		
 		ftm.getSchedule(scheduleIndex).addShift(aShift);
 		
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
-	public void removeShiftFromSchedule(Schedule aSchedule, Shift aShift){
+	public void removeShiftFromSchedule(Schedule aSchedule, Shift aShift) throws InvalidInputException{
 		
+FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check that the schedule is indeed in the database
+		int counter = 0;
+		Iterator scIt = ftm.getSchedule().iterator();
+		int scheduleIndex =-1;
+		while ( scIt.hasNext()){
+			Schedule tempSchedule = (Schedule) scIt.next();
+			
+			if ( aSchedule.equals(tempSchedule)){
+				scheduleIndex = counter;
+			}
+			counter++;
+		}
+		if (scheduleIndex == -1){
+			throw new InvalidInputException("Schedule not found int the database!");
+		}
+		// check that shift is indeed in the database
+		
+		Iterator it = ftm.getShift().iterator();
+		
+		int shiftIndex = -1;
+		counter = 0;
+		while ( it.hasNext()){
+			Shift tempShift = (Shift) it.next();
+			
+			if(tempShift.equals(aShift)){
+				shiftIndex = counter;
+				break;
+			}
+			counter++;
+		}
+		if (shiftIndex == -1){
+			throw new InvalidInputException("Shift not found in the database!");
+		}
+		
+		// should never happen
+		if (!ftm.getSchedule(scheduleIndex).removeShift(ftm.getSchedule(scheduleIndex).getShift(shiftIndex))){
+			throw new InvalidInputException("Shift was not deleted!");
+		}
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 		
 	}
 	
-	public void removeSchedule(Schedule aSchedule){
+	public void deleteSchedule(Schedule aSchedule) throws InvalidInputException{
 		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// find the schedule in the database
+		
+		Iterator<Schedule> schIt = ftm.getSchedule().iterator();
+		
+		int scheduleIndex = -1;
+		int counter = 0;
+		while ( schIt.hasNext()){
+			Schedule tempSchedule = schIt.next();
+			
+			if ( tempSchedule.equals(aSchedule)){
+				scheduleIndex = counter;
+			}
+			counter++;
+		}
+		if (scheduleIndex == -1){
+			throw new InvalidInputException("Schedule not found in the database!");
+		}
+		
+		// should never happen
+		if (!ftm.removeSchedule(ftm.getSchedule(scheduleIndex))){
+			throw new InvalidInputException("Schedule was not removed!");
+		}
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 		
 	}
 }

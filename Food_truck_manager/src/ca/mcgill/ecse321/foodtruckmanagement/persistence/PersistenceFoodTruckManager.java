@@ -36,6 +36,11 @@ public class PersistenceFoodTruckManager {
 			while ( shIt.hasNext()){
 				ftm.addShift(shIt.next());
 			}
+			
+			Iterator<Schedule> schIt = ftm2.getSchedule().iterator();
+			while (schIt.hasNext()){
+				ftm.addSchedule(schIt.next());
+			}
 		}
 	}
 	public static void modifyFileName(String x){

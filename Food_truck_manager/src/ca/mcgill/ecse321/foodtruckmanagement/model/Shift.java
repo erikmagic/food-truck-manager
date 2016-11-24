@@ -108,7 +108,7 @@ public class Shift
   public boolean equals(Shift otherShift){
 	  if (this.startingHour != otherShift.startingHour) return false;
 	  else if ( this.finishingHour != otherShift.finishingHour) return false;
-	  else if ( this.staff != otherShift.staff) return false;
+	  else if ( !this.staff.equals(otherShift.staff)) return false;
 	  else if (this.day != otherShift.day) return false;
 	  else return true;
   }

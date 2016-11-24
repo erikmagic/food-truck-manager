@@ -142,7 +142,7 @@ public class Schedule
   
   public boolean equals(Schedule other){
 	  
-	  if (this.week != other.getWeek()) return false;
+	  if (!this.week.equals(other.getWeek())) return false;
 	  
 	  else return true;
   }

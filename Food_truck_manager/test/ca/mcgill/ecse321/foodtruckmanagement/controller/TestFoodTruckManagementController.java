@@ -22,15 +22,7 @@ public class TestFoodTruckManagementController {
 	// once at the beginning 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// ---- set filname (data.xml ) and directory
-		PersistenceXStream.setFileName("test"+File.separator
-				+"ca"+File.separator+"mcgill"+File.separator
-				+"ecse321"+File.separator+"foodtruckmanagement"+
-				File.separator+"persistence"+File.separator+"data.xml");
-		// associates alias to class names
-		PersistenceXStream.setAlias("staff", Staff.class);
-		PersistenceXStream.setAlias("manager", FoodTruckManager.class);
-		// TODO add all other aliases for all classes
+		
 		
 	}
 
@@ -41,7 +33,15 @@ public class TestFoodTruckManagementController {
 
 	@Before
 	public void setUp() throws Exception {
-		
+		// ---- set filname (data.xml ) and directory
+				PersistenceXStream.setFileName("test"+File.separator
+						+"ca"+File.separator+"mcgill"+File.separator
+						+"ecse321"+File.separator+"foodtruckmanagement"+
+						File.separator+"persistence"+File.separator+"data.xml");
+				// associates alias to class names
+				PersistenceXStream.setAlias("staff", Staff.class);
+				PersistenceXStream.setAlias("manager", FoodTruckManager.class);
+				// TODO add all other aliases for all classes
 	}
 
 	// after each tests
@@ -50,6 +50,9 @@ public class TestFoodTruckManagementController {
 		// clear everything in the management system
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		ftm.delete();
+		
+		
+		
 	}
 	// tests enum
 	@Test
@@ -91,6 +94,103 @@ public class TestFoodTruckManagementController {
 		
 		
 		
+	}
+	
+	@Test
+	public void testEqualsMethod(){
+		
+		String name1 = "Jack";
+		String role1 = "Janitor";
+		
+		String name2 = "Jack";
+		String role2 = "Janitor";
+		
+		String name3 = "Joe";
+		String role3 = "Janitor";
+		
+		Staff staff1 = new Staff(name1, role1);
+		Staff staff2 = new Staff(name2, role2);
+		Staff staff3 = new Staff(name3, role3);
+		
+		boolean staffsTrue = staff1.equals(staff2);
+		boolean staffsFalse = staff2.equals(staff3);
+		assertEquals(true, staffsTrue);
+		assertEquals(false, staffsFalse);
+		
+		Calendar c = Calendar.getInstance();
+		
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Time time1 = new Time(c.getTimeInMillis());
+		
+		c.set(Calendar.HOUR_OF_DAY, 2);
+		
+		Time time2 = new Time(c.getTimeInMillis());
+		
+		boolean differentTime = time1.equals(time2);
+		
+		assertEquals(false, differentTime);
+		
+		Day day1 = Day.WEDNESDAY;
+		
+		Day day2 = Day.FRIDAY;
+		
+		boolean differentDay = day1.equals(day2);
+		assertEquals(false, differentDay);
+		
+		
+		Shift shift1 = new Shift(time1, time2, day1, staff1);
+		
+		Shift shift2 = new Shift(time1, time2, day1, staff2);
+		
+		Shift shift3 = new Shift(time1, time2, day2, staff3);
+		
+		boolean differentShift = shift1.equals(shift3);
+		boolean sameShift = shift2.equals(shift1);
+		assertEquals(false, differentShift);
+		assertEquals(true, sameShift);
+		
+		/*c.set(Calendar.DATE, 0);
+		
+		Date date1 = new Date(c.getTimeInMillis());
+		
+		c.set(Calendar.DATE, -2);
+		
+		Date date2 = new Date(c.getTimeInMillis());
+		
+		c.set(Calendar.DATE, 2);
+		
+		Date date3 = new Date(c.getTimeInMillis());*/
+		
+		c.clear();
+		
+		int firstDateInt = 22;
+		int secondDateInt = 24;
+		
+		
+		c.set(2016, 05, firstDateInt);
+		Date date1 = new Date(c.getTimeInMillis());
+		
+		c.set(2016, 05, secondDateInt);
+		Date date2 = new Date(c.getTimeInMillis());
+		
+		c.set(2016, 05, firstDateInt);
+		Date date3 = new Date(c.getTimeInMillis());
+		
+		boolean differentDate = date1.equals(date2);
+		boolean sameDate = date3.equals(date1);
+		assertEquals(false, differentDate);
+		assertEquals(true, sameDate);
+		
+		Schedule schedule1 = new Schedule(date1);
+		Schedule schedule2 = new Schedule(date3);
+		
+		boolean sameSchedule = schedule1.equals(schedule2);
+		assertEquals(true, sameSchedule);
+		
+		
+		
+	
 	}
 	
 	// ------------------ SCHEDULE ------------------------------- //
@@ -166,6 +266,7 @@ public class TestFoodTruckManagementController {
 		
 		assertEquals(0, ftm.getSchedule().size());
 		
+		
 	}
 	
 	@Test
@@ -194,10 +295,6 @@ public class TestFoodTruckManagementController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 		
 		
-		// load manager from memory
-		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-		
-		assertEquals(1, ftm2.getSchedule().size());
 		
 		
 	}
@@ -237,11 +334,6 @@ public class TestFoodTruckManagementController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 		
 		
-		// load manager from memory
-		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-		
-		assertEquals(1, ftm2.getSchedule().size());
-		assertEquals(firstDay, ftm.getSchedule(0).getWeek());
 		
 		
 	}
@@ -271,6 +363,12 @@ public class TestFoodTruckManagementController {
 		assertEquals(1, ftm.getSchedule().size());
 		assertEquals("", error);
 		
+		// check that the schedule is in the database
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		assertEquals(1, ftm2.getSchedule().size());
+		
+		
 		// create new schedule with same date
 		
 		try {
@@ -278,16 +376,584 @@ public class TestFoodTruckManagementController {
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
+
 		
-		assertEquals(1, ftm.getSchedule().size());
 		assertEquals("Schedule already exists!", error);
+		assertEquals(1, ftm.getSchedule().size());
 		
 		
 		
 	}
 	
+	// test add a nonexistent shift to a schedule
+	@Test
+	public void testAddNonExistentShiftSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// good start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 10, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+	
+		// shift that is not in the database
+		Shift newShift = new Shift(startTime, endTime, day, ftm.getStaff(0));
+		
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule().size());
+		
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), newShift);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("Shift not found in the database!", error);
+		assertEquals(0, ftm.getSchedule(0).getShift().size());
+			
+	}
+	
+	// test that it is impossible to add shifts to non existent schedule
+	@Test
+	public void testAddShiftToNonExistentSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		String error = "";
+		
+		String name = "Charles";
+		String role = "Janitor";
+		
+		Staff charles = new Staff(name, role);
+		
+		// correct times and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 12, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+		// initialize controller
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		try {
+			ftmc.createStaff(name, role);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals(1, ftm.getShift().size());
+		assertEquals("", error);
+		
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		Schedule newSchedule = new Schedule(today);
+		
+		try {
+			ftmc.addShiftToSchedule(newSchedule, ftm.getShift(0));
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("Schedule not found int the database!", error);
+		assertEquals(0, ftm.getSchedule().size());
+		
+		
+	}
+	// add the same shift twice to the same schedule
+	@Test
+	public void testAddShiftTwiceSameSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// good start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 10, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+	
+		// create shift in the database
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		
+		assertEquals(1, ftm.getShift().size());
+		assertEquals("", error);
+		
+		
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule().size());
+		
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(0));
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule(0).getShift().size());
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(0));
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("Shift already exists in the current schedule!", error);
+		assertEquals(1, ftm.getSchedule(0).getShift().size());
+		
+
+		
+	}
+	
+	// test adding shifts to a schedule
+	@Test
+	public void testAddShiftSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// good start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 10, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day1 = Day.MONDAY;
+		
+		Day day2 = Day.TUESDAY;
+		
+		Day day3 = Day.WEDNESDAY;
+		
+		// create shifts in the database
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day1);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day2);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day3);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		
+		
+		assertEquals(3, ftm.getShift().size());
+		assertEquals("", error);
+		
+		
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule().size());
+		
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(0));
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(1));
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(2));
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(3, ftm.getSchedule(0).getShift().size());
+		
+		
+		
+		
+	}
+	// test remove schedule
+	@Test
+	public void testRemoveSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		
+		// create two schedules
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		Calendar c = Calendar.getInstance();
+		
+		c.set(2016, 05, 22);
+		
+		Date date1 = new Date(c.getTimeInMillis());
+		
+		c.set(2016, 06, 17);
+		
+		Date date2 = new Date(c.getTimeInMillis());
+		
+		try {
+			ftmc.createSchedule(date1);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		try {
+			ftmc.createSchedule(date2);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		
+		
+		assertEquals("", error);
+		assertEquals(2, ftm.getSchedule().size());
+		
+		
+		try {
+			ftmc.deleteSchedule(ftm.getSchedule(0));
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule().size());
+		
+	}
+	
+	// try to remove a non existent schedule
+	@Test
+	public void testRemoveNonExistentSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		
+		// create two schedules
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		Calendar c = Calendar.getInstance();
+		
+		c.set(2016, 05, 22);
+		
+		Date date1 = new Date(c.getTimeInMillis());
+		
+		c.set(2016, 06, 17);
+		
+		Date date2 = new Date(c.getTimeInMillis());
+		
+		try {
+			ftmc.createSchedule(date1);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		
+		assertEquals(1, ftm.getSchedule().size());
+		assertEquals("", error);
+		
+		Schedule nonExistent = new Schedule(date2);
+		
+		try {
+			ftmc.deleteSchedule(nonExistent);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("Schedule not found in the database!", error);
+		assertEquals(1, ftm.getSchedule().size());
+		
+		
+	}
+	
+	// remove shift from a schedule
+	@Test
+	public void testRemoveShiftFromSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		String error = "";
+		
+		// create temp staff that does not exist in the database
+		String goodName = "Henri";
+		String goodRole = "Cashier";
+		
+		// add the staff to the databas
+		try{
+			ftmc.createStaff(goodName, goodRole);
+		} catch (InvalidInputException e){
+			error = e.getMessage();
+		}
+		// asssert that the staff has been successfully created
+		assertEquals(1, ftm.getStaff().size());
+		
+		
+		// good start time and good end time  and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 10, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day1 = Day.MONDAY;
+		
+		Day day2 = Day.TUESDAY;
+		
+		Day day3 = Day.WEDNESDAY;
+		
+		// create shifts in the database
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day1);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day2);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day3);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		
+		
+		assertEquals(3, ftm.getShift().size());
+		assertEquals("", error);
+		
+		
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule().size());
+		
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(0));
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(1));
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), ftm.getShift(2));
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(3, ftm.getSchedule(0).getShift().size());
+		
+		
+		try {
+			ftmc.removeShiftFromSchedule(ftm.getSchedule(0), ftm.getSchedule(0).getShift(1));
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("", error);
+		assertEquals(2, ftm.getSchedule(0).getShift().size());
+		
+		try {
+			ftmc.removeShiftFromSchedule(ftm.getSchedule(0), ftm.getSchedule(0).getShift(2));
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		assertEquals(1, ftm.getSchedule(0).getShift().size());
+		
+		assertEquals("", error);
+		
+		
+	}
 	// ------------------ ADD SHIFT ------------------------------ //
 	
+	// check that it is impossible to add two identical shifts
+	@Test
+	public void testAddShifTwice(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		String error = "";
+		
+		String name = "Charles";
+		String role = "Janitor";
+		
+		Staff charles = new Staff(name, role);
+		
+		// correct times and days
+		Calendar c = Calendar.getInstance();
+		c.set(2016, Calendar.MAY, 22, 9, 0, 0);
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016, Calendar.MAY, 22, 12, 0, 0);
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+		// initialize controller
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		try {
+			ftmc.createStaff(name, role);
+		} catch (InvalidInputException e1) {
+			error += e1.getMessage();
+		}
+		
+		
+		
+		try {
+			ftmc.createShift(ftm.getStaff(0), startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals(1, ftm.getShift().size());
+		assertEquals("", error);
+		
+		
+		try {
+			ftmc.createShift(charles, startTime, endTime, day);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals(1, ftm.getShift().size());
+		assertEquals("Shift already exists!", error);
+		
+		
+		
+		
+		
+	}
 	// check that nothing happens when the staff entered is inexistent
 	@Test
 	public void addShiftBadStaff(){
@@ -370,12 +1036,6 @@ public class TestFoodTruckManagementController {
 		assertEquals(error,  "Start time cannot be after end time!");
 		assertEquals(0, ftm.getShift().size());
 		
-		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-		
-		assertEquals(0, ftm2.getShift().size());
-		
-		
-		
 		
 	}
 	// check that nothing happens when the time entered is incorrect
@@ -425,9 +1085,6 @@ public class TestFoodTruckManagementController {
 		assertEquals(endTime, ftm.getShift(0).getFinishingHour());
 		assertEquals(day, ftm.getShift(0).getDay());
 		
-		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-
-		assertEquals(1, ftm2.getShift().size());
 				
 	}
 	
@@ -498,9 +1155,6 @@ public class TestFoodTruckManagementController {
 		// assert that the shift has succesfully been removed
 		assertEquals(0, ftm.getShift().size());
 		
-		ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-		
-		assertEquals(0, ftm2.getShift().size());
 		
 		
 		
@@ -960,32 +1614,32 @@ public class TestFoodTruckManagementController {
 	@Test
 	public void testCreateStaffRoleNull() {
 		// creates new instance of food truck manager
-				FoodTruckManager ftm = FoodTruckManager.getInstance();
-				// checks that there is not staff already there
-				assertEquals(0, ftm.getStaff().size());
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		// checks that there is not staff already there
+		assertEquals(0, ftm.getStaff().size());
+		
+		// initialize role to null
+		String name = "Erik-Olivier";
+		String role = null;
 				
-				// initialize role to null
-				String name = "Erik-Olivier";
-				String role = null;
+		// initialize controller
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		// set up error to null
+		String error = null;
+		
+		// add staff to controller
+		try {
+			ftmc.createStaff(name, role);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
 				
-				// initialize controller
-				FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		// check whether the error corresponds to the error expected in the controller
+		assertEquals(error, "Staff name or role cannot be empty or null!");
 				
-				// set up error to null
-				String error = null;
-				
-				// add staff to controller
-				try {
-					ftmc.createStaff(name, role);
-				} catch (InvalidInputException e) {
-					error = e.getMessage();
-				}
-				
-				// check whether the error corresponds to the error expected in the controller
-				assertEquals(error, "Staff name or role cannot be empty or null!");
-				
-				// check that error cause no changes in memory
-				assertEquals(0, ftm.getStaff().size());
+		// check that error cause no changes in memory
+		assertEquals(0, ftm.getStaff().size());
 	}
 	
 	@Test
@@ -1115,6 +1769,8 @@ public class TestFoodTruckManagementController {
 		// asserts that there is no staff in the instance
 		assertEquals(0, ftm.getStaff().size());
 		
+		String error = "";
+		
 		// name and role for a new staff
 		String name = "Erik-Olivier";
 		String role = "Cook";
@@ -1125,11 +1781,10 @@ public class TestFoodTruckManagementController {
 		try {
 			ftmc.createStaff(name, role);
 		} catch (InvalidInputException e) {
-			// Auto-generated catch block
-			fail();
+			error += e.getMessage();
 		}
 		
-		//-------------  check model in memory  ---------
+		assertEquals("", error);
 		// check if there is the correct amount of staff
 		assertEquals(1, ftm.getStaff().size());
 		// check if the name is good
@@ -1138,15 +1793,6 @@ public class TestFoodTruckManagementController {
 		assertEquals(role, ftm.getStaff(0).getRole());
 		
 		
-		// ----- import model from memory ---
-		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
-		
-		// ----- check file content in memory ------
-		// check for the correct amount of staff
-		assertEquals(1, ftm2.getStaff().size());
-		// check for the good name and role
-		assertEquals(name, ftm2.getStaff(0).getName());
-		assertEquals(role, ftm2.getStaff(0).getRole());
 		
 	}
 
