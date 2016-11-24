@@ -21,6 +21,7 @@
       <staff reference="3"/>
     </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
   </shift>
-  <item id="13"/>
-  <report id="14"/>
+  <schedule id="13"/>
+  <item id="14"/>
+  <report id="15"/>
 </manager>

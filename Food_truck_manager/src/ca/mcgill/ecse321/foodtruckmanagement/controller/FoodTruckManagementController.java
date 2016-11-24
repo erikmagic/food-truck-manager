@@ -5,8 +5,11 @@ import ca.mcgill.ecse321.foodtruckmanagement.persistence.PersistenceFoodTruckMan
 import ca.mcgill.ecse321.foodtruckmanagement.persistence.PersistenceXStream;
 
 import java.sql.Time;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 
@@ -150,4 +153,100 @@ public class FoodTruckManagementController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
+	// -------------------- schedule --------------------------- //
+	
+	public void createSchedule(Date startWeek) throws InvalidInputException{
+		
+		// initialize model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		
+		if ( startWeek == null){
+			throw new InvalidInputException("Date cannot be set to null!");
+		}
+		
+		// find the closest first day of the week to create a new schedule from the new weed
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(startWeek);
+		while ( c.getFirstDayOfWeek() != c.get(Calendar.DAY_OF_WEEK)){
+			c.add(Calendar.DATE, -1);	
+		}
+		
+		// create new schedule
+		
+		// date.sql
+		Schedule sch = new Schedule( startWeek);
+		
+		
+		// check if the schedule already exists
+		
+		Iterator it = ftm.getSchedule().iterator();
+		
+		while ( it.hasNext()){
+			Schedule toCompare = (Schedule) it.next();
+			if (toCompare.equals(sch)){
+				throw new InvalidInputException("Schedule already exists!");
+			}
+		}
+		
+		ftm.addSchedule(sch);
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+		
+		
+	}
+	
+	public void addShiftToSchedule(Schedule aSchedule, Shift aShift) throws InvalidInputException{
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check that the schedule is indeed in the database
+		int counter = 0;
+		Iterator scIt = ftm.getSchedule().iterator();
+		int scheduleIndex =-1;
+		while ( scIt.hasNext()){
+			Schedule tempSchedule = (Schedule) scIt.next();
+			
+			if ( aSchedule.equals(tempSchedule)){
+				scheduleIndex = counter;
+			}
+			counter++;
+		}
+		if (scheduleIndex == -1){
+			throw new InvalidInputException("Schedule not found int the database!");
+		}
+		// check that shift is indeed in the database
+		
+		Iterator it = ftm.getShift().iterator();
+		
+		int shiftIndex = -1;
+		counter = 0;
+		while ( it.hasNext()){
+			Shift tempShift = (Shift) it.next();
+			
+			if(tempShift.equals(aShift)){
+				shiftIndex = counter;
+				break;
+			}
+			counter++;
+		}
+		if (shiftIndex == -1){
+			throw new InvalidInputException("Shift not found in the database!");
+		}
+		
+		ftm.getSchedule(scheduleIndex).addShift(aShift);
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeShiftFromSchedule(Schedule aSchedule, Shift aShift){
+		
+		
+	}
+	
+	public void removeSchedule(Schedule aSchedule){
+		
+		
+	}
 }

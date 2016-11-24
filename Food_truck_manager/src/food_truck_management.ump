@@ -29,7 +29,7 @@ class FoodTruckManager{
   1 -> * Order order;
   1 -> 1 Menu menu;
   1 -> * Shift shift;
-  1 -> 1 Schedule schedule;
+  1 -> * Schedule schedule;
   1 -> * Item item;
   1 -> * Report report;
 

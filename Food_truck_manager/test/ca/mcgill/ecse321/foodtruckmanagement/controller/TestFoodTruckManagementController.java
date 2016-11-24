@@ -2,7 +2,9 @@ package ca.mcgill.ecse321.foodtruckmanagement.controller;
 
 import static org.junit.Assert.*;
 
+
 import java.io.File;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.Calendar;
 
@@ -83,6 +85,158 @@ public class TestFoodTruckManagementController {
 		assertEquals(7, number_received);
 		number_received = -1;
 	}
+	
+	@Test 
+	public void testSeeWhichShiftsComeBefore(){
+		
+		
+		
+	}
+	
+	// ------------------ SCHEDULE ------------------------------- //
+	
+	
+	@Test
+	public void testCreateScheduleDateNull(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		
+		// date.sql
+		Date badDate = null;
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		try {
+			ftmc.createSchedule(badDate);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("Date cannot be set to null!", error);
+		
+		assertEquals(0, ftm.getSchedule().size());
+		
+	}
+	
+	@Test
+	public void testCreateSchedule(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		
+		// todays date
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+				
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule().size());
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+		
+		
+		// load manager from memory
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		assertEquals(1, ftm2.getSchedule().size());
+		
+		
+	}
+	@Test
+	public void testCreateScheduleAndSeeIfTheScheduleStartsFirstDayWeek(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		
+		// todays date
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		int firstDayWeek = c.getFirstDayOfWeek();
+		
+		int todayDay = c.get(Calendar.DAY_OF_WEEK);
+				
+		c.set(Calendar.DAY_OF_WEEK, (firstDayWeek - todayDay));
+		
+		Date firstDay = new Date(c.getTimeInMillis());
+		
+		
+		assertEquals("", error);
+		assertEquals(1, ftm.getSchedule().size());
+		assertEquals(firstDay, ftm.getSchedule(0).getWeek());
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+		
+		
+		// load manager from memory
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		assertEquals(1, ftm2.getSchedule().size());
+		assertEquals(firstDay, ftm.getSchedule(0).getWeek());
+		
+		
+	}
+	
+	@Test 
+	public void testCreateScheduleAlreadyExists(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		String error = "";
+		
+		Calendar c = Calendar.getInstance();
+		
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		
+		Date today = new Date(c.getTimeInMillis());
+		
+		// create first schedule
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals(1, ftm.getSchedule().size());
+		assertEquals("", error);
+		
+		// create new schedule with same date
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(1, ftm.getSchedule().size());
+		assertEquals("Schedule already exists!", error);
+		
+		
+		
+	}
+	
 	// ------------------ ADD SHIFT ------------------------------ //
 	
 	// check that nothing happens when the staff entered is inexistent
@@ -167,6 +321,10 @@ public class TestFoodTruckManagementController {
 		assertEquals(error,  "Start time cannot be after end time!");
 		assertEquals(0, ftm.getShift().size());
 		
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		assertEquals(0, ftm2.getShift().size());
+		
 		
 		
 		
@@ -217,6 +375,10 @@ public class TestFoodTruckManagementController {
 		assertEquals(startTime, ftm.getShift(0).getStartingHour());
 		assertEquals(endTime, ftm.getShift(0).getFinishingHour());
 		assertEquals(day, ftm.getShift(0).getDay());
+		
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+
+		assertEquals(1, ftm2.getShift().size());
 				
 	}
 	
@@ -269,6 +431,10 @@ public class TestFoodTruckManagementController {
 		assertEquals(endTime, ftm.getShift(0).getFinishingHour());
 		assertEquals(day, ftm.getShift(0).getDay());
 		
+		FoodTruckManager ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+
+		assertEquals(1, ftm2.getShift().size());
+		
 		// remove the shift just created
 		
 		Shift to_be_removed_shift = new Shift(startTime, endTime, day, ftm.getStaff(0));
@@ -282,6 +448,10 @@ public class TestFoodTruckManagementController {
 		assertEquals(error, "");
 		// assert that the shift has succesfully been removed
 		assertEquals(0, ftm.getShift().size());
+		
+		ftm2 = (FoodTruckManager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		assertEquals(0, ftm2.getShift().size());
 		
 		
 		

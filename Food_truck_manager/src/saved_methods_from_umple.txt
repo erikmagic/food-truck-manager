@@ -1,0 +1,29 @@
+saved methods from umple
+
+shifts:
+
+  public boolean equals(Shift otherShift){
+	  if (this.startingHour != otherShift.startingHour) return false;
+	  else if ( this.finishingHour != otherShift.finishingHour) return false;
+	  else if ( this.staff != otherShift.staff) return false;
+	  else if (this.day != otherShift.day) return false;
+	  else return true;
+  }
+  
+  
+  staffs:
+  
+   public boolean equals(Staff aStaff){
+	  if ( !this.getName().equals(aStaff.getName())) return false;
+	  else if ( !this.getRole().equals(aStaff.getRole())) return false;
+	  else return true;
+  }
+  
+  
+  -> strategy design pattern
+  
+  -> proxy pattern
+  
+  -> command pattern
+  
+  -> polymorphism
