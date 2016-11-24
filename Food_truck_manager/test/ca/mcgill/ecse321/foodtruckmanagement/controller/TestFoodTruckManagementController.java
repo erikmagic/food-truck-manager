@@ -95,6 +95,55 @@ public class TestFoodTruckManagementController {
 	
 	// ------------------ SCHEDULE ------------------------------- //
 	
+	@Test
+	public void testAddShiftScheduleErrorNoShift(){
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		String error = "";
+		
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 0); // today
+		Time startTime = new Time(c.getTimeInMillis());
+		Date today = new Date(c.getTimeInMillis());
+		
+		
+		c.set(Calendar.HOUR_OF_DAY, 2); // today plus 2 hours
+		Time endTime = new Time(c.getTimeInMillis());
+		
+		Day day = Day.MONDAY;
+		
+		Staff staff = new Staff("Jack", "Cook");
+		
+		Shift newShift = new Shift(startTime, endTime, day, staff);
+		
+		// initialize controller
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		
+		// create schedule
+		
+		try {
+			ftmc.createSchedule(today);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals(1, ftm.getSchedule().size());
+		assertEquals("", error);
+		
+		
+		try {
+			ftmc.addShiftToSchedule(ftm.getSchedule(0), newShift);
+		} catch (InvalidInputException e) {
+			error += e.getMessage();
+		}
+		
+		assertEquals("Shift not found in the database!", error);
+		assertEquals(0, ftm.getSchedule(0).getShift().size());
+		
+		
+	}
 	
 	@Test
 	public void testCreateScheduleDateNull(){

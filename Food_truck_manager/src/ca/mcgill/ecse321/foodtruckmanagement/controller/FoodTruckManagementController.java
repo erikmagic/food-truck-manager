@@ -169,8 +169,9 @@ public class FoodTruckManagementController {
 		
 		Calendar c = Calendar.getInstance();
 		c.setTime(startWeek);
-		while ( c.getFirstDayOfWeek() != c.get(Calendar.DAY_OF_WEEK)){
-			c.add(Calendar.DATE, -1);	
+		Date day = new Date(c.getTimeInMillis());
+		while ( c.getFirstDayOfWeek() != Calendar.DAY_OF_WEEK){
+			c.set(Calendar.DATE, -1);	
 		}
 		
 		// create new schedule
