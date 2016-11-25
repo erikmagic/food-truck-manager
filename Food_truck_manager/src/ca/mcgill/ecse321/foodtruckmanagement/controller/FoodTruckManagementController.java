@@ -268,7 +268,7 @@ public class FoodTruckManagementController {
 	
 	public void removeShiftFromSchedule(Schedule aSchedule, Shift aShift) throws InvalidInputException{
 		
-FoodTruckManager ftm = FoodTruckManager.getInstance();
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		
 		// check that the schedule is indeed in the database
 		int counter = 0;

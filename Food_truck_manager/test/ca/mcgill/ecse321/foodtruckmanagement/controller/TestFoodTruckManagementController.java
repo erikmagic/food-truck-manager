@@ -875,7 +875,7 @@ public class TestFoodTruckManagementController {
 		
 		
 		try {
-			ftmc.removeShiftFromSchedule(ftm.getSchedule(0), ftm.getSchedule(0).getShift(1));
+			ftmc.removeShiftFromSchedule(ftm.getSchedule(0), ftm.getSchedule(0).getShift(0));
 		} catch (InvalidInputException e) {
 			error += e.getMessage();
 		}
@@ -884,7 +884,7 @@ public class TestFoodTruckManagementController {
 		assertEquals(2, ftm.getSchedule(0).getShift().size());
 		
 		try {
-			ftmc.removeShiftFromSchedule(ftm.getSchedule(0), ftm.getSchedule(0).getShift(2));
+			ftmc.removeShiftFromSchedule(ftm.getSchedule(0), ftm.getSchedule(0).getShift(0));
 		} catch (InvalidInputException e) {
 			error += e.getMessage();
 		}
