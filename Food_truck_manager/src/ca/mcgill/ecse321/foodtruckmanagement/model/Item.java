@@ -3,10 +3,9 @@
 
 package ca.mcgill.ecse321.foodtruckmanagement.model;
 import java.util.*;
-import java.sql.Date;
 
 // line 39 "../../../../../food_truck_management.ump"
-// line 99 "../../../../../food_truck_management.ump"
+// line 98 "../../../../../food_truck_management.ump"
 public class Item
 {
 

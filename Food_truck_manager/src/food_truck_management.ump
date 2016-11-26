@@ -25,14 +25,14 @@ class Schedule{
 class FoodTruckManager{
   singleton;
   1-> * Staff staff;
-  1 -> * Supply supply;
+  1 -> * Ingredient ingredients;
   1 -> * Order order;
   1 -> 1 Menu menu;
   1 -> * Shift shift;
   1 -> * Schedule schedule;
   1 -> * Item item;
   1 -> * Report report;
-
+  1 -> * Equipment equipment;
   
 }
       
@@ -53,11 +53,10 @@ class Menu{
 class Supply{
   name;
   double quantity;
-  Date purchasedDate;
   double price;
 }
 
-class Ingredients{
+class Ingredient{
   Date expirationDate;
   isA Supply;
 }

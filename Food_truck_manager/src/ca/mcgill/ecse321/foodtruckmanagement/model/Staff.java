@@ -6,7 +6,7 @@ import java.util.*;
 import java.sql.Time;
 
 // line 5 "../../../../../food_truck_management.ump"
-// line 84 "../../../../../food_truck_management.ump"
+// line 83 "../../../../../food_truck_management.ump"
 public class Staff
 {
 
@@ -154,14 +154,12 @@ public class Staff
   {
     shift.clear();
   }
-  
-  // helpers
-  
+
   public boolean equals(Staff aStaff){
 	  if ( !this.getName().equals(aStaff.getName())) return false;
 	  else if ( !this.getRole().equals(aStaff.getRole())) return false;
 	  else return true;
-  }
+ }
 
   public String toString()
   {

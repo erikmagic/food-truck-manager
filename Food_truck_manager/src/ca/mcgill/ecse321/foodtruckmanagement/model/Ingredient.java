@@ -4,25 +4,24 @@
 package ca.mcgill.ecse321.foodtruckmanagement.model;
 import java.sql.Date;
 
-// line 60 "../../../../../food_truck_management.ump"
-// line 114 "../../../../../food_truck_management.ump"
-public class Ingredients extends Supply
+// line 59 "../../../../../food_truck_management.ump"
+public class Ingredient extends Supply
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //Ingredients Attributes
+  //Ingredient Attributes
   private Date expirationDate;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Ingredients(String aName, double aQuantity, Date aPurchasedDate, double aPrice, Date aExpirationDate)
+  public Ingredient(String aName, double aQuantity, double aPrice, Date aExpirationDate)
   {
-    super(aName, aQuantity, aPurchasedDate, aPrice);
+    super(aName, aQuantity, aPrice);
     expirationDate = aExpirationDate;
   }
 
@@ -47,7 +46,15 @@ public class Ingredients extends Supply
   {
     super.delete();
   }
-
+  
+  public boolean equals(Ingredient otherIngredient){
+	  if ( !this.expirationDate.equals(otherIngredient.expirationDate)) return false;
+	  else if ( !super.getName().equals(otherIngredient.getName())) return false;
+	  else if ( super.getPrice() != otherIngredient.getPrice()) return false;
+	  else if ( super.getQuantity() != otherIngredient.getQuantity()) return false;
+	  else return true;
+	  
+  }
 
   public String toString()
   {

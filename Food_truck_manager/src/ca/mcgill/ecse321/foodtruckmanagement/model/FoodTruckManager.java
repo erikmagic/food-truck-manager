@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 // line 25 "../../../../../food_truck_management.ump"
-// line 134 "../../../../../food_truck_management.ump"
+// line 133 "../../../../../food_truck_management.ump"
 public class FoodTruckManager
 {
 
@@ -23,13 +23,14 @@ public class FoodTruckManager
 
   //FoodTruckManager Associations
   private List<Staff> staff;
-  private List<Supply> supply;
+  private List<Ingredient> ingredients;
   private List<Order> order;
   private Menu menu;
   private List<Shift> shift;
   private List<Schedule> schedule;
   private List<Item> item;
   private List<Report> report;
+  private List<Equipment> equipment;
 
   //------------------------
   // CONSTRUCTOR
@@ -38,12 +39,13 @@ public class FoodTruckManager
   private FoodTruckManager()
   {
     staff = new ArrayList<Staff>();
-    supply = new ArrayList<Supply>();
+    ingredients = new ArrayList<Ingredient>();
     order = new ArrayList<Order>();
     shift = new ArrayList<Shift>();
     schedule = new ArrayList<Schedule>();
     item = new ArrayList<Item>();
     report = new ArrayList<Report>();
+    equipment = new ArrayList<Equipment>();
   }
 
   public static FoodTruckManager getInstance()
@@ -89,33 +91,33 @@ public class FoodTruckManager
     return index;
   }
 
-  public Supply getSupply(int index)
+  public Ingredient getIngredient(int index)
   {
-    Supply aSupply = supply.get(index);
-    return aSupply;
+    Ingredient aIngredient = ingredients.get(index);
+    return aIngredient;
   }
 
-  public List<Supply> getSupply()
+  public List<Ingredient> getIngredients()
   {
-    List<Supply> newSupply = Collections.unmodifiableList(supply);
-    return newSupply;
+    List<Ingredient> newIngredients = Collections.unmodifiableList(ingredients);
+    return newIngredients;
   }
 
-  public int numberOfSupply()
+  public int numberOfIngredients()
   {
-    int number = supply.size();
+    int number = ingredients.size();
     return number;
   }
 
-  public boolean hasSupply()
+  public boolean hasIngredients()
   {
-    boolean has = supply.size() > 0;
+    boolean has = ingredients.size() > 0;
     return has;
   }
 
-  public int indexOfSupply(Supply aSupply)
+  public int indexOfIngredient(Ingredient aIngredient)
   {
-    int index = supply.indexOf(aSupply);
+    int index = ingredients.indexOf(aIngredient);
     return index;
   }
 
@@ -280,6 +282,36 @@ public class FoodTruckManager
     return index;
   }
 
+  public Equipment getEquipment(int index)
+  {
+    Equipment aEquipment = equipment.get(index);
+    return aEquipment;
+  }
+
+  public List<Equipment> getEquipment()
+  {
+    List<Equipment> newEquipment = Collections.unmodifiableList(equipment);
+    return newEquipment;
+  }
+
+  public int numberOfEquipment()
+  {
+    int number = equipment.size();
+    return number;
+  }
+
+  public boolean hasEquipment()
+  {
+    boolean has = equipment.size() > 0;
+    return has;
+  }
+
+  public int indexOfEquipment(Equipment aEquipment)
+  {
+    int index = equipment.indexOf(aEquipment);
+    return index;
+  }
+
   public static int minimumNumberOfStaff()
   {
     return 0;
@@ -337,59 +369,59 @@ public class FoodTruckManager
     return wasAdded;
   }
 
-  public static int minimumNumberOfSupply()
+  public static int minimumNumberOfIngredients()
   {
     return 0;
   }
 
-  public boolean addSupply(Supply aSupply)
+  public boolean addIngredient(Ingredient aIngredient)
   {
     boolean wasAdded = false;
-    if (supply.contains(aSupply)) { return false; }
-    supply.add(aSupply);
+    if (ingredients.contains(aIngredient)) { return false; }
+    ingredients.add(aIngredient);
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeSupply(Supply aSupply)
+  public boolean removeIngredient(Ingredient aIngredient)
   {
     boolean wasRemoved = false;
-    if (supply.contains(aSupply))
+    if (ingredients.contains(aIngredient))
     {
-      supply.remove(aSupply);
+      ingredients.remove(aIngredient);
       wasRemoved = true;
     }
     return wasRemoved;
   }
 
-  public boolean addSupplyAt(Supply aSupply, int index)
+  public boolean addIngredientAt(Ingredient aIngredient, int index)
   {  
     boolean wasAdded = false;
-    if(addSupply(aSupply))
+    if(addIngredient(aIngredient))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfSupply()) { index = numberOfSupply() - 1; }
-      supply.remove(aSupply);
-      supply.add(index, aSupply);
+      if(index > numberOfIngredients()) { index = numberOfIngredients() - 1; }
+      ingredients.remove(aIngredient);
+      ingredients.add(index, aIngredient);
       wasAdded = true;
     }
     return wasAdded;
   }
 
-  public boolean addOrMoveSupplyAt(Supply aSupply, int index)
+  public boolean addOrMoveIngredientAt(Ingredient aIngredient, int index)
   {
     boolean wasAdded = false;
-    if(supply.contains(aSupply))
+    if(ingredients.contains(aIngredient))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfSupply()) { index = numberOfSupply() - 1; }
-      supply.remove(aSupply);
-      supply.add(index, aSupply);
+      if(index > numberOfIngredients()) { index = numberOfIngredients() - 1; }
+      ingredients.remove(aIngredient);
+      ingredients.add(index, aIngredient);
       wasAdded = true;
     } 
     else 
     {
-      wasAdded = addSupplyAt(aSupply, index);
+      wasAdded = addIngredientAt(aIngredient, index);
     }
     return wasAdded;
   }
@@ -687,16 +719,74 @@ public class FoodTruckManager
     return wasAdded;
   }
 
+  public static int minimumNumberOfEquipment()
+  {
+    return 0;
+  }
+
+  public boolean addEquipment(Equipment aEquipment)
+  {
+    boolean wasAdded = false;
+    if (equipment.contains(aEquipment)) { return false; }
+    equipment.add(aEquipment);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeEquipment(Equipment aEquipment)
+  {
+    boolean wasRemoved = false;
+    if (equipment.contains(aEquipment))
+    {
+      equipment.remove(aEquipment);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addEquipmentAt(Equipment aEquipment, int index)
+  {  
+    boolean wasAdded = false;
+    if(addEquipment(aEquipment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfEquipment()) { index = numberOfEquipment() - 1; }
+      equipment.remove(aEquipment);
+      equipment.add(index, aEquipment);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveEquipmentAt(Equipment aEquipment, int index)
+  {
+    boolean wasAdded = false;
+    if(equipment.contains(aEquipment))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfEquipment()) { index = numberOfEquipment() - 1; }
+      equipment.remove(aEquipment);
+      equipment.add(index, aEquipment);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addEquipmentAt(aEquipment, index);
+    }
+    return wasAdded;
+  }
+
   public void delete()
   {
     staff.clear();
-    supply.clear();
+    ingredients.clear();
     order.clear();
     menu = null;
     shift.clear();
     schedule.clear();
     item.clear();
     report.clear();
+    equipment.clear();
   }
 
 }

@@ -7,7 +7,7 @@ import java.util.*;
 import java.sql.Time;
 
 // line 20 "../../../../../food_truck_management.ump"
-// line 94 "../../../../../food_truck_management.ump"
+// line 93 "../../../../../food_truck_management.ump"
 public class Schedule
 {
 
@@ -147,8 +147,6 @@ public class Schedule
 	  else return true;
   }
   
-
-
   public String toString()
   {
 	  String outputString = "";

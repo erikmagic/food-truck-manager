@@ -4,12 +4,10 @@
 package ca.mcgill.ecse321.foodtruckmanagement.model;
 import java.sql.Time;
 
-
 import ca.mcgill.ecse321.foodtruckmanagement.controller.Day;
-import ca.mcgill.ecse321.foodtruckmanagement.controller.DayMap;
 
 // line 13 "../../../../../food_truck_management.ump"
-// line 89 "../../../../../food_truck_management.ump"
+// line 88 "../../../../../food_truck_management.ump"
 public class Shift
 {
 
@@ -104,46 +102,13 @@ public class Shift
     staff = null;
   }
 
-  // helpers
   public boolean equals(Shift otherShift){
 	  if (this.startingHour != otherShift.startingHour) return false;
 	  else if ( this.finishingHour != otherShift.finishingHour) return false;
-	  else if ( !this.staff.equals(otherShift.staff)) return false;
+	  else if ( this.staff != otherShift.staff) return false;
 	  else if (this.day != otherShift.day) return false;
 	  else return true;
   }
-  
-  /** first.compareTo(second)
- * @param otherShift
- * @return 0 if both shifts starts at the same time
- * 1 if the first is before second
- * -1 if the first is after second
- */
-public int compareTo(Shift otherShift){
-	  if (this.equals(otherShift)) return 0;
-	  
-	  if (!this.day.equals(otherShift.day)){
-		  
-		  int thisDay = DayMap.getNumberDay(this.day);
-		  int otherDay = DayMap.getNumberDay(otherShift.day);
-		  
-		  if (thisDay > otherDay) return 1;
-		  else return -1;
-		  
-	  }
-	  else {
-		  
-		  Time thisTime = this.startingHour;
-		  Time otherTime = otherShift.startingHour;
-		  
-		  if ( thisTime.getTime() == otherTime.getTime()	) return 0;
-		  else if ( thisTime.getTime() < otherTime.getTime()) return 1;
-		  else return -1;
-		  
-	  }
-  }
-  
-  
   
   public String toString()
   {

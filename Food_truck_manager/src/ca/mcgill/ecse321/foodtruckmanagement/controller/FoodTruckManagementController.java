@@ -11,6 +11,8 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.swing.text.StyledEditorKit.ForegroundAction;
+
 import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 
 /**This Controller is activated by user input in the graphical interface. The controller then calls
@@ -345,4 +347,151 @@ public class FoodTruckManagementController {
 	}
 	
 	// ------------------------------ food controller -------------------------------------- //
+	
+	public void createIngredient(String aName, double aQuantity, double aPrice, Date aExpirationDate) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check that the parameters are fine
+		
+		if ( aName == null || aName.trim().length() == 0){
+			throw new InvalidInputException("Ingredient name cannot be null or empty!");
+		}
+		
+		if ( aQuantity == 0){
+			throw new InvalidInputException("Ingredient quantity cannot be 0!");
+		}
+		
+		// ingredients price can be 0
+		
+		if (aExpirationDate == null ){
+			throw new InvalidInputException("Ingredient expiration date cannot be null!");
+		}
+		
+		// check if the ingredient already exists
+		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
+		Ingredient ingredient = new Ingredient(aName, aQuantity, aPrice, aExpirationDate);
+		
+		while ( ingIt.hasNext()){
+			Ingredient tempIng = ingIt.next();
+			if ( ingredient.equals(tempIng) ){
+				throw new InvalidInputException("Ingredient already exists!");
+			}	
+		}
+		
+		ftm.addIngredient(ingredient);
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+		
+	}
+	
+	public void removeIngredient(Ingredient ingredient) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check if ingredient if in the database
+		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
+		
+		int ingredientIndex = -1;
+		int counter = 0;
+		while ( ingIt.hasNext()){
+			Ingredient tempIng = ingIt.next();
+			if ( ingredient.equals(tempIng) ){
+				ingredientIndex = counter;
+			}	
+			counter++;
+		}
+		if (ingredientIndex == -1){
+			throw new InvalidInputException("Ingredient was not found in the database!");
+		}
+		
+		// should not throw errors
+		if ( !ftm.removeIngredient(ftm.getIngredient(ingredientIndex))){
+			throw new InvalidInputException("Ingredient not removed!");
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void createEquipment(String aName, double aQuantity, double aPrice) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		if ( aName == null || aName.trim().length() == 0){
+			throw new InvalidInputException("Equipment name cannot be null or empty!");
+		}
+		
+		if ( aQuantity == 0){
+			throw new InvalidInputException("Equipment quantity cannot be 0!");
+		}
+		
+		// ingredients price can be 0
+		
+		// check if equipment already exists
+		Iterator<Equipment> equipIt = ftm.getEquipment().iterator();
+		Equipment equipment = new Equipment(aName, aQuantity, aPrice);
+		
+		while ( equipIt.hasNext()){
+			Equipment tempEquip = equipIt.next();
+			if ( equipment.equals(tempEquip)){
+				throw new InvalidInputException("Equipment already exists!");
+			}
+		}
+		
+		ftm.addEquipment(equipment);
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeEquipment(Equipment equipment) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check if ingredient if in the database
+		Iterator<Equipment> equipIt = ftm.getEquipment().iterator();
+		
+		int equipmentIndex = -1;
+		int counter = 0;
+		while ( equipIt.hasNext()){
+			Equipment tempEquip = equipIt.next();
+			if ( equipment.equals(tempEquip) ){
+				equipmentIndex = counter;
+			}	
+			counter++;
+		}
+		if (equipmentIndex == -1){
+			throw new InvalidInputException("Equipment was not found in the database!");
+		}
+		
+		// should not throw errors
+		if (!ftm.removeEquipment(ftm.getEquipment(equipmentIndex))){
+			throw new InvalidInputException("Equipment does not exists!");
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	// items
+	
+	public void createItem(String aName, double aPrice, boolean aAvailability){
+		
+	}
+	
+	public void removeItem(Item item){
+		
+		
+	}
+	
+	public void addIngredientToItem(Item item, Ingredient ingredient){
+		
+		
+	}
+	public void removeIngredientFromItem(Item item, Ingredient ingredient){
+	
+	}
+	public void checkAvailabilityItem(Item item){
+		
+	}
 }

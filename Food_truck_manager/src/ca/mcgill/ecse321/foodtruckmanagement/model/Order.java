@@ -5,8 +5,8 @@ package ca.mcgill.ecse321.foodtruckmanagement.model;
 import java.sql.Date;
 import java.util.*;
 
-// line 69 "../../../../../food_truck_management.ump"
-// line 124 "../../../../../food_truck_management.ump"
+// line 68 "../../../../../food_truck_management.ump"
+// line 123 "../../../../../food_truck_management.ump"
 public class Order
 {
 

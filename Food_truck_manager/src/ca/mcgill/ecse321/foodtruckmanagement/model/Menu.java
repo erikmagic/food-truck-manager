@@ -5,7 +5,7 @@ package ca.mcgill.ecse321.foodtruckmanagement.model;
 import java.util.*;
 
 // line 46 "../../../../../food_truck_management.ump"
-// line 104 "../../../../../food_truck_management.ump"
+// line 103 "../../../../../food_truck_management.ump"
 public class Menu
 {
 
