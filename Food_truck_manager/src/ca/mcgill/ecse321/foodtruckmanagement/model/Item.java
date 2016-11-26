@@ -172,7 +172,12 @@ public class Item
   {
     Ingredient.clear();
   }
-
+  public boolean equals(Item other){
+	  if ( this.availability != other.availability) return false;
+	  else if (!this.name.equals(other.getName())) return false;
+	  else if ( this.price != other.price) return false;
+	  else return true;
+}
 
   public String toString()
   {

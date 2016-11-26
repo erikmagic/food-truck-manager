@@ -23,7 +23,13 @@ public class Ingredient extends Supply
   //------------------------
   // INTERFACE
   //------------------------
-
+  public boolean equals(Ingredient otherIngredient){
+	  if ( !super.getName().equals(otherIngredient.getName())) return false;
+	  else if ( super.getPrice() != otherIngredient.getPrice()) return false;
+	  else if ( super.getQuantity() != otherIngredient.getQuantity()) return false;
+	  else return true;
+	  
+  }
   public void delete()
   {
     super.delete();

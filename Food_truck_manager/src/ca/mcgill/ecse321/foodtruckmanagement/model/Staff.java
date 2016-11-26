@@ -153,7 +153,11 @@ public class Staff
   {
     shift.clear();
   }
-
+  public boolean equals(Staff aStaff){
+	  if ( !this.getName().equals(aStaff.getName())) return false;
+	  else if ( !this.getRole().equals(aStaff.getRole())) return false;
+	  else return true;
+ }
 
   public String toString()
   {

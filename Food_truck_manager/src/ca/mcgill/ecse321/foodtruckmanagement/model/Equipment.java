@@ -24,7 +24,13 @@ public class Equipment extends Supply
   //------------------------
   // INTERFACE
   //------------------------
-
+  public boolean equals(Equipment otherEquipment){
+	  
+	  if ( !super.getName().equals(otherEquipment.getName())) return false;
+	  else if ( super.getPrice() != otherEquipment.getPrice()) return false;
+	  else if ( super.getQuantity() != otherEquipment.getQuantity()) return false;
+	  else return true;
+  }
   public void delete()
   {
     super.delete();

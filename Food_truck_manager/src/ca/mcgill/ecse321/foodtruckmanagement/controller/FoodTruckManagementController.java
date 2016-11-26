@@ -376,7 +376,7 @@ public class FoodTruckManagementController {
 		
 		// check if the ingredient already exists
 		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
-		Ingredient ingredient = new Ingredient(aName, aQuantity, aPrice, aExpirationDate);
+		Ingredient ingredient = new Ingredient(aName, aQuantity, aPrice);
 		
 		while ( ingIt.hasNext()){
 			Ingredient tempIng = ingIt.next();
@@ -583,13 +583,143 @@ public class FoodTruckManagementController {
 		if (itemIndex == -1){
 			throw new InvalidInputException("Item was not found in the database!");
 		}
-		//ftm.getItem(itemIndex).addSuply(ftm.getIngredient(ingredientIndex));
+		ftm.getItem(itemIndex).addIngredient(ftm.getIngredient(ingredientIndex));
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 		
 	}
-	public void removeIngredientFromItem(Item item, Ingredient ingredient){
+	public void removeIngredientFromItem(Item item, Ingredient ingredient) throws InvalidInputException{
 	
-	}
-	public void checkAvailabilityItem(Item item, Date currentDate){
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		
+		// check if the item exists
+		Iterator<Item> itIt = ftm.getItem().iterator();
+		int counter = 0;
+		int itemIndex = -1;
+		while(itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (item.equals(tempItem)){
+				itemIndex = counter;
+			}
+			counter++;
+		}
+		if (itemIndex == -1){
+			throw new InvalidInputException("Item not found in the database!");
+		}
+		
+		
+		// check if the ingredient exists in the current item
+		Iterator<Ingredient> ingIt = ftm.getItem(itemIndex).getIngredient().iterator();
+		counter = 0;
+		int ingredientIndex = -1;
+		while(ingIt.hasNext()){
+			Ingredient tempIngredient = ingIt.next();
+			if (ingredient.equals(tempIngredient)){
+				ingredientIndex = counter;
+			}
+			counter++;
+		}
+		if (ingredientIndex == -1){
+			throw new InvalidInputException("Ingredient not found in the specific item");
+		}
+		
+		// should not happen
+		if (!ftm.getItem(itemIndex).removeIngredient(ftm.getItem(itemIndex).getIngredient(ingredientIndex))){
+			throw new InvalidInputException("Ingredient was not removed!");
+		}
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
+	
+	/**updates the quantity of an ingredient if the ingredient has sufficiant quantity ( supports + and -)
+	 * @exception insufficiant quantity
+	 * @param item
+	 */
+	private void updateQuantity(Ingredient ingredient, double update) throws InvalidInputException{
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check if the item is in the database
+		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
+		int counter = 0;
+		int ingredientIndex = -1;
+		while(ingIt.hasNext()){
+			Ingredient tempIngredient = ingIt.next();
+			if (ingredient.equals(tempIngredient)){
+				ingredientIndex = counter;
+			}
+			counter++;
+		}
+		
+		if (ingredientIndex == -1){
+			throw new InvalidInputException("Ingredient not found in the database!");
+		}
+		
+		// check if the updated quantity is not negative
+		if (ftm.getIngredient(ingredientIndex).getQuantity()+update < 0){
+			throw new InvalidInputException("Not enough " + ftm.getIngredient(ingredientIndex).getName() + " !");
+		}
+		
+		// update the quantity of the desired item
+		ftm.getIngredient(ingredientIndex).setQuantity(ftm.getIngredient(ingredientIndex).getQuantity() + update);
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	/**checks if all the ingredients in an item have quantities above 0
+	 * @param item
+	 * @return true if the item is available
+	 */
+	private boolean checkAvailabilityItem(Item item){
+	
+		return false;
+	}
+	
+	public void addItemToMenu(Item item) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check that the item is in the database
+		Iterator<Item> itIt = ftm.getItem().iterator();
+		int counter = 0;
+		int itemIndex = -1;
+		while (itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (item.equals(tempItem)){
+				itemIndex = counter;
+			}
+			counter++;
+		}
+		if ( itemIndex == -1){
+			throw new InvalidInputException("Item not found in the database!");
+		}
+		
+		ftm.getMenu().addItem(ftm.getItem(itemIndex));
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	public void removeItemFromMenu(Item item) throws InvalidInputException{
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check that the item is in the database
+		Iterator<Item> itIt = ftm.getItem().iterator();
+		int counter = 0;
+		int itemIndex = -1;
+		while (itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (item.equals(tempItem)){
+				itemIndex = counter;
+			}
+			counter++;
+		}
+		if ( itemIndex == -1){
+			throw new InvalidInputException("Item not found in the database!");
+		}
+		
+		ftm.getMenu().removeItem(ftm.getItem(itemIndex));
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	// order
+	
 }

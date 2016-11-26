@@ -139,7 +139,12 @@ public class Schedule
   {
     shift.clear();
   }
-
+  public boolean equals(Schedule other){
+	  
+	  if (!this.week.equals(other.getWeek())) return false;
+	  
+	  else return true;
+  }
 
   public String toString()
   {
