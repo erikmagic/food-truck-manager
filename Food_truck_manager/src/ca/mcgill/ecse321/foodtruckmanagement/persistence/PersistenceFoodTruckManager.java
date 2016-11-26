@@ -41,6 +41,19 @@ public class PersistenceFoodTruckManager {
 			while (schIt.hasNext()){
 				ftm.addSchedule(schIt.next());
 			}
+			
+			Iterator<Ingredient> ingIt = ftm2.getIngredients().iterator(); // the s at the end of ingredient is a tolerable bug
+			while (ingIt.hasNext()){
+				ftm.addIngredient(ingIt.next());
+			}
+			Iterator<Equipment> equipIt = ftm2.getEquipment().iterator();
+			while(ingIt.hasNext()){
+				ftm.addEquipment(equipIt.next());
+			}
+			Iterator<Item> itIt = ftm2.getItem().iterator();
+			while (itIt.hasNext()){
+				ftm.addItem(itIt.next());
+			}
 		}
 	}
 	public static void modifyFileName(String x){

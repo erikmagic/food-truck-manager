@@ -362,8 +362,13 @@ public class FoodTruckManagementController {
 		if ( aQuantity == 0){
 			throw new InvalidInputException("Ingredient quantity cannot be 0!");
 		}
-		
+		if ( aQuantity < 0){
+			throw new InvalidInputException("Ingredient quantity cannot be negative!");
+		}
 		// ingredients price can be 0
+		if ( aPrice < 0){
+			throw new InvalidInputException("Ingredient price cannot be negative");
+		}
 		
 		if (aExpirationDate == null ){
 			throw new InvalidInputException("Ingredient expiration date cannot be null!");
@@ -426,8 +431,14 @@ public class FoodTruckManagementController {
 		if ( aQuantity == 0){
 			throw new InvalidInputException("Equipment quantity cannot be 0!");
 		}
+		if ( aQuantity < 0){
+			throw new InvalidInputException("Equipment quantity cannot be negative!");
+		}
 		
-		// ingredients price can be 0
+		// equipment price can be 0
+		if ( aPrice < 0){
+			throw new InvalidInputException("Equipment price cannot be negative!");
+		}
 		
 		// check if equipment already exists
 		Iterator<Equipment> equipIt = ftm.getEquipment().iterator();
@@ -475,23 +486,110 @@ public class FoodTruckManagementController {
 	
 	// items
 	
-	public void createItem(String aName, double aPrice, boolean aAvailability){
+	public void createItem(String aName, double aPrice, boolean aAvailability) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check parameters
+		
+		if (aName == null || aName.trim().length() == 0){
+			throw new InvalidInputException("Item name cannot be empty or null!");
+		}
+		// price can be 0
+		if (aPrice < 0){
+			throw new InvalidInputException("Item price cannot be negative!");
+		}
+		
+		// check if the item already exists
+		Iterator<Item> itIt = ftm.getItem().iterator();
+		Item item = new Item(aName, aPrice, aAvailability);
+		
+		while (itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (item.equals(tempItem)){
+				throw new InvalidInputException("Item already exists!");
+			}
+		}
+		 
+		// add to model
+		
+		ftm.addItem(item);
+		
+		// save
+		PersistenceXStream.saveToXMLwithXStream(ftm);	
+	}
+	
+	public void removeItem(Item item) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// search for the item
+		int counter = 0;
+		int itemIndex = -1;
+		Iterator<Item> itIt = ftm.getItem().iterator();
+		while (itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (tempItem.equals(item)){
+				itemIndex = counter;
+			}
+			counter++;
+		}
+		if (itemIndex == -1){
+			throw new InvalidInputException("Item not found in the database!");
+		}
+		// should never throw an error
+		if (!ftm.removeItem(ftm.getItem(itemIndex))){
+			throw new InvalidInputException("Item was not removed!");
+		}
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
 		
 	}
 	
-	public void removeItem(Item item){
+	public void addIngredientToItem(Item item, Ingredient ingredient) throws InvalidInputException{
 		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		
-	}
-	
-	public void addIngredientToItem(Item item, Ingredient ingredient){
+		// check if the ingredient exists
 		
+		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
+		
+		int ingredientIndex = -1; 
+		int counter = 0;
+		while(ingIt.hasNext()){
+			Ingredient tempIngredient = ingIt.next();
+			if (ingredient.equals(tempIngredient)){
+				ingredientIndex = counter;
+			}
+			counter++;
+		}
+		if (ingredientIndex == -1){
+			throw new InvalidInputException("Ingredient was not found in the database!");
+		}
+		// chech if the item exists
+		Iterator<Item> itIt = ftm.getItem().iterator();
+		int itemIndex = -1;
+		counter = 0;
+		while(itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (item.equals(tempItem)){
+				itemIndex = counter;
+			}
+			counter++;
+		}
+		if (itemIndex == -1){
+			throw new InvalidInputException("Item was not found in the database!");
+		}
+		//ftm.getItem(itemIndex).addSuply(ftm.getIngredient(ingredientIndex));
 		
 	}
 	public void removeIngredientFromItem(Item item, Ingredient ingredient){
 	
 	}
-	public void checkAvailabilityItem(Item item){
+	public void checkAvailabilityItem(Item item, Date currentDate){
 		
 	}
 }

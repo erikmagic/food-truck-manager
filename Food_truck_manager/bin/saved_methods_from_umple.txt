@@ -29,6 +29,37 @@ shifts:
 	  else return true;
   }
   
+  ingredients :
+  
+    public boolean equals(Ingredient otherIngredient){
+	  if ( !this.expirationDate.equals(otherIngredient.expirationDate)) return false;
+	  else if ( !super.getName().equals(otherIngredient.getName())) return false;
+	  else if ( super.getPrice() != otherIngredient.getPrice()) return false;
+	  else if ( super.getQuantity() != otherIngredient.getQuantity()) return false;
+	  else return true;
+	  
+  }
+  
+  equipment :
+  
+    public boolean equals(Equipment otherEquipment){
+	  
+	  if ( !super.getName().equals(otherEquipment.getName())) return false;
+	  else if ( super.getPrice() != otherEquipment.getPrice()) return false;
+	  else if ( super.getQuantity() != otherEquipment.getQuantity()) return false;
+	  else return true;
+  }
+  
+  items :
+  
+    public boolean equals(Item other){
+	  if ( this.availability != other.availability) return false;
+	  else if (!this.name.equals(other.getName())) return false;
+	  else if ( this.price != other.price) return false;
+	  else return true;
+  }
+  
+  
   -> strategy design pattern
   
   -> proxy pattern
