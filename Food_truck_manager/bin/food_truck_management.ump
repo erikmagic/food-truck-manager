@@ -40,12 +40,12 @@ class Item{
    name;                       
    double price;
    Boolean availability;
-   1 -> * Supply supply;  
+   1 -> * Ingredient Ingredient;  
   }
   
 class Menu{
   singleton;
-  1 -> * Item items;
+  1 -> * Item item;
 }
   
 
@@ -57,7 +57,6 @@ class Supply{
 }
 
 class Ingredient{
-  Date expirationDate;
   isA Supply;
 }
 
@@ -68,14 +67,13 @@ class Equipment{
 class Order{
   double totalPrice;
   Date orderDate;
-  autounique orderID;
+  long orderID;
   1 -> * Item item;
 }
 
 class Report{
   Date startingDate;
   Date endingDate;
-  Date generatedDate;
   String reportName;
   1 -> * Order order;
 } //$?[End_of_model]$?
