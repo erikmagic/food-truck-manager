@@ -20,7 +20,7 @@ public class Order
   private long orderID;
 
   //Order Associations
-  private List<Item> item;
+  private HashMap<Item, Integer> item;
 
   //------------------------
   // CONSTRUCTOR
@@ -31,7 +31,7 @@ public class Order
     totalPrice = aTotalPrice;
     orderDate = aOrderDate;
     orderID = aOrderID;
-    item = new ArrayList<Item>();
+    item = new HashMap<Item, Integer>();
   }
 
   //------------------------
@@ -77,16 +77,20 @@ public class Order
     return orderID;
   }
 
-  public Item getItem(int index)
+  public Set<Item> getItem()
   {
-    Item aItem = item.get(index);
-    return aItem;
-  }
-
-  public List<Item> getItem()
-  {
-    List<Item> newItem = Collections.unmodifiableList(item);
+    Set<Item> newItem = Collections.unmodifiableSet(item.keySet());
     return newItem;
+  }
+  public Item getItem(Item it){
+	  Iterator<Item> itIt = item.keySet().iterator();
+	  while(itIt.hasNext()){
+		  Item tempItem = itIt.next();
+		  if (it.equals(tempItem)){
+			  return tempItem;
+		  }
+	  }
+	  return null;
   }
 
   public int numberOfItem()
@@ -101,74 +105,54 @@ public class Order
     return has;
   }
 
-  public int indexOfItem(Item aItem)
-  {
-    int index = item.indexOf(aItem);
-    return index;
-  }
 
   public static int minimumNumberOfItem()
   {
     return 0;
   }
 
-  public boolean addItem(Item aItem)
+  public boolean addItem(Item aItem, int quantity)
   {
     boolean wasAdded = false;
-    if (item.contains(aItem)) { return false; }
-    item.add(aItem);
+    if (item.keySet().contains(aItem)) { return false; }
+    item.put(aItem, quantity);
     wasAdded = true;
     return wasAdded;
   }
 
-  public boolean removeItem(Item aItem)
+  public int removeItem(Item aItem)
   {
-    boolean wasRemoved = false;
-    if (item.contains(aItem))
-    {
-      item.remove(aItem);
-      wasRemoved = true;
-    }
-    return wasRemoved;
+	  int value = 0;
+	  if (!item.keySet().contains(aItem)) { return value; }
+	  value = item.remove(aItem);
+	  return value;
   }
 
-  public boolean addItemAt(Item aItem, int index)
-  {  
-    boolean wasAdded = false;
-    if(addItem(aItem))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfItem()) { index = numberOfItem() - 1; }
-      item.remove(aItem);
-      item.add(index, aItem);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveItemAt(Item aItem, int index)
-  {
-    boolean wasAdded = false;
-    if(item.contains(aItem))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfItem()) { index = numberOfItem() - 1; }
-      item.remove(aItem);
-      item.add(index, aItem);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addItemAt(aItem, index);
-    }
-    return wasAdded;
-  }
 
   public void delete()
   {
     item.clear();
   }
-
+  
+  public boolean equals(Order other){
+	  if (this.orderID == other.getOrderID()) return true;
+	  else return false;
+  }
+  
+  public HashMap<Item, Integer> getMap(){
+	  return this.item;
+  }
+  public boolean compareDate(Date initial, Date end){
+	  // if the date is between the two others, return true
+	  long one =initial.getTime();
+	  long two = end.getTime();
+	  
+	  if (this.orderDate.getTime() >= one && this.orderDate.getTime() <= two){
+		  return true;
+	  }
+	  
+	  return false;
+  }
 
   public String toString()
   {

@@ -5,13 +5,25 @@ import ca.mcgill.ecse321.foodtruckmanagement.persistence.PersistenceFoodTruckMan
 import ca.mcgill.ecse321.foodtruckmanagement.persistence.PersistenceXStream;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.text.StyledEditorKit.ForegroundAction;
+
+import com.thoughtworks.xstream.io.path.Path;
+import com.thoughtworks.xstream.mapper.FieldAliasingMapper;
 
 import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 
@@ -348,7 +360,9 @@ public class FoodTruckManagementController {
 	
 	// ------------------------------ food controller -------------------------------------- //
 	
-	public void createIngredient(String aName, double aQuantity, double aPrice, Date aExpirationDate) throws InvalidInputException{
+	// ingredient 
+	
+	public void createIngredient(String aName, double aQuantity, double aPrice) throws InvalidInputException{
 		
 		// load model
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -370,9 +384,7 @@ public class FoodTruckManagementController {
 			throw new InvalidInputException("Ingredient price cannot be negative");
 		}
 		
-		if (aExpirationDate == null ){
-			throw new InvalidInputException("Ingredient expiration date cannot be null!");
-		}
+		
 		
 		// check if the ingredient already exists
 		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
@@ -418,6 +430,44 @@ public class FoodTruckManagementController {
 		}
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
+	
+	/**updates the quantity of an ingredient if the ingredient has sufficiant quantity ( supports + and -)
+	 * @exception insufficiant quantity
+	 * @param item
+	 */
+	public void updateQuantity(Ingredient ingredient, double update) throws InvalidInputException{
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// check if the item is in the database
+		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
+		int counter = 0;
+		int ingredientIndex = -1;
+		while(ingIt.hasNext()){
+			Ingredient tempIngredient = ingIt.next();
+			if (ingredient.equals(tempIngredient)){
+				ingredientIndex = counter;
+			}
+			counter++;
+		}
+		
+		if (ingredientIndex == -1){
+			throw new InvalidInputException("Ingredient not found in the database!");
+		}
+		
+		// check if the updated quantity is not negative
+		if (ftm.getIngredient(ingredientIndex).getQuantity()+update < 0){
+			throw new InvalidInputException("Not enough " + ftm.getIngredient(ingredientIndex).getName() + " !");
+		}
+		
+		// update the quantity of the desired item
+		ftm.getIngredient(ingredientIndex).setQuantity(ftm.getIngredient(ingredientIndex).getQuantity() + update);
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	
+	// equipment
 	
 	public void createEquipment(String aName, double aQuantity, double aPrice) throws InvalidInputException{
 		
@@ -631,48 +681,35 @@ public class FoodTruckManagementController {
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
 	
-	/**updates the quantity of an ingredient if the ingredient has sufficiant quantity ( supports + and -)
-	 * @exception insufficiant quantity
-	 * @param item
-	 */
-	private void updateQuantity(Ingredient ingredient, double update) throws InvalidInputException{
+	public void changeAvailabilityItem(Item item, boolean availability) throws InvalidInputException{
+		
 		// load model
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
 		
-		// check if the item is in the database
-		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
-		int counter = 0;
-		int ingredientIndex = -1;
-		while(ingIt.hasNext()){
-			Ingredient tempIngredient = ingIt.next();
-			if (ingredient.equals(tempIngredient)){
-				ingredientIndex = counter;
+		// find the item in the database
+		int counter = 0, itemIndex = -1;
+		Iterator<Item> itIt = ftm.getItem().iterator();
+		while (itIt.hasNext()){
+			Item tempId = itIt.next();
+			if (item.equals(tempId)){
+				itemIndex = counter;
 			}
 			counter++;
 		}
-		
-		if (ingredientIndex == -1){
-			throw new InvalidInputException("Ingredient not found in the database!");
+		if (itemIndex == -1){
+			throw new InvalidInputException("Item was not found in the database!");
 		}
 		
-		// check if the updated quantity is not negative
-		if (ftm.getIngredient(ingredientIndex).getQuantity()+update < 0){
-			throw new InvalidInputException("Not enough " + ftm.getIngredient(ingredientIndex).getName() + " !");
-		}
+		// change the availability of the item
+		ftm.getItem(itemIndex).setAvailability(availability);
 		
-		// update the quantity of the desired item
-		ftm.getIngredient(ingredientIndex).setQuantity(ftm.getIngredient(ingredientIndex).getQuantity() + update);
-		
+		// save
 		PersistenceXStream.saveToXMLwithXStream(ftm);
+		
 	}
-	/**checks if all the ingredients in an item have quantities above 0
-	 * @param item
-	 * @return true if the item is available
-	 */
-	private boolean checkAvailabilityItem(Item item){
+
 	
-		return false;
-	}
+	// menu
 	
 	public void addItemToMenu(Item item) throws InvalidInputException{
 		
@@ -697,6 +734,7 @@ public class FoodTruckManagementController {
 		ftm.getMenu().addItem(ftm.getItem(itemIndex));
 		PersistenceXStream.saveToXMLwithXStream(ftm);
 	}
+	
 	public void removeItemFromMenu(Item item) throws InvalidInputException{
 		// load model
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -721,5 +759,247 @@ public class FoodTruckManagementController {
 	}
 	
 	// order
+	
+	/**Initial price should always be 0, the date should always be today's date, the orderId increments by one
+	 * @throws InvalidInputException 
+	 *
+	 */
+	public void createOrder(Date date) throws InvalidInputException{
+		
+		// load model 
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// price is 0
+		double price = 0.0;
+		
+		// check that date is not null
+		if (date == null){
+			throw new InvalidInputException("Date cannot be null!");
+		}
+		
+		// id is the last id + 1
+		Iterator<Order> ordIt = ftm.getOrder().iterator();
+		int counter = 0;
+		while (ordIt.hasNext()){
+			counter++;
+		}
+		
+		Order aOrder = new Order(price, date, counter);
+		// create the order
+		ftm.addOrder(aOrder);
+		
+		// save to persistence
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+				
+	}
+	
+	public void removeOrder(Order order) throws InvalidInputException{
+		
+		// load model
+		
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// find the id
+		Iterator<Order> ordIt = ftm.getOrder().iterator();
+		int counter = 0, orderIndex = -1;
+		while (ordIt.hasNext()){
+			Order tempOrder = ordIt.next();
+			if (order.getOrderID() == tempOrder.getOrderID()){
+				orderIndex = counter;
+			}
+			counter++;
+		}
+		
+		if (orderIndex == -1){
+			throw new InvalidInputException("Order not found in the database!");
+		}
+		// remove the order , error should never happen
+		if (!ftm.removeOrder(ftm.getOrder(orderIndex))){
+			throw new InvalidInputException("Order not removed!");
+		}
+		
+		// save
+		
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void addItemToOrder(Order order, Item item, int quantity) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// find the corresponding order
+		int counter = 0, orderIndex = -1;
+		Iterator<Order> ordIt = ftm.getOrder().iterator();
+		while (ordIt.hasNext()){
+			Order tempOrder = ordIt.next();
+			if (tempOrder.getOrderID() == order.getOrderID()){
+				orderIndex = counter;
+			}
+			counter++;
+		}
+		
+		// error if the order was not found
+		if (orderIndex == -1){
+			throw new InvalidInputException("Order not found in the database!");
+		}
+		
+		// find the corresponding in the database ( from the menu)
+		counter = 0;
+		int itemIndex = -1;
+		Iterator<Item> itIt = ftm.getMenu().getItem().iterator();
+		while (itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (item.equals(tempItem)){
+				itemIndex = counter;
+			}
+			counter++;
+		}
+		
+		// error if the item was not found in the database ( in the menu)
+		if (itemIndex == -1){
+			throw new InvalidInputException("Item is not in the menu!");
+		}
+		
+		// check if the item is available
+		if (ftm.getMenu().getItem(itemIndex).getAvailability() == false){
+			throw new InvalidInputException("Item not available!");
+		}
+		// update the item popularity
+		ftm.getMenu().getItem(itemIndex).updatePopularity(quantity);
+		
+		// add the item to the order, also updating the order price 
+		
+		ftm.getOrder(orderIndex).addItem(ftm.getMenu().getItem(itemIndex), quantity);
+		double current_price = ftm.getOrder(orderIndex).getTotalPrice();
+		double added_price = ftm.getMenu().getItem(itemIndex).getPrice();
+		ftm.getOrder(orderIndex).setTotalPrice(current_price + added_price);
+		
+		// save
+		PersistenceXStream.saveToXMLwithXStream(ftm);
+	}
+	
+	public void removeItemFromOrder(Item item, Order order) throws InvalidInputException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// find the order in the database
+		int counter = 0, orderIndex = -1;
+		Iterator<Order> ordIt = ftm.getOrder().iterator();
+		while (ordIt.hasNext()){
+			Order tempOrder = ordIt.next();
+			if (tempOrder.getOrderID() == order.getOrderID()){
+				orderIndex = counter;
+			}
+			counter++;
+		}
+		counter = 0;
+		if (orderIndex == -1){
+			throw new InvalidInputException("Order was not found in the database!");
+		}
+		// find item in the order
+		int itemIndex = -1;
+		Iterator<Item> itIt = ftm.getOrder(orderIndex).getItem().iterator();
+		while (itIt.hasNext()){
+			Item tempItem = itIt.next();
+			if (item.equals(tempItem)){
+				itemIndex = counter;
+			}
+			counter++;
+		}
+		
+		if (itemIndex == -1){
+			throw new InvalidInputException("Item is not in the specified order!");
+		}
+		
+		// search for the item in the menu for updating its popularity afterwards
+		Iterator<Item> menuIt = ftm.getMenu().getItem().iterator();
+		counter = 0;
+		int indexItemInMenu = -1;
+		while (menuIt.hasNext()){
+			Item tempItem = menuIt.next();
+			if ( item.equals(tempItem)){
+				indexItemInMenu = counter;
+			}
+			counter++;
+		}
+		if (indexItemInMenu == -1){
+			throw new InvalidInputException("Item is not in the menu!");
+		}
+		// remove the item from the order, also updating the price and the popularity of the item
+		
+		double current_price = ftm.getOrder(orderIndex).getTotalPrice();
+		double update_price = ftm.getOrder(orderIndex).getItem(item).getPrice();
+		
+		// remove item
+		int update_pop = -ftm.getOrder(orderIndex).removeItem(item);
+		
+		// update price
+		ftm.getOrder(orderIndex).setTotalPrice(current_price-update_price);
+		
+		// update popularity
+		ftm.getMenu().getItem(itemIndex).updatePopularity(update_pop);
+		
+		
+	}
+	
+	// report 
+	
+	/**takes all the order between the two dates and creates a text files with the data
+	 * @param initialDate
+	 * @param endingDate
+	 * @param name
+	 * @throws IOException 
+	 */
+	public void generateReport(Date initialDate, Date endingDate, String name) throws IOException{
+		
+		// load model
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// loads all orders between the two dates
+		Iterator<Order> orderIt =ftm.getOrder().iterator();
+		ArrayList<Order> orders = new ArrayList<Order>();
+		while (orderIt.hasNext()){
+			Order tempOrder = orderIt.next();
+			if (tempOrder.compareDate(initialDate, endingDate)){
+				orders.add(tempOrder);
+			}
+		}
+		// now that we have a list of orders, parses all items, updating their quantities
+		
+		orderIt = orders.iterator();
+		HashMap<Item, Integer> itemQuantity = new HashMap<Item, Integer>();
+		while (orderIt.hasNext()){
+			Order tempOrder = orderIt.next();
+			itemQuantity.putAll(tempOrder.getMap());
+		}
+		
+		// find todays' date
+		Calendar c = Calendar.getInstance();
+		Date today = new Date(c.getTimeInMillis());
+		String file_name = "report-" + today.toString();
+		
+		// create the file
+		File file = new File("." + file_name);
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
+		
+		// append all the keys - values to a list of strings 
+		Iterator<Entry<Item, Integer>> itemInteger = itemQuantity.entrySet().iterator();
+		
+		while (itemInteger.hasNext()){
+			Entry<Item, Integer> tempEntry = itemInteger.next();
+			String tempString = "" + tempEntry.getKey().getName() + ":" + tempEntry.getValue();
+			writer.write(tempString);
+		}
+
+		
+		
+		
+		writer.close();
+	}
+	
+	
 	
 }

@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.foodtruckmanagement.controller;
 import static org.junit.Assert.*;
 
 
+
 import java.io.File;
 import java.sql.Date;
 import java.sql.Time;
@@ -54,6 +55,53 @@ public class TestFoodTruckManagementController {
 		
 		
 	}
+	
+	// test compare date in Order in Model
+	@Test
+	public void testCompareDate(){
+		
+		Calendar c = Calendar.getInstance();
+		c.set(2016, 05, 22);
+		Date date_initial = new Date(c.getTimeInMillis());
+		Date date = new Date(c.getTimeInMillis());
+		c.set(2016, 05, 29);
+		Date date_final = new Date(c.getTimeInMillis());
+		
+		// create new Order
+		Order newOrder = new Order(10,date, 1);
+		
+		// check if the order is between the two dates, should be true
+		// first case is when the order is the first day of the partition
+		boolean order_between_dates = newOrder.compareDate(date_initial, date_final);
+		assertEquals(true, order_between_dates);
+		
+		date = new Date(c.getTimeInMillis());
+		
+		// check when the date is the last day of the partition
+		order_between_dates = false;
+		newOrder.setOrderDate(date);
+		order_between_dates = newOrder.compareDate(date_initial, date_final);
+		assertEquals(true, order_between_dates);
+		
+		// check when the date is in the middle of the partition
+		order_between_dates = false;
+		c.set(2016, 05, 25);
+		date = new Date(c.getTimeInMillis());
+		newOrder.setOrderDate(date);
+		order_between_dates = newOrder.compareDate(date_initial, date_final);
+		assertEquals(true, order_between_dates);
+		
+		// check when the date is out of the partition, should be false
+		c.set(2016, 05, 21);
+		date = new Date(c.getTimeInMillis());
+		newOrder.setOrderDate(date);
+		order_between_dates = true;
+		order_between_dates = newOrder.compareDate(date_initial, date_final);
+		order_between_dates = newOrder.compareDate(date_initial, date_final);
+		assertEquals(false, order_between_dates);
+		
+	}
+	
 	// tests enum
 	@Test
 	public void enumMap(){

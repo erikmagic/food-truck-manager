@@ -17,7 +17,8 @@ public class Item
   private String name;
   private double price;
   private boolean availability;
-
+  private int popularity;
+  
   //Item Associations
   private List<Ingredient> Ingredient;
 
@@ -31,6 +32,7 @@ public class Item
     price = aPrice;
     availability = aAvailability;
     Ingredient = new ArrayList<Ingredient>();
+    popularity = 0;
   }
 
   //------------------------
@@ -171,6 +173,15 @@ public class Item
   public void delete()
   {
     Ingredient.clear();
+  }
+  
+  // helpers
+  
+  public int getPopularity(){
+	  return this.popularity;
+  }
+  public void updatePopularity(int update){
+	  popularity += update;
   }
   public boolean equals(Item other){
 	  if ( this.availability != other.availability) return false;

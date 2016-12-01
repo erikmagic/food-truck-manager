@@ -2,9 +2,11 @@ package ca.mcgill.ecse321.foodtruckmanagement.view;
 
 import javax.swing.JFrame;
 
-
+import java.lang.Object.*;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import static java.lang.String.*;
+
 
 import ca.mcgill.ecse321.foodtruckmanagement.controller.Day;
 import ca.mcgill.ecse321.foodtruckmanagement.controller.DayMap;
@@ -14,13 +16,17 @@ import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 
 import javax.swing.ComboBoxEditor;
 import javax.swing.JButton;
+import java.util.Calendar;
 import java.awt.Font;
 import java.awt.List;
 import java.awt.Color;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.util.Calendar;
@@ -28,11 +34,21 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JSeparator;
+
 import org.jdatepicker.impl.SqlDateModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.DateModel;
+
 import java.util.Properties;
+
+import javax.swing.JRadioButton;
+
+import java.awt.Dimension;
+
+import javax.swing.JTextPane;
+import javax.swing.JSpinner;
 
 
 public class WholePage extends JFrame {
@@ -63,7 +79,7 @@ public class WholePage extends JFrame {
 	private String errorRemoveStaff = "";
 	private String errorAddShift = "";
 	private int selectedDay = -1;
-
+	
 	
 	private HashMap<Integer, Shift> shifts;
 	private Integer selectedShiftRemoval = -1;
@@ -83,29 +99,10 @@ public class WholePage extends JFrame {
 	private JButton removeShift;
 	private JComboBox<String> removeShiftComboBox;
 	private JLabel errorRemoveShift;
-	private JTextField yearScheduleTextField;
-	private JTextField monthScheduleTextField;
-	private JTextField dayScheduleTextField;
 	
-	private JLabel lblYear;
 	
-	private JLabel monthScheduleLabel;
 	
-	private JLabel dayScheduleLabel;
-	
-	private JButton addScheduleButton;
-	
-	private JComboBox<String> addShiftToScheduleComboBox;
-		
-	private JButton addShiftToScheduleButton;
-	
-	private JComboBox<String> removeShiftFromScheduleComboBox;
-	
-	private JButton removeShiftFromScheduleButton;
-	
-	private JComboBox<String> removeScheduleComboBox;
-	
-	private JButton removeScheduleButton;
+	private JComboBox ItemNameComboBox;
 	
 	private JSeparator shiftScheduleSeperator;
 	private JLabel addScheduleError;
@@ -117,6 +114,94 @@ public class WholePage extends JFrame {
 	private String errorAddShiftSchedule;
 	private String errorRemoveShiftSchedule;
 	private String errorRemoveSchedule;
+	private JRadioButton SupplyRadioButton;
+	private JRadioButton EquipmentRadioButton;
+	private JLabel lblHireNewEmployee;
+	private JLabel lblFireEmployee;
+	private JLabel lblCreateNewShift;
+	private JLabel lblRemoveShift;
+	private JLabel lblShift;
+	private JLabel label_5;
+	private JLabel label_6;
+	private JTextField monthScheduleTextField;
+	private JTextField dayScheduleTextField;
+	private JButton addScheduleButton;
+	private JLabel label_23;
+	private JLabel label_24;
+	private JComboBox<String> comboBox_7;
+	private JLabel label_25;
+	private JButton addShiftToScheduleButton;
+	private JLabel label_26;
+	private JLabel label_27;
+	private JComboBox<String> removeShiftFromScheduleComboBox;
+	private JComboBox<String> comboBox_11;
+	private JLabel label_28;
+	private JButton removeShiftFromScheduleButton;
+	private JLabel label_7;
+	private JLabel label_8;
+	private JComboBox<String> comboBox_8;
+	private JButton removeScheduleButton;
+	private JLabel label_29;
+	private JLabel label_30;
+	private JComboBox<String> removeScheduleComboBox;
+	private JButton DisplayScheduleButton;
+	private JLabel label_31;
+	private JTextField newSupplyNameTextField;
+	private JLabel lblItemName;
+	private JLabel newSupplyQuantityLabel;
+	private JSpinner newSupplyQuantitySpinner;
+	private JTextField newSupplyPurchaseDateTextField;
+	private JRadioButton newIngridientRadioButton;
+	private JRadioButton newEquipmentRadioButton;
+	private JButton addNewSupplybutton;
+	private JLabel removeSupplyLabel;
+	private JLabel label_12;
+	private JButton removeSupplyButton;
+	private JComboBox removeSupplyspinner;
+	private JLabel label_13;
+	private JLabel lblAddNewSupply;
+	private JLabel label;
+	private JTextField addMenuItemNameTextField;
+	private JLabel label_1;
+	private JLabel label_3;
+	private JButton addItemMenuButton;
+	private JLabel DeletMenuLabel;
+	private JLabel label_9;
+	private JButton deleteItemMenuButton;
+	private JComboBox deleteMenuItemcomboBox;
+	private JLabel addIngridientslabel;
+	private JComboBox addIngridientItemNamecomboBox;
+	private JLabel label_15;
+	private JLabel label_16;
+	private JComboBox addIngridientNamecomboBoxcomboBox;
+	private JButton addIngridientsButton;
+	private JLabel label_17;
+	private JComboBox itemNameRemoveIngridcomboBox;
+	private JLabel ItemNameRemoveIngridientLabel;
+	private JComboBox IngridientNameRemoveIngridcomboBox;
+	private JLabel IngridientNameRemoveIngridientLabel;
+	private JButton removeIngridientButton;
+	private JSpinner addMenuItemPriceSpinner;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
+	private JComboBox<String> addShiftToScheduleComboBox;
+	private JTextField yearScheduleTextField;
+	private JLabel monthScheduleLabel;
+	private JLabel dayScheduleLabel;
+	private JButton PlaceAndPrintOrderButton;
+	private JButton addItemCreateOrderButton;
+	private JLabel createOrderItemNamelabel;
+	private JLabel label_21;
+	private JComboBox createOrderItemNamecomboBox;
+	private JSeparator separator_3;
+	private JTextField endDateGenerateReportTextField;
+	private JLabel salesReportEndDatelabel;
+	private JTextField startDateGenerateReportTextField;
+	private JLabel salesReportStartDatelabel;
+	private JButton btnGenerateReportButton;
+	private JLabel lblGenertateSalesReport;
+	
+	private boolean ItemPlacedonOrder=false;
 	
 	
 	/**
@@ -127,8 +212,9 @@ public class WholePage extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 731, 602);
+		setBounds(100, 100, 864, 803);
 		yearScheduleLabel = new JPanel();
+		yearScheduleLabel.setPreferredSize(new Dimension(21, 21));
 		yearScheduleLabel.setBackground(new Color(240, 240, 240));
 		yearScheduleLabel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(yearScheduleLabel);
@@ -142,36 +228,27 @@ public class WholePage extends JFrame {
 				addStaffButtonActionPerformed(evt);
 			}
 		});
-		addStaffButton.setBounds(10, 73, 140, 23);
+		addStaffButton.setBounds(10, 101, 140, 23);
 		yearScheduleLabel.add(addStaffButton);
 		
 		staffNameTextField = new JTextField();
 		staffNameTextField.setToolTipText("Name");
-		staffNameTextField.setBounds(64, 11, 86, 20);
+		staffNameTextField.setBounds(64, 35, 86, 20);
 		yearScheduleLabel.add(staffNameTextField);
 		staffNameTextField.setColumns(10);
 		
 		staffRoleTextField = new JTextField();
 		staffRoleTextField.setToolTipText("Role");
-		staffRoleTextField.setBounds(64, 40, 86, 20);
+		staffRoleTextField.setBounds(64, 68, 86, 20);
 		yearScheduleLabel.add(staffRoleTextField);
 		staffRoleTextField.setColumns(10);
 		
-		errorLabel = new JLabel("");
-		errorLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
-		errorLabel.setVerticalAlignment(SwingConstants.TOP);
-		errorLabel.setToolTipText("");
-		errorLabel.setLabelFor(yearScheduleLabel);
-		errorLabel.setForeground(Color.RED);
-		errorLabel.setBounds(162, 11, 140, 48);
-		yearScheduleLabel.add(errorLabel);
-		
 		staffNameTextLabel = new JLabel("Name:");
-		staffNameTextLabel.setBounds(10, 14, 46, 14);
+		staffNameTextLabel.setBounds(10, 45, 46, 14);
 		yearScheduleLabel.add(staffNameTextLabel);
 		
 		staffRoletextLabel = new JLabel("Role:");
-		staffRoletextLabel.setBounds(8, 43, 46, 14);
+		staffRoletextLabel.setBounds(10, 74, 46, 14);
 		yearScheduleLabel.add(staffRoletextLabel);
 		
 		// REMOVE STAFF COMBO BOX
@@ -183,7 +260,7 @@ public class WholePage extends JFrame {
 				selectedStaff = cb.getSelectedIndex();
 			}
 		});
-		removeStaffComboBox.setBounds(10, 106, 140, 20);
+		removeStaffComboBox.setBounds(10, 157, 140, 20);
 		yearScheduleLabel.add(removeStaffComboBox);
 		
 		removeStaffButton = new JButton("Remove Staff");
@@ -194,14 +271,8 @@ public class WholePage extends JFrame {
 				removeStaffButtonActionPerformed(evt);
 			}
 		});
-		removeStaffButton.setBounds(10, 137, 140, 23);
+		removeStaffButton.setBounds(10, 190, 140, 23);
 		yearScheduleLabel.add(removeStaffButton);
-		
-		errorRemoveStaffLabel = new JLabel("");
-		errorRemoveStaffLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
-		errorRemoveStaffLabel.setForeground(Color.RED);
-		errorRemoveStaffLabel.setBounds(162, 108, 164, 52);
-		yearScheduleLabel.add(errorRemoveStaffLabel);
 		
 		// ADD SHIFT COMBO BOX
 		addShiftComboBox = new JComboBox<String>();
@@ -212,66 +283,56 @@ public class WholePage extends JFrame {
 				selectedStaffShift = cb.getSelectedIndex();
 			}
 		});
-		addShiftComboBox.setBounds(255, 11, 140, 20);
+		addShiftComboBox.setBounds(267, 39, 116, 20);
 		yearScheduleLabel.add(addShiftComboBox);
 		
 		staffShiftText = new JLabel("Staff:");
-		staffShiftText.setBounds(209, 13, 56, 16);
+		staffShiftText.setBounds(209, 43, 46, 16);
 		yearScheduleLabel.add(staffShiftText);
 		
 		startTimeText = new JLabel("Start Time:");
-		startTimeText.setBounds(209, 42, 71, 16);
+		startTimeText.setBounds(209, 70, 71, 16);
 		yearScheduleLabel.add(startTimeText);
-		
-		startHoursShiftTextBox = new JTextField();
-		startHoursShiftTextBox.setBounds(301, 39, 31, 22);
-		yearScheduleLabel.add(startHoursShiftTextBox);
-		startHoursShiftTextBox.setColumns(10);
 		
 		doubleColonStartTime = new JLabel(":");
 		doubleColonStartTime.setFont(new Font("Dialog", Font.BOLD, 15));
 		doubleColonStartTime.setEnabled(true);
-		doubleColonStartTime.setBounds(334, 41, 15, 16);
+		doubleColonStartTime.setBounds(330, 69, 15, 16);
 		yearScheduleLabel.add(doubleColonStartTime);
 		
 		startMinsTextField = new JTextField();
 		startMinsTextField.setColumns(10);
-		startMinsTextField.setBounds(344, 39, 31, 22);
+		startMinsTextField.setBounds(338, 67, 31, 22);
 		yearScheduleLabel.add(startMinsTextField);
 		
 		shiftEndTimeLAbel = new JLabel("End Time:");
-		shiftEndTimeLAbel.setBounds(209, 76, 71, 16);
+		shiftEndTimeLAbel.setBounds(209, 104, 71, 16);
 		yearScheduleLabel.add(shiftEndTimeLAbel);
-		
-		endHoursShiftText = new JTextField();
-		endHoursShiftText.setColumns(10);
-		endHoursShiftText.setBounds(301, 73, 31, 22);
-		yearScheduleLabel.add(endHoursShiftText);
 		
 		doubleColonEndTime = new JLabel(":");
 		doubleColonEndTime.setFont(new Font("Dialog", Font.BOLD, 15));
 		doubleColonEndTime.setEnabled(true);
-		doubleColonEndTime.setBounds(334, 75, 15, 16);
+		doubleColonEndTime.setBounds(330, 103, 15, 16);
 		yearScheduleLabel.add(doubleColonEndTime);
 		
 		endMinsShiftText = new JTextField();
 		endMinsShiftText.setColumns(10);
-		endMinsShiftText.setBounds(344, 73, 31, 22);
+		endMinsShiftText.setBounds(338, 101, 31, 22);
 		yearScheduleLabel.add(endMinsShiftText);
 		
 		shiftStaffSeparator = new JSeparator();
 		shiftStaffSeparator.setOrientation(SwingConstants.VERTICAL);
-		shiftStaffSeparator.setBounds(184, 14, 13, 315);
+		shiftStaffSeparator.setBounds(184, 14, 13, 275);
 		yearScheduleLabel.add(shiftStaffSeparator);
 		
-		addShiftDay = new JLabel("Day:");
-		addShiftDay.setBounds(209, 108, 56, 16);
+		addShiftDay = new JLabel("Shift Day:");
+		addShiftDay.setBounds(209, 144, 56, 16);
 		yearScheduleLabel.add(addShiftDay);
 		
 		// day of the week combo box
 		dayOfTheWeekBox = 	new JComboBox<String>();
 		dayOfTheWeekBox.setToolTipText("");
-		dayOfTheWeekBox.setBounds(255, 105, 140, 20);
+		dayOfTheWeekBox.setBounds(275, 140, 109, 20);
 		dayOfTheWeekBox.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed ( java.awt.event.ActionEvent evt) {
 				JComboBox<Day> cb = (JComboBox<Day>) evt.getSource();
@@ -283,7 +344,7 @@ public class WholePage extends JFrame {
 		addShiftbtn = new JButton("Add Shift");
 		addShiftbtn.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
 		addShiftbtn.setBackground(Color.LIGHT_GRAY);
-		addShiftbtn.setBounds(209, 136, 186, 23);
+		addShiftbtn.setBounds(231, 172, 164, 23);
 		addShiftbtn.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				addShiftButtonActionPerformed(evt);
@@ -291,17 +352,11 @@ public class WholePage extends JFrame {
 		});
 		yearScheduleLabel.add(addShiftbtn);
 		
-		errorAddShiftLabel = new JLabel("");
-		errorAddShiftLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
-		errorAddShiftLabel.setForeground(Color.RED);
-		errorAddShiftLabel.setBounds(426, 79, 155, 81);
-		yearScheduleLabel.add(errorAddShiftLabel);
-		
 		
 		// remove shift combo box
 		removeShiftComboBox = new JComboBox<String>();
 		removeShiftComboBox.setToolTipText("Shifts");
-		removeShiftComboBox.setBounds(209, 172, 186, 20);
+		removeShiftComboBox.setBounds(275, 233, 116, 20);
 		removeShiftComboBox.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed ( java.awt.event.ActionEvent evt) {
 				JComboBox<Day> cb = (JComboBox<Day>) evt.getSource();
@@ -320,93 +375,16 @@ public class WholePage extends JFrame {
 		});
 		removeShift.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
 		removeShift.setBackground(Color.LIGHT_GRAY);
-		removeShift.setBounds(209, 205, 186, 23);
+		removeShift.setBounds(209, 266, 186, 23);
 		yearScheduleLabel.add(removeShift);
-		
-		errorRemoveShift = new JLabel("");
-		errorRemoveShift.setForeground(Color.RED);
-		errorRemoveShift.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
-		errorRemoveShift.setBounds(407, 173, 164, 52);
-		yearScheduleLabel.add(errorRemoveShift);
-		
-		lblYear = new JLabel("Year:");
-		lblYear.setBounds(451, 13, 56, 16);
-		yearScheduleLabel.add(lblYear);
-		
-		monthScheduleLabel = new JLabel("Month:");
-		monthScheduleLabel.setBounds(451, 42, 56, 16);
-		yearScheduleLabel.add(monthScheduleLabel);
-		
-		dayScheduleLabel = new JLabel("Day:");
-		dayScheduleLabel.setBounds(451, 76, 56, 16);
-		yearScheduleLabel.add(dayScheduleLabel);
-		
-		yearScheduleTextField = new JTextField();
-		yearScheduleTextField.setBounds(519, 10, 116, 22);
-		yearScheduleLabel.add(yearScheduleTextField);
-		yearScheduleTextField.setColumns(10);
-		
-		monthScheduleTextField = new JTextField();
-		monthScheduleTextField.setBounds(519, 39, 116, 22);
-		yearScheduleLabel.add(monthScheduleTextField);
-		monthScheduleTextField.setColumns(10);
-		
-		dayScheduleTextField = new JTextField();
-		dayScheduleTextField.setBounds(519, 73, 116, 22);
-		yearScheduleLabel.add(dayScheduleTextField);
-		dayScheduleTextField.setColumns(10);
-		
-		addScheduleButton = new JButton("Add Schedule");
-		addScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
-		addScheduleButton.setBackground(Color.LIGHT_GRAY);
-		addScheduleButton.setBounds(451, 104, 186, 23);
-		yearScheduleLabel.add(addScheduleButton);
-		
-		// show all shifts
-		addShiftToScheduleComboBox = new JComboBox<String>();
-		addShiftToScheduleComboBox.setToolTipText("Shifts");
-		addShiftToScheduleComboBox.setBounds(451, 140, 186, 20);
-		yearScheduleLabel.add(addShiftToScheduleComboBox);
-		
-		addShiftToScheduleButton = new JButton("Add Shift to Schedule");
-		addShiftToScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
-		addShiftToScheduleButton.setBackground(Color.LIGHT_GRAY);
-		addShiftToScheduleButton.setBounds(449, 170, 186, 23);
-		yearScheduleLabel.add(addShiftToScheduleButton);
-		
-		removeShiftFromScheduleComboBox = new JComboBox<String>();
-		removeShiftFromScheduleComboBox.setToolTipText("Shifts");
-		removeShiftFromScheduleComboBox.setBounds(449, 205, 186, 20);
-		yearScheduleLabel.add(removeShiftFromScheduleComboBox);
-		
-		removeShiftFromScheduleButton = new JButton("Remove Shift from Schedule");
-		removeShiftFromScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 10));
-		removeShiftFromScheduleButton.setBackground(Color.LIGHT_GRAY);
-		removeShiftFromScheduleButton.setBounds(451, 238, 186, 23);
-		yearScheduleLabel.add(removeShiftFromScheduleButton);
-		
-		removeScheduleComboBox = new JComboBox<String>();
-		removeScheduleComboBox.setToolTipText("Shifts");
-		removeScheduleComboBox.setBounds(451, 274, 186, 20);
-		yearScheduleLabel.add(removeScheduleComboBox);
-		
-		removeScheduleButton = new JButton("Remove Schedule");
-		removeScheduleButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		removeScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
-		removeScheduleButton.setBackground(Color.LIGHT_GRAY);
-		removeScheduleButton.setBounds(451, 306, 186, 23);
-		yearScheduleLabel.add(removeScheduleButton);
 		
 		shiftScheduleSeperator = new JSeparator();
 		shiftScheduleSeperator.setOrientation(SwingConstants.VERTICAL);
-		shiftScheduleSeperator.setBounds(426, 11, 13, 318);
+		shiftScheduleSeperator.setBounds(407, 11, 13, 275);
 		yearScheduleLabel.add(shiftScheduleSeperator);
 		
 		addScheduleError = new JLabel("");
-		addScheduleError.setBounds(645, 13, 56, 145);
+		addScheduleError.setBounds(645, 13, 6, 145);
 		yearScheduleLabel.add(addScheduleError);
 		
 		addShiftScheduleError = new JLabel("");
@@ -421,7 +399,499 @@ public class WholePage extends JFrame {
 		removeScheduleError.setBounds(647, 174, 56, 155);
 		yearScheduleLabel.add(removeScheduleError);
 		
+		lblHireNewEmployee = new JLabel("Hire New Employee");
+		lblHireNewEmployee.setBounds(22, 11, 120, 14);
+		yearScheduleLabel.add(lblHireNewEmployee);
 		
+		lblFireEmployee = new JLabel("Fire Employee");
+		lblFireEmployee.setBounds(20, 130, 120, 14);
+		yearScheduleLabel.add(lblFireEmployee);
+		
+		errorRemoveStaffLabel = new JLabel("");
+		errorRemoveStaffLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
+		errorRemoveStaffLabel.setForeground(Color.RED);
+		errorRemoveStaffLabel.setBounds(162, 173, 164, 52);
+		yearScheduleLabel.add(errorRemoveStaffLabel);
+		
+		errorLabel = new JLabel("");
+		errorLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
+		errorLabel.setVerticalAlignment(SwingConstants.TOP);
+		errorLabel.setToolTipText("");
+		errorLabel.setLabelFor(yearScheduleLabel);
+		errorLabel.setForeground(Color.RED);
+		errorLabel.setBounds(161, 76, 140, 48);
+		yearScheduleLabel.add(errorLabel);
+		
+		lblCreateNewShift = new JLabel("Create New Shift");
+		lblCreateNewShift.setBounds(230, 11, 120, 14);
+		yearScheduleLabel.add(lblCreateNewShift);
+		
+		endHoursShiftText = new JTextField();
+		endHoursShiftText.setColumns(10);
+		endHoursShiftText.setBounds(295, 101, 31, 22);
+		yearScheduleLabel.add(endHoursShiftText);
+		
+		startHoursShiftTextBox = new JTextField();
+		startHoursShiftTextBox.setBounds(295, 67, 31, 22);
+		yearScheduleLabel.add(startHoursShiftTextBox);
+		startHoursShiftTextBox.setColumns(10);
+		
+		lblRemoveShift = new JLabel("Remove Shift");
+		lblRemoveShift.setBounds(259, 208, 86, 14);
+		yearScheduleLabel.add(lblRemoveShift);
+		
+		lblShift = new JLabel("Shift:");
+		lblShift.setBounds(219, 235, 46, 16);
+		yearScheduleLabel.add(lblShift);
+		
+		label_5 = new JLabel("Create New Schedule");
+		label_5.setBounds(8, 315, 140, 14);
+		yearScheduleLabel.add(label_5);
+		
+		label_6 = new JLabel("Year:");
+		label_6.setBounds(9, 345, 56, 16);
+		yearScheduleLabel.add(label_6);
+		
+		monthScheduleTextField = new JTextField();
+		monthScheduleTextField.setColumns(10);
+		monthScheduleTextField.setBounds(77, 375, 99, 22);
+		yearScheduleLabel.add(monthScheduleTextField);
+		
+		dayScheduleTextField = new JTextField();
+		dayScheduleTextField.setColumns(10);
+		dayScheduleTextField.setBounds(77, 409, 99, 22);
+		yearScheduleLabel.add(dayScheduleTextField);
+		
+		addScheduleButton = new JButton("Add Schedule");
+		addScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
+		addScheduleButton.setBackground(Color.LIGHT_GRAY);
+		addScheduleButton.setBounds(9, 449, 164, 23);
+		yearScheduleLabel.add(addScheduleButton);
+		
+		label_23 = new JLabel("Add Shift to Schedule");
+		label_23.setBounds(33, 479, 140, 14);
+		yearScheduleLabel.add(label_23);
+		
+		label_24 = new JLabel("Schedule:");
+		label_24.setBounds(11, 511, 76, 16);
+		yearScheduleLabel.add(label_24);
+		
+		comboBox_7 = new JComboBox<String>();
+		comboBox_7.setToolTipText("Shifts");
+		comboBox_7.setBounds(77, 542, 99, 20);
+		yearScheduleLabel.add(comboBox_7);
+		
+		label_25 = new JLabel("Shift:");
+		label_25.setBounds(11, 544, 76, 16);
+		yearScheduleLabel.add(label_25);
+		
+		addShiftToScheduleButton = new JButton("Add Shift Schedule");
+		addShiftToScheduleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		addShiftToScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
+		addShiftToScheduleButton.setBackground(Color.LIGHT_GRAY);
+		addShiftToScheduleButton.setBounds(11, 578, 165, 23);
+		yearScheduleLabel.add(addShiftToScheduleButton);
+		
+		label_26 = new JLabel("Remove Shift from Schedule");
+		label_26.setBounds(10, 614, 174, 14);
+		yearScheduleLabel.add(label_26);
+		
+		label_27 = new JLabel("Schedule:");
+		label_27.setBounds(8, 647, 76, 16);
+		yearScheduleLabel.add(label_27);
+		
+		removeShiftFromScheduleComboBox = new JComboBox<String>();
+		removeShiftFromScheduleComboBox.setToolTipText("Shifts");
+		removeShiftFromScheduleComboBox.setBounds(77, 645, 95, 20);
+		yearScheduleLabel.add(removeShiftFromScheduleComboBox);
+		
+		comboBox_11 = new JComboBox<String>();
+		comboBox_11.setToolTipText("Shifts");
+		comboBox_11.setBounds(77, 678, 97, 20);
+		yearScheduleLabel.add(comboBox_11);
+		
+		label_28 = new JLabel("Shift:");
+		label_28.setBounds(11, 681, 76, 16);
+		yearScheduleLabel.add(label_28);
+		
+		removeShiftFromScheduleButton = new JButton("Remove Shift Schedule");
+		removeShiftFromScheduleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		removeShiftFromScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 10));
+		removeShiftFromScheduleButton.setBackground(Color.LIGHT_GRAY);
+		removeShiftFromScheduleButton.setBounds(12, 710, 161, 23);
+		yearScheduleLabel.add(removeShiftFromScheduleButton);
+		
+		label_7 = new JLabel("Remove Schedule");
+		label_7.setBounds(246, 315, 132, 14);
+		yearScheduleLabel.add(label_7);
+		
+		label_8 = new JLabel("Schedule:");
+		label_8.setBounds(209, 345, 76, 16);
+		yearScheduleLabel.add(label_8);
+		
+		comboBox_8 = new JComboBox<String>();
+		comboBox_8.setToolTipText("Shifts");
+		comboBox_8.setBounds(295, 343, 99, 20);
+		yearScheduleLabel.add(comboBox_8);
+		
+		removeScheduleButton = new JButton("Remove Schedule");
+		removeScheduleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		removeScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
+		removeScheduleButton.setBackground(Color.LIGHT_GRAY);
+		removeScheduleButton.setBounds(209, 373, 186, 23);
+		yearScheduleLabel.add(removeScheduleButton);
+		
+		label_29 = new JLabel("Display Schedule");
+		label_29.setBounds(253, 419, 116, 14);
+		yearScheduleLabel.add(label_29);
+		
+		label_30 = new JLabel("Schedule:");
+		label_30.setBounds(209, 449, 76, 16);
+		yearScheduleLabel.add(label_30);
+		
+		removeScheduleComboBox = new JComboBox<String>();
+		removeScheduleComboBox.setToolTipText("Shifts");
+		removeScheduleComboBox.setBounds(296, 447, 99, 20);
+		yearScheduleLabel.add(removeScheduleComboBox);
+		
+		DisplayScheduleButton = new JButton("Display Schedule");
+		DisplayScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
+		DisplayScheduleButton.setBackground(Color.LIGHT_GRAY);
+		DisplayScheduleButton.setBounds(209, 473, 186, 23);
+		yearScheduleLabel.add(DisplayScheduleButton);
+		
+		JSeparator separator = new JSeparator();
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBounds(184, 311, 13, 422);
+		yearScheduleLabel.add(separator);
+		
+		label_31 = new JLabel("________________________________________________________________________________________");
+		label_31.setBounds(0, 288, 620, 16);
+		yearScheduleLabel.add(label_31);
+		
+		//Supply Name Text field
+		newSupplyNameTextField = new JTextField();
+		newSupplyNameTextField.setColumns(10);
+		newSupplyNameTextField.setBounds(517, 41, 86, 22);
+		yearScheduleLabel.add(newSupplyNameTextField);
+		
+		newSupplyQuantityLabel = new JLabel("Quantity:");
+		newSupplyQuantityLabel.setBounds(428, 70, 56, 14);
+		yearScheduleLabel.add(newSupplyQuantityLabel);
+		
+		
+		//Supply Quantity Spinner
+		newSupplyQuantitySpinner = new JSpinner();
+		newSupplyQuantitySpinner.setBounds(573, 67, 30, 22);
+		yearScheduleLabel.add(newSupplyQuantitySpinner);
+		
+		newSupplyPurchaseDateTextField = new JTextField();
+		newSupplyPurchaseDateTextField.setText("yyyy-mm-dd");
+		newSupplyPurchaseDateTextField.setColumns(10);
+		newSupplyPurchaseDateTextField.setBounds(516, 88, 86, 22);
+		yearScheduleLabel.add(newSupplyPurchaseDateTextField);
+		
+		//New Ingridient Radio Button
+		newIngridientRadioButton = new JRadioButton("Supply");
+		newIngridientRadioButton.setBounds(426, 115, 71, 25);
+		yearScheduleLabel.add(newIngridientRadioButton);
+		
+		//New Equipment Radio Button
+		newEquipmentRadioButton = new JRadioButton("Equipment");
+		newEquipmentRadioButton.setBounds(503, 115, 99, 25);
+		yearScheduleLabel.add(newEquipmentRadioButton);
+		
+		//Add new Supply Button
+		addNewSupplybutton = new JButton("Add Supply");
+		addNewSupplybutton.setBackground(Color.LIGHT_GRAY);
+		addNewSupplybutton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewSupplybuttonActionPerformed(e);				
+			}
+		});
+		addNewSupplybutton.setBounds(451, 140, 134, 25);
+		yearScheduleLabel.add(addNewSupplybutton);
+		
+		removeSupplyLabel = new JLabel("Remove Suppy");
+		removeSupplyLabel.setBounds(465, 194, 97, 14);
+		yearScheduleLabel.add(removeSupplyLabel);
+		
+		label_12 = new JLabel("Item Name:");
+		label_12.setBounds(428, 220, 69, 14);
+		yearScheduleLabel.add(label_12);
+		
+		//Remove a supply Button
+		removeSupplyButton = new JButton("Remove Supply");
+		removeSupplyButton.setBackground(Color.LIGHT_GRAY);
+		removeSupplyButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				removeSupplyButtonActionPerformed(e);
+			}
+		});
+		removeSupplyButton.setBounds(453, 251, 132, 25);
+		yearScheduleLabel.add(removeSupplyButton);
+		
+		//Remove Supply spinner
+		removeSupplyspinner = new JComboBox();
+		removeSupplyspinner.setBounds(503, 216, 100, 22);
+		yearScheduleLabel.add(removeSupplyspinner);
+		
+		
+		label_13 = new JLabel("Purchase Date:");
+		label_13.setBounds(428, 92, 89, 14);
+		yearScheduleLabel.add(label_13);
+		
+		lblAddNewSupply = new JLabel("Add New Supply");
+		lblAddNewSupply.setBounds(451, 14, 120, 14);
+		yearScheduleLabel.add(lblAddNewSupply);
+		
+		errorAddShiftLabel = new JLabel("");
+		errorAddShiftLabel.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
+		errorAddShiftLabel.setForeground(Color.RED);
+		errorAddShiftLabel.setBounds(416, 114, 155, 81);
+		yearScheduleLabel.add(errorAddShiftLabel);
+		
+		errorRemoveShift = new JLabel("");
+		errorRemoveShift.setForeground(Color.RED);
+		errorRemoveShift.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
+		errorRemoveShift.setBounds(407, 245, 164, 52);
+		yearScheduleLabel.add(errorRemoveShift);
+		
+		label = new JLabel("Add new Menu Item");
+		label.setBounds(457, 315, 120, 14);
+		yearScheduleLabel.add(label);
+		
+		//Add Menu to Item Text Field
+		addMenuItemNameTextField = new JTextField();
+		addMenuItemNameTextField.setColumns(10);
+		addMenuItemNameTextField.setBounds(517, 334, 86, 22);
+		yearScheduleLabel.add(addMenuItemNameTextField);
+		
+		label_1 = new JLabel("Item Name:");
+		label_1.setBounds(421, 338, 71, 14);
+		yearScheduleLabel.add(label_1);
+		
+		label_3 = new JLabel("Item Price:");
+		label_3.setBounds(417, 372, 67, 14);
+		yearScheduleLabel.add(label_3);
+		
+		//Add an Item to Menu Button
+		addItemMenuButton = new JButton("Add Item");
+		addItemMenuButton.setBackground(Color.LIGHT_GRAY);
+		addItemMenuButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addItemMenuButtonActionPerformed(e);				
+			}
+		});
+		addItemMenuButton.setBounds(451, 394, 134, 25);
+		yearScheduleLabel.add(addItemMenuButton);
+		
+		DeletMenuLabel = new JLabel("Delete a menu item");
+		DeletMenuLabel.setBounds(457, 432, 120, 14);
+		yearScheduleLabel.add(DeletMenuLabel);
+		
+		label_9 = new JLabel("Item Name:");
+		label_9.setBounds(428, 452, 69, 14);
+		yearScheduleLabel.add(label_9);
+		
+		//Delete an Item from Menu Button
+		deleteItemMenuButton = new JButton("Delete Item");
+		deleteItemMenuButton.setBackground(Color.LIGHT_GRAY);
+		deleteItemMenuButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteItemMenuButtonActionPerformed(e);
+			}
+		});
+		deleteItemMenuButton.setBounds(451, 479, 134, 25);
+		yearScheduleLabel.add(deleteItemMenuButton);
+		
+		deleteMenuItemcomboBox = new JComboBox();
+		deleteMenuItemcomboBox.setBounds(503, 448, 100, 22);
+		yearScheduleLabel.add(deleteMenuItemcomboBox);
+		
+		addIngridientslabel = new JLabel("Add Ingredient");
+		addIngridientslabel.setBounds(465, 520, 120, 14);
+		yearScheduleLabel.add(addIngridientslabel);
+		
+		addIngridientItemNamecomboBox = new JComboBox();
+		addIngridientItemNamecomboBox.setBounds(532, 543, 71, 22);
+		yearScheduleLabel.add(addIngridientItemNamecomboBox);
+		
+		label_15 = new JLabel("Item Name:");
+		label_15.setBounds(436, 547, 69, 14);
+		yearScheduleLabel.add(label_15);
+		
+		label_16 = new JLabel("Ingridient Name:");
+		label_16.setBounds(439, 578, 97, 14);
+		yearScheduleLabel.add(label_16);
+		
+		addIngridientNamecomboBoxcomboBox = new JComboBox();
+		addIngridientNamecomboBoxcomboBox.setBounds(534, 574, 69, 22);
+		yearScheduleLabel.add(addIngridientNamecomboBoxcomboBox);
+		
+		//Add Ingridient Button
+		addIngridientsButton = new JButton("Add Ingrid.");
+		addIngridientsButton.setBackground(Color.LIGHT_GRAY);
+		addIngridientsButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addIngridientsButtonActionPerformed(e);			
+			}
+		});
+		addIngridientsButton.setBounds(451, 605, 134, 25);
+		yearScheduleLabel.add(addIngridientsButton);
+		
+		label_17 = new JLabel("Remove Ingridient");
+		label_17.setBounds(465, 631, 120, 14);
+		yearScheduleLabel.add(label_17);
+		
+		itemNameRemoveIngridcomboBox = new JComboBox();
+		itemNameRemoveIngridcomboBox.setBounds(534, 658, 69, 22);
+		yearScheduleLabel.add(itemNameRemoveIngridcomboBox);
+		
+		ItemNameRemoveIngridientLabel = new JLabel("Item Name:");
+		ItemNameRemoveIngridientLabel.setBounds(436, 670, 69, 14);
+		yearScheduleLabel.add(ItemNameRemoveIngridientLabel);
+		
+		IngridientNameRemoveIngridcomboBox = new JComboBox();
+		IngridientNameRemoveIngridcomboBox.setBounds(534, 690, 70, 22);
+		yearScheduleLabel.add(IngridientNameRemoveIngridcomboBox);
+		
+		IngridientNameRemoveIngridientLabel = new JLabel("Ingridient Name:");
+		IngridientNameRemoveIngridientLabel.setBounds(439, 694, 97, 14);
+		yearScheduleLabel.add(IngridientNameRemoveIngridientLabel);
+		
+		//Remove Ingridient Button
+		removeIngridientButton = new JButton("Remove Ingrid.");
+		removeIngridientButton.setBackground(Color.LIGHT_GRAY);
+		removeIngridientButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				removeIngridientButtonActionPerformed(e);
+			}
+		});
+		removeIngridientButton.setBounds(451, 722, 134, 25);
+		yearScheduleLabel.add(removeIngridientButton);
+		
+		addMenuItemPriceSpinner = new JSpinner();
+		addMenuItemPriceSpinner.setBounds(573, 364, 30, 22);
+		yearScheduleLabel.add(addMenuItemPriceSpinner);
+		
+		separator_1 = new JSeparator();
+		separator_1.setOrientation(SwingConstants.VERTICAL);
+		separator_1.setBounds(615, 14, 13, 275);
+		yearScheduleLabel.add(separator_1);
+		
+		separator_2 = new JSeparator();
+		separator_2.setOrientation(SwingConstants.VERTICAL);
+		separator_2.setBounds(407, 317, 13, 421);
+		yearScheduleLabel.add(separator_2);
+		
+		
+		// show all shifts
+		addShiftToScheduleComboBox = new JComboBox<String>();
+		addShiftToScheduleComboBox.setToolTipText("Shifts");
+		addShiftToScheduleComboBox.setBounds(76, 506, 97, 20);
+		yearScheduleLabel.add(addShiftToScheduleComboBox);
+		
+		yearScheduleTextField = new JTextField();
+		yearScheduleTextField.setBounds(77, 342, 97, 22);
+		yearScheduleLabel.add(yearScheduleTextField);
+		yearScheduleTextField.setColumns(10);
+		
+		
+		monthScheduleLabel = new JLabel("Month:");
+		monthScheduleLabel.setBounds(10, 378, 56, 16);
+		yearScheduleLabel.add(monthScheduleLabel);		
+		
+		
+		dayScheduleLabel = new JLabel("Day:");
+		dayScheduleLabel.setBounds(10, 412, 56, 16);
+		yearScheduleLabel.add(dayScheduleLabel);
+		
+		lblItemName = new JLabel("Item Name:");
+		lblItemName.setBounds(428, 47, 77, 14);
+		yearScheduleLabel.add(lblItemName);
+		
+		PlaceAndPrintOrderButton = new JButton("Place & Print Order !!");
+		PlaceAndPrintOrderButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 14));
+		PlaceAndPrintOrderButton.setBackground(Color.LIGHT_GRAY);
+		PlaceAndPrintOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PlaceAndPrintOrderButtonActionPerformed(e);
+			}
+		});
+		PlaceAndPrintOrderButton.setBounds(645, 374, 189, 42);
+		yearScheduleLabel.add(PlaceAndPrintOrderButton);
+		
+		addItemCreateOrderButton = new JButton("Add Item");
+		addItemCreateOrderButton.setBackground(Color.LIGHT_GRAY);
+		addItemCreateOrderButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addItemCreateOrderButtonActionPerformed(e);
+			}
+		});
+		addItemCreateOrderButton.setBounds(645, 333, 97, 25);
+		yearScheduleLabel.add(addItemCreateOrderButton);
+		
+		createOrderItemNamelabel = new JLabel("Item Name:");
+		createOrderItemNamelabel.setBounds(658, 306, 69, 14);
+		yearScheduleLabel.add(createOrderItemNamelabel);
+		
+		label_21 = new JLabel("Create Order");
+		label_21.setBounds(690, 237, 116, 52);
+		yearScheduleLabel.add(label_21);
+		
+		createOrderItemNamecomboBox = new JComboBox();
+		createOrderItemNamecomboBox.setBounds(765, 307, 69, 22);
+		yearScheduleLabel.add(createOrderItemNamecomboBox);
+		
+		separator_3 = new JSeparator();
+		separator_3.setOrientation(SwingConstants.VERTICAL);
+		separator_3.setBounds(615, 311, 13, 427);
+		yearScheduleLabel.add(separator_3);
+		
+		endDateGenerateReportTextField = new JTextField();
+		endDateGenerateReportTextField.setText("yyyy-mm-dd");
+		endDateGenerateReportTextField.setColumns(10);
+		endDateGenerateReportTextField.setBounds(733, 614, 86, 22);
+		yearScheduleLabel.add(endDateGenerateReportTextField);
+		
+		salesReportEndDatelabel = new JLabel("End Date:");
+		salesReportEndDatelabel.setBounds(645, 618, 89, 14);
+		yearScheduleLabel.add(salesReportEndDatelabel);
+		
+		startDateGenerateReportTextField = new JTextField();
+		startDateGenerateReportTextField.setText("yyyy-mm-dd");
+		startDateGenerateReportTextField.setColumns(10);
+		startDateGenerateReportTextField.setBounds(733, 578, 86, 22);
+		yearScheduleLabel.add(startDateGenerateReportTextField);
+		
+		salesReportStartDatelabel = new JLabel("Start Date:");
+		salesReportStartDatelabel.setBounds(645, 582, 89, 14);
+		yearScheduleLabel.add(salesReportStartDatelabel);
+		
+		btnGenerateReportButton = new JButton("Generate Report");
+		btnGenerateReportButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnGenerateReportButtonActionPerformed(e);
+			}
+		});
+		btnGenerateReportButton.setBackground(Color.LIGHT_GRAY);
+		btnGenerateReportButton.setBounds(685, 657, 134, 25);
+		yearScheduleLabel.add(btnGenerateReportButton);
+		
+		lblGenertateSalesReport = new JLabel("Genertate Sales Report");
+		lblGenertateSalesReport.setBounds(658, 526, 148, 52);
+		yearScheduleLabel.add(lblGenertateSalesReport);
+	
 		
 		// show initialData
 		initialData();
@@ -538,6 +1008,7 @@ public class WholePage extends JFrame {
 			
 		}
 		
+		
 		// remove shift
 		
 		if (errorRemovalShift == null || errorRemovalShift.length() == 0){
@@ -556,8 +1027,15 @@ public class WholePage extends JFrame {
 			removeShiftComboBox.setSelectedItem(selectedShiftRemoval);
 		}
 		
+		// addSupplies
 		
-	
+		if((int)newSupplyQuantitySpinner.getValue()<=0 || (newSupplyNameTextField.getText().length()==0)){
+			
+
+			
+		}
+		
+		
 	}
 	
 	private void addStaffButtonActionPerformed(java.awt.event.ActionEvent evt)
@@ -568,17 +1046,197 @@ public class WholePage extends JFrame {
 			ftmc.createStaff(staffNameTextField.getText(), staffRoleTextField.getText());
 		} catch (InvalidInputException e) {
 			//  Auto-generated catch block
-			errorStaff = e.getMessage();
+			JOptionPane.showMessageDialog(null, e.getMessage());
+			//e.getMessage();
 		}
 		// update visuals
 		refreshData();
 
 	}
 	
+	
+	//Add Supplies Button
+	private void addNewSupplybuttonActionPerformed (java.awt.event.ActionEvent evt){
+
+		String newSupplyName =""; 
+		String newEquipmentName =""; 
+		boolean correct_input = true;		
+		int newSupplyQuantity = 0;
+		int newEquipmentQuantity = 0;
+
+		if(newSupplyNameTextField.getText().length()==0){
+			JOptionPane.showMessageDialog(null, "Supply name cannot be empty");
+			correct_input=false;
+		} 
+		if((int)newSupplyQuantitySpinner.getValue()<=0){
+			JOptionPane.showMessageDialog(null, "Supply quantity cannot be <=0");			
+			correct_input=false;
+		}
+		if( (newIngridientRadioButton.isSelected() && newEquipmentRadioButton.isSelected()) 
+				|| (!newIngridientRadioButton.isSelected() && !newEquipmentRadioButton.isSelected()) ){
+
+			JOptionPane.showMessageDialog(null, "Select one type of supply");
+			correct_input=false;
+		}
+
+		if(correct_input){
+			if(newIngridientRadioButton.isSelected()){
+				newSupplyName = newSupplyNameTextField.getText();
+				newSupplyQuantity = (int)newSupplyQuantitySpinner.getValue();
+			} else{
+
+				newEquipmentName = newSupplyNameTextField.getText();
+				newEquipmentQuantity = (int)newSupplyQuantitySpinner.getValue();
+			}		
+			//Controller connects here !
+		}	
+
+		//update Visuals
+		newIngridientRadioButton.setSelected(false);
+		newEquipmentRadioButton.setSelected(false);
+		newSupplyNameTextField.setText("");
+		newSupplyQuantitySpinner.setValue(0);		
+	}
+	
+	//Remove a supply Button
+	private void removeSupplyButtonActionPerformed(java.awt.event.ActionEvent evt){
+
+		boolean correct_input = true;
+
+		if(removeSupplyspinner.getSelectedIndex()==-1){
+			JOptionPane.showMessageDialog(null, "Item name needs to be selected");
+			correct_input = false;
+		}
+		if(correct_input){
+			//Controller connects here !
+		}
+	}
+	
+	
+	
+	
+	private void addItemMenuButtonActionPerformed(java.awt.event.ActionEvent evt){
+
+		String itemName =""; 
+		boolean correct_input = true;		
+		int itemPrice = 0;
+
+		if(addMenuItemNameTextField.getText().length()==0){		
+			JOptionPane.showMessageDialog(null, "Item name cannot be empty");
+			correct_input=false;
+		} 
+		if((int)addMenuItemPriceSpinner.getValue()<=0){	
+			JOptionPane.showMessageDialog(null, "Item price cannot be <=0");			
+			correct_input=false;
+		}
+
+		if(correct_input){
+			itemName = addMenuItemNameTextField.getText();
+			itemPrice = (int)addMenuItemPriceSpinner.getValue();		
+			//Controller connects here !
+
+		}	
+		//update Visuals
+		addMenuItemNameTextField.setText("");
+		addMenuItemPriceSpinner.setValue(0);
+	}
+	
+	
+	//Delete an Item from Menu Button
+	private void deleteItemMenuButtonActionPerformed(java.awt.event.ActionEvent evt){
+			
+		boolean correct_input = true;
+		
+		if(deleteMenuItemcomboBox.getSelectedIndex()==-1){	
+			JOptionPane.showMessageDialog(null, "Item name needs to be selected");
+			correct_input = false;
+		}	
+		if(correct_input){			
+		//Controller connects here !
+		}	
+	}
+	
+	
+	//Add Ingredient to an Item Button
+	private void addIngridientsButtonActionPerformed(java.awt.event.ActionEvent evt){
+
+		boolean correct_input = true;
+
+		if(addIngridientItemNamecomboBox.getSelectedIndex()==-1){	
+			JOptionPane.showMessageDialog(null, "Select item to add ingridients to it ");
+			correct_input = false;
+		}
+		if(addIngridientNamecomboBoxcomboBox.getSelectedIndex()==-1){	
+			JOptionPane.showMessageDialog(null, "Select Ingridient Name to be added");
+			correct_input = false;
+		}
+		if(correct_input){			
+			//Controller connects here !
+		}
+	}
+
+	// Remove Ingridient from an Item Button
+	private void removeIngridientButtonActionPerformed(java.awt.event.ActionEvent evt){
+
+		boolean correct_input = true;
+
+		if(itemNameRemoveIngridcomboBox.getSelectedIndex()==-1){	
+			JOptionPane.showMessageDialog(null, "Select Item Name to remove ingridient from");
+			correct_input = false;
+		}	
+		if(IngridientNameRemoveIngridcomboBox.getSelectedIndex()==-1){	
+			JOptionPane.showMessageDialog(null, "Select Ingridient to be removed");
+			correct_input = false;
+		}	
+		if(correct_input){			
+			//Controller connects here !
+		}		
+	}
+	
+	
+	//Add Item to the Order Button
+private void addItemCreateOrderButtonActionPerformed(java.awt.event.ActionEvent evt){
+		
+	boolean correct_input = true;
+	
+	if(createOrderItemNamecomboBox.getSelectedIndex()==-1){	
+		JOptionPane.showMessageDialog(null, "Select an Item to be added to the Order");
+		correct_input = false;
+	}
+	
+	if(correct_input){			
+		
+		ItemPlacedonOrder = true;
+		//Controller connects here !
+	
+	
+	}
+			
+	}
+
+	//Place and Print Order Button
+	private void PlaceAndPrintOrderButtonActionPerformed(java.awt.event.ActionEvent evt){
+
+		//check if an Item has been placed on the order
+		if(ItemPlacedonOrder){
+			
+			
+		}
+	
+	}
+
+
+	//Generate Report Button
+	private void btnGenerateReportButtonActionPerformed(java.awt.event.ActionEvent evt){
+	}
+	
+
+	
 	private void removeStaffButtonActionPerformed( java.awt.event.ActionEvent evt ) {
 		
 		errorRemoveStaff = "";
 		if (selectedStaff < 0){
+			JOptionPane.showMessageDialog(null, "Staff needs to be selected for removal!");
 			errorRemoveStaff = "Staff needs to be selected for removal!";
 			errorRemoveStaff = errorRemoveStaff.trim();
 		}
@@ -589,6 +1247,8 @@ public class WholePage extends JFrame {
 				ftmc.deleteStaff(staffs.get(selectedStaff));
 			} catch (InvalidInputException e) {
 				errorRemoveStaff += e.getMessage();
+				
+				
 			}
 		}
 		// update visuals
@@ -603,8 +1263,10 @@ public class WholePage extends JFrame {
 		
 		if ( selectedStaffShift < 0) {
 			errorAddShift += "Staff needs to be selected before adding a shift!";
+			JOptionPane.showMessageDialog(null, "Staff needs to be selected before adding a shift!");
 		} else if  ( selectedDay < 0){
 			errorAddShift += "Day needs to be selected before adding a shift!";
+		
 		} else {
 			// verifies that the user has entered digits between 0 and 23 in the hours box and 0 to 60 in the minutes box
 			errorAddShift += checkTimeConditions();
@@ -655,6 +1317,7 @@ public class WholePage extends JFrame {
 		if (selectedShiftRemoval < 0){
 			errorRemovalShift = "Shift needs to be selected for removal!";
 			errorRemovalShift = errorRemovalShift.trim();
+			JOptionPane.showMessageDialog(null, "Shift needs to be selected for removal!");
 		}
 		if ( errorRemovalShift.length() == 0) {
 			FoodTruckManagementController ftmc = new FoodTruckManagementController();

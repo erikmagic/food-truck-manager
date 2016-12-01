@@ -39,6 +39,7 @@ class FoodTruckManager{
 class Item{
    name;                       
    double price;
+   int popularity;
    Boolean availability;
    1 -> * Ingredient Ingredient;  
   }
