@@ -76,9 +76,17 @@ public class WholePage extends JFrame {
 	private Integer selectedStaff = -1;
 	private Integer selectedStaffShift = -1;
 	private HashMap<Integer, Staff> staffs;
+	private HashMap<Integer, Ingredient> ingredients;
+	private HashMap<Integer, Equipment> equipments;
 	private String errorRemoveStaff = "";
 	private String errorAddShift = "";
 	private int selectedDay = -1;
+	
+	
+	private String errorAddSupply = "";
+	private String errorRemoveSupply = "";
+	private String errorAddItem = "";
+	private String errorRemoveItem = "";;
 	
 	
 	private HashMap<Integer, Shift> shifts;
@@ -102,7 +110,7 @@ public class WholePage extends JFrame {
 	
 	
 	
-	private JComboBox ItemNameComboBox;
+	private JComboBox<String> ItemNameComboBox;
 	
 	private JSeparator shiftScheduleSeperator;
 	private JLabel addScheduleError;
@@ -128,13 +136,13 @@ public class WholePage extends JFrame {
 	private JButton addScheduleButton;
 	private JLabel label_23;
 	private JLabel label_24;
-	private JComboBox<String> comboBox_7;
+	private JComboBox<String> selectScheduleToAddShift;
 	private JLabel label_25;
 	private JButton addShiftToScheduleButton;
 	private JLabel label_26;
 	private JLabel label_27;
 	private JComboBox<String> removeShiftFromScheduleComboBox;
-	private JComboBox<String> comboBox_11;
+	private JComboBox<String> selectScheduleToRemoveShift;
 	private JLabel label_28;
 	private JButton removeShiftFromScheduleButton;
 	private JLabel label_7;
@@ -157,7 +165,7 @@ public class WholePage extends JFrame {
 	private JLabel removeSupplyLabel;
 	private JLabel label_12;
 	private JButton removeSupplyButton;
-	private JComboBox removeSupplyspinner;
+	private JComboBox<String> removeSupplyspinner;
 	private JLabel label_13;
 	private JLabel lblAddNewSupply;
 	private JLabel label;
@@ -168,17 +176,17 @@ public class WholePage extends JFrame {
 	private JLabel DeletMenuLabel;
 	private JLabel label_9;
 	private JButton deleteItemMenuButton;
-	private JComboBox deleteMenuItemcomboBox;
+	private JComboBox<String> deleteMenuItemcomboBox;
 	private JLabel addIngridientslabel;
-	private JComboBox addIngridientItemNamecomboBox;
+	private JComboBox<String> addIngridientItemNamecomboBox;
 	private JLabel label_15;
-	private JLabel label_16;
-	private JComboBox addIngridientNamecomboBoxcomboBox;
+	private JLabel lblIngredientName;
+	private JComboBox<String> addIngridientNamecomboBoxcomboBox;
 	private JButton addIngridientsButton;
-	private JLabel label_17;
-	private JComboBox itemNameRemoveIngridcomboBox;
+	private JLabel lblRemoveIngredient;
+	private JComboBox<String> itemNameRemoveIngridcomboBox;
 	private JLabel ItemNameRemoveIngridientLabel;
-	private JComboBox IngridientNameRemoveIngridcomboBox;
+	private JComboBox<String> IngridientNameRemoveIngridcomboBox;
 	private JLabel IngridientNameRemoveIngridientLabel;
 	private JButton removeIngridientButton;
 	private JSpinner addMenuItemPriceSpinner;
@@ -192,7 +200,7 @@ public class WholePage extends JFrame {
 	private JButton addItemCreateOrderButton;
 	private JLabel createOrderItemNamelabel;
 	private JLabel label_21;
-	private JComboBox createOrderItemNamecomboBox;
+	private JComboBox<String> createOrderItemNamecomboBox;
 	private JSeparator separator_3;
 	private JTextField endDateGenerateReportTextField;
 	private JLabel salesReportEndDatelabel;
@@ -200,6 +208,7 @@ public class WholePage extends JFrame {
 	private JLabel salesReportStartDatelabel;
 	private JButton btnGenerateReportButton;
 	private JLabel lblGenertateSalesReport;
+	
 	
 	private boolean ItemPlacedonOrder=false;
 	
@@ -476,10 +485,10 @@ public class WholePage extends JFrame {
 		label_24.setBounds(11, 511, 76, 16);
 		yearScheduleLabel.add(label_24);
 		
-		comboBox_7 = new JComboBox<String>();
-		comboBox_7.setToolTipText("Shifts");
-		comboBox_7.setBounds(77, 542, 99, 20);
-		yearScheduleLabel.add(comboBox_7);
+		selectScheduleToAddShift = new JComboBox<String>();
+		selectScheduleToAddShift.setToolTipText("Shifts");
+		selectScheduleToAddShift.setBounds(77, 509, 99, 20);
+		yearScheduleLabel.add(selectScheduleToAddShift);
 		
 		label_25 = new JLabel("Shift:");
 		label_25.setBounds(11, 544, 76, 16);
@@ -505,13 +514,13 @@ public class WholePage extends JFrame {
 		
 		removeShiftFromScheduleComboBox = new JComboBox<String>();
 		removeShiftFromScheduleComboBox.setToolTipText("Shifts");
-		removeShiftFromScheduleComboBox.setBounds(77, 645, 95, 20);
+		removeShiftFromScheduleComboBox.setBounds(81, 676, 95, 20);
 		yearScheduleLabel.add(removeShiftFromScheduleComboBox);
 		
-		comboBox_11 = new JComboBox<String>();
-		comboBox_11.setToolTipText("Shifts");
-		comboBox_11.setBounds(77, 678, 97, 20);
-		yearScheduleLabel.add(comboBox_11);
+		selectScheduleToRemoveShift = new JComboBox<String>();
+		selectScheduleToRemoveShift.setToolTipText("Shifts");
+		selectScheduleToRemoveShift.setBounds(79, 647, 97, 20);
+		yearScheduleLabel.add(selectScheduleToRemoveShift);
 		
 		label_28 = new JLabel("Shift:");
 		label_28.setBounds(11, 681, 76, 16);
@@ -601,7 +610,7 @@ public class WholePage extends JFrame {
 		yearScheduleLabel.add(newSupplyPurchaseDateTextField);
 		
 		//New Ingridient Radio Button
-		newIngridientRadioButton = new JRadioButton("Supply");
+		newIngridientRadioButton = new JRadioButton("Ingr.");
 		newIngridientRadioButton.setBounds(426, 115, 71, 25);
 		yearScheduleLabel.add(newIngridientRadioButton);
 		
@@ -621,7 +630,7 @@ public class WholePage extends JFrame {
 		addNewSupplybutton.setBounds(451, 140, 134, 25);
 		yearScheduleLabel.add(addNewSupplybutton);
 		
-		removeSupplyLabel = new JLabel("Remove Suppy");
+		removeSupplyLabel = new JLabel("Remove Supply");
 		removeSupplyLabel.setBounds(465, 194, 97, 14);
 		yearScheduleLabel.add(removeSupplyLabel);
 		
@@ -641,7 +650,7 @@ public class WholePage extends JFrame {
 		yearScheduleLabel.add(removeSupplyButton);
 		
 		//Remove Supply spinner
-		removeSupplyspinner = new JComboBox();
+		removeSupplyspinner = new JComboBox<String>();
 		removeSupplyspinner.setBounds(503, 216, 100, 22);
 		yearScheduleLabel.add(removeSupplyspinner);
 		
@@ -714,7 +723,7 @@ public class WholePage extends JFrame {
 		deleteItemMenuButton.setBounds(451, 479, 134, 25);
 		yearScheduleLabel.add(deleteItemMenuButton);
 		
-		deleteMenuItemcomboBox = new JComboBox();
+		deleteMenuItemcomboBox = new JComboBox<String>();
 		deleteMenuItemcomboBox.setBounds(503, 448, 100, 22);
 		yearScheduleLabel.add(deleteMenuItemcomboBox);
 		
@@ -722,7 +731,7 @@ public class WholePage extends JFrame {
 		addIngridientslabel.setBounds(465, 520, 120, 14);
 		yearScheduleLabel.add(addIngridientslabel);
 		
-		addIngridientItemNamecomboBox = new JComboBox();
+		addIngridientItemNamecomboBox = new JComboBox<String>();
 		addIngridientItemNamecomboBox.setBounds(532, 543, 71, 22);
 		yearScheduleLabel.add(addIngridientItemNamecomboBox);
 		
@@ -730,16 +739,16 @@ public class WholePage extends JFrame {
 		label_15.setBounds(436, 547, 69, 14);
 		yearScheduleLabel.add(label_15);
 		
-		label_16 = new JLabel("Ingridient Name:");
-		label_16.setBounds(439, 578, 97, 14);
-		yearScheduleLabel.add(label_16);
+		lblIngredientName = new JLabel("Ingredient Name:");
+		lblIngredientName.setBounds(418, 582, 118, 14);
+		yearScheduleLabel.add(lblIngredientName);
 		
-		addIngridientNamecomboBoxcomboBox = new JComboBox();
+		addIngridientNamecomboBoxcomboBox = new JComboBox<String>();
 		addIngridientNamecomboBoxcomboBox.setBounds(534, 574, 69, 22);
 		yearScheduleLabel.add(addIngridientNamecomboBoxcomboBox);
 		
 		//Add Ingridient Button
-		addIngridientsButton = new JButton("Add Ingrid.");
+		addIngridientsButton = new JButton("Add Ingred.");
 		addIngridientsButton.setBackground(Color.LIGHT_GRAY);
 		addIngridientsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -749,11 +758,11 @@ public class WholePage extends JFrame {
 		addIngridientsButton.setBounds(451, 605, 134, 25);
 		yearScheduleLabel.add(addIngridientsButton);
 		
-		label_17 = new JLabel("Remove Ingridient");
-		label_17.setBounds(465, 631, 120, 14);
-		yearScheduleLabel.add(label_17);
+		lblRemoveIngredient = new JLabel("Remove Ingredient");
+		lblRemoveIngredient.setBounds(465, 631, 120, 14);
+		yearScheduleLabel.add(lblRemoveIngredient);
 		
-		itemNameRemoveIngridcomboBox = new JComboBox();
+		itemNameRemoveIngridcomboBox = new JComboBox<String>();
 		itemNameRemoveIngridcomboBox.setBounds(534, 658, 69, 22);
 		yearScheduleLabel.add(itemNameRemoveIngridcomboBox);
 		
@@ -761,16 +770,16 @@ public class WholePage extends JFrame {
 		ItemNameRemoveIngridientLabel.setBounds(436, 670, 69, 14);
 		yearScheduleLabel.add(ItemNameRemoveIngridientLabel);
 		
-		IngridientNameRemoveIngridcomboBox = new JComboBox();
+		IngridientNameRemoveIngridcomboBox = new JComboBox<String>();
 		IngridientNameRemoveIngridcomboBox.setBounds(534, 690, 70, 22);
 		yearScheduleLabel.add(IngridientNameRemoveIngridcomboBox);
 		
-		IngridientNameRemoveIngridientLabel = new JLabel("Ingridient Name:");
-		IngridientNameRemoveIngridientLabel.setBounds(439, 694, 97, 14);
+		IngridientNameRemoveIngridientLabel = new JLabel("Ingredient Name:");
+		IngridientNameRemoveIngridientLabel.setBounds(426, 694, 110, 14);
 		yearScheduleLabel.add(IngridientNameRemoveIngridientLabel);
 		
 		//Remove Ingridient Button
-		removeIngridientButton = new JButton("Remove Ingrid.");
+		removeIngridientButton = new JButton("Remove Ingred.");
 		removeIngridientButton.setBackground(Color.LIGHT_GRAY);
 		removeIngridientButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
@@ -798,7 +807,7 @@ public class WholePage extends JFrame {
 		// show all shifts
 		addShiftToScheduleComboBox = new JComboBox<String>();
 		addShiftToScheduleComboBox.setToolTipText("Shifts");
-		addShiftToScheduleComboBox.setBounds(76, 506, 97, 20);
+		addShiftToScheduleComboBox.setBounds(77, 542, 97, 20);
 		yearScheduleLabel.add(addShiftToScheduleComboBox);
 		
 		yearScheduleTextField = new JTextField();
@@ -849,7 +858,7 @@ public class WholePage extends JFrame {
 		label_21.setBounds(690, 237, 116, 52);
 		yearScheduleLabel.add(label_21);
 		
-		createOrderItemNamecomboBox = new JComboBox();
+		createOrderItemNamecomboBox = new JComboBox<String>();
 		createOrderItemNamecomboBox.setBounds(765, 307, 69, 22);
 		yearScheduleLabel.add(createOrderItemNamecomboBox);
 		
@@ -888,7 +897,7 @@ public class WholePage extends JFrame {
 		btnGenerateReportButton.setBounds(685, 657, 134, 25);
 		yearScheduleLabel.add(btnGenerateReportButton);
 		
-		lblGenertateSalesReport = new JLabel("Genertate Sales Report");
+		lblGenertateSalesReport = new JLabel("Generate Sales Report");
 		lblGenertateSalesReport.setBounds(658, 526, 148, 52);
 		yearScheduleLabel.add(lblGenertateSalesReport);
 	
@@ -899,6 +908,9 @@ public class WholePage extends JFrame {
 	
 	private void initialData(){
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		
+		// staffs spinner
+		
 		staffs = new HashMap<Integer, Staff>();
 		Iterator<Staff> sIt = ftm.getStaff().iterator();
 		Integer index = 0;
@@ -911,6 +923,9 @@ public class WholePage extends JFrame {
 			index++;
 		}
 		index = 0;
+		
+		// shifts spinner
+		
 		shifts = new HashMap<Integer, Shift>();
 		Iterator<Shift> shIt = ftm.getShift().iterator();
 		while (shIt.hasNext()){
@@ -923,6 +938,7 @@ public class WholePage extends JFrame {
 		}
 		index = 0;
 		
+		
 		// add days in the shift days combo box
 		dayOfTheWeekBox.addItem("Monday");
 		dayOfTheWeekBox.addItem("Tuesday");
@@ -931,6 +947,32 @@ public class WholePage extends JFrame {
 		dayOfTheWeekBox.addItem("Friday");
 		dayOfTheWeekBox.addItem("Saturday");
 		dayOfTheWeekBox.addItem("Sunday");
+		
+		
+		// supplies spinner
+		
+		Iterator<Ingredient> ingIt = ftm.getIngredients().iterator();
+		ingredients = new HashMap<Integer, Ingredient>();
+		while (ingIt.hasNext()){
+			// add the ingredient to the appropriate spinners
+			Ingredient tempIng = ingIt.next();
+			ingredients.put(index, tempIng);
+			removeSupplyspinner.addItem(tempIng.getName());
+			addIngridientItemNamecomboBox.addItem(tempIng.getName());
+			IngridientNameRemoveIngridcomboBox.addItem(tempIng.getName());
+			index++;
+		}
+		index=0;
+		Iterator<Equipment> equipIt = ftm.getEquipment().iterator();
+		equipments = new HashMap<Integer, Equipment>();
+		while(equipIt.hasNext()){
+			// add the equipment to the appropriate spinners
+			Equipment tempEquip = equipIt.next();
+			equipments.put(index, tempEquip);
+			removeSupplyspinner.addItem(tempEquip.getName());
+			index++;
+		}
+		index = 0;
 		
 	}
 	private void refreshData()
@@ -948,16 +990,19 @@ public class WholePage extends JFrame {
 			
 			staffs = new HashMap<Integer, Staff>();
 			removeStaffComboBox.removeAllItems();
+			addShiftComboBox.removeAllItems();
 			Iterator<Staff> sIt = ftm.getStaff().iterator();
 			Integer index = 0;
 			while (sIt.hasNext()){
 				Staff s = sIt.next();
 				staffs.put(index, s);
 				removeStaffComboBox.addItem(s.getName() + " - " + s.getRole());
+				addShiftComboBox.addItem(s.getName() + " - " + s.getRole());
 				index++;
 			}
 			selectedStaff = -1;
 			removeStaffComboBox.setSelectedItem(selectedStaff);
+			addShiftComboBox.setSelectedItem(selectedStaffShift);
 			
 			staffNameTextField.setText("");
 			staffRoleTextField.setText("");
@@ -969,16 +1014,19 @@ public class WholePage extends JFrame {
 		if ( errorRemoveStaff == null || errorRemoveStaff.length() == 0){
 			staffs = new HashMap<Integer, Staff>();
 			removeStaffComboBox.removeAllItems();
+			addShiftComboBox.removeAllItems();
 			Iterator<Staff> sIt = ftm.getStaff().iterator();
 			Integer index = 0;
 			while (sIt.hasNext()){
 				Staff s = sIt.next();
 				staffs.put(index, s);
 				removeStaffComboBox.addItem(s.getName() + " - " + s.getRole());
+				addShiftComboBox.addItem(s.getName() + " - " + s.getRole());
 				index++;
 			}
 			selectedStaff= -1;
-			removeStaffComboBox.setSelectedItem(selectedStaffShift);
+			removeStaffComboBox.setSelectedItem(selectedStaff);
+			addShiftComboBox.setSelectedItem(selectedStaffShift);
 			
 			
 		}
@@ -1014,6 +1062,7 @@ public class WholePage extends JFrame {
 		if (errorRemovalShift == null || errorRemovalShift.length() == 0){
 			shifts = new HashMap<Integer, Shift>();
 			removeShiftComboBox.removeAllItems();
+			
 			Iterator<Shift> shIt = ftm.getShift().iterator();
 			Integer index = 0;
 			while ( shIt.hasNext()){
@@ -1027,13 +1076,18 @@ public class WholePage extends JFrame {
 			removeShiftComboBox.setSelectedItem(selectedShiftRemoval);
 		}
 		
-		// addSupplies
-		
-		if((int)newSupplyQuantitySpinner.getValue()<=0 || (newSupplyNameTextField.getText().length()==0)){
+		// add Supplies
+		if (errorRemoveSupply.length() == 0){
+			newIngridientRadioButton.setSelected(false);
+			newEquipmentRadioButton.setSelected(false);
+			newSupplyNameTextField.setText("");
+			newSupplyQuantitySpinner.setValue(0);
 			
-
 			
 		}
+		
+		// remove supply 
+		
 		
 		
 	}
@@ -1057,7 +1111,8 @@ public class WholePage extends JFrame {
 	
 	//Add Supplies Button
 	private void addNewSupplybuttonActionPerformed (java.awt.event.ActionEvent evt){
-
+		
+		errorAddSupply = "";
 		String newSupplyName =""; 
 		String newEquipmentName =""; 
 		boolean correct_input = true;		
@@ -1065,51 +1120,63 @@ public class WholePage extends JFrame {
 		int newEquipmentQuantity = 0;
 
 		if(newSupplyNameTextField.getText().length()==0){
-			JOptionPane.showMessageDialog(null, "Supply name cannot be empty");
+			JOptionPane.showMessageDialog(null, "Supply name cannot be empty!");
+			errorAddSupply += "Supply name cannot be empty!";
 			correct_input=false;
 		} 
 		if((int)newSupplyQuantitySpinner.getValue()<=0){
-			JOptionPane.showMessageDialog(null, "Supply quantity cannot be <=0");			
+			JOptionPane.showMessageDialog(null, "Supply quantity cannot be 0 or less!");
+			errorAddSupply += "Supply quantity cannot be 0 or less!";
 			correct_input=false;
 		}
 		if( (newIngridientRadioButton.isSelected() && newEquipmentRadioButton.isSelected()) 
 				|| (!newIngridientRadioButton.isSelected() && !newEquipmentRadioButton.isSelected()) ){
 
-			JOptionPane.showMessageDialog(null, "Select one type of supply");
+			JOptionPane.showMessageDialog(null, "Select one type of supply!");
+			errorAddSupply += "Select one type of supply!";
 			correct_input=false;
 		}
 
 		if(correct_input){
+			FoodTruckManagementController ftmc = new FoodTruckManagementController();
 			if(newIngridientRadioButton.isSelected()){
 				newSupplyName = newSupplyNameTextField.getText();
 				newSupplyQuantity = (int)newSupplyQuantitySpinner.getValue();
+				try {
+					ftmc.createIngredient(newSupplyName, newSupplyQuantity, 1);
+				} catch (InvalidInputException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
 			} else{
 
 				newEquipmentName = newSupplyNameTextField.getText();
 				newEquipmentQuantity = (int)newSupplyQuantitySpinner.getValue();
+				try {
+					ftmc.createEquipment(newEquipmentName, newEquipmentQuantity, 1);
+				} catch (InvalidInputException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
 			}		
-			//Controller connects here !
 		}	
 
-		//update Visuals
-		newIngridientRadioButton.setSelected(false);
-		newEquipmentRadioButton.setSelected(false);
-		newSupplyNameTextField.setText("");
-		newSupplyQuantitySpinner.setValue(0);		
+		refreshData();		
 	}
 	
 	//Remove a supply Button
 	private void removeSupplyButtonActionPerformed(java.awt.event.ActionEvent evt){
-
+		errorRemoveSupply = "";
 		boolean correct_input = true;
 
 		if(removeSupplyspinner.getSelectedIndex()==-1){
-			JOptionPane.showMessageDialog(null, "Item name needs to be selected");
+			JOptionPane.showMessageDialog(null, "Item name needs to be selected!");
+			errorRemoveSupply += "Item name needs to be selected!";
 			correct_input = false;
 		}
 		if(correct_input){
 			//Controller connects here !
 		}
+		
+		refreshData();
 	}
 	
 	

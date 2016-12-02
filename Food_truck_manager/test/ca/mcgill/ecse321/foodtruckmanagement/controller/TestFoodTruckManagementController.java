@@ -1295,7 +1295,7 @@ public class TestFoodTruckManagementController {
 	
 	// ------------------ REMOVE STAFF -------------------------- //
 	
-	/*
+	
 	// check that nothing happens if the user tries to remove a staff with the name null
 	@Test
 	public void removeStaffNameNull(){
@@ -1309,9 +1309,9 @@ public class TestFoodTruckManagementController {
 		// initialize controller and error message
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
 		String error = null;
-		
+		Staff aStaff = new Staff(name, role);
 		try {
-			ftmc.deleteStaff(name, role);
+			ftmc.deleteStaff(aStaff);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
@@ -1336,9 +1336,9 @@ public class TestFoodTruckManagementController {
 		// initialize controller and error message
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
 		String error = null;
-		
+		Staff aStaff = new Staff(name, role);
 		try {
-			ftmc.deleteStaff(name, role);
+			ftmc.deleteStaff(aStaff);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
@@ -1364,9 +1364,9 @@ public class TestFoodTruckManagementController {
 		// initialize controller and error message
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
 		String error = null;
-		
+		Staff aStaff = new Staff(name, role);
 		try {
-			ftmc.deleteStaff(name, role);
+			ftmc.deleteStaff(aStaff);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
@@ -1392,9 +1392,9 @@ public class TestFoodTruckManagementController {
 		// initialize controller and error message
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
 		String error = null;
-		
+		Staff aStaff = new Staff(name, role);
 		try {
-			ftmc.deleteStaff(name, role);
+			ftmc.deleteStaff(aStaff);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
@@ -1420,9 +1420,9 @@ public class TestFoodTruckManagementController {
 		// initialize controller and error message
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
 		String error = null;
-		
+		Staff aStaff = new Staff(name, role);
 		try {
-			ftmc.deleteStaff(name, role);
+			ftmc.deleteStaff(aStaff);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
@@ -1448,9 +1448,9 @@ public class TestFoodTruckManagementController {
 		// initialize controller and error message
 		FoodTruckManagementController ftmc = new FoodTruckManagementController();
 		String error = null;
-		
+		Staff aStaff = new Staff(name, role);
 		try {
-			ftmc.deleteStaff(name,role);
+			ftmc.deleteStaff(aStaff);
 		} catch (InvalidInputException e) {
 			error = e.getMessage();
 		}
@@ -1461,7 +1461,7 @@ public class TestFoodTruckManagementController {
 		// check that there was no change in model memory
 		assertEquals(0, ftm.getStaff().size());
 	}
-	*/
+	
 	// check that nothing happens if the user tries to remove a staff when there is no staff
 	@Test
 	public void removeStaffNoStaff(){

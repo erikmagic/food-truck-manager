@@ -9,7 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
+import ca.mcgill.ecse321.foodtruckmanagement.controller.FoodTruckManagementController;
 import ca.mcgill.ecse321.foodtruckmanagement.model.*;
 public class TestPersistence {
 
@@ -23,11 +23,18 @@ public class TestPersistence {
 		Staff s1 = new Staff("Erik-Olivier", "Cook");
 		Staff s2 = new Staff("Juan Pedro San Luiz", "Cashier");
 		
+		Equipment equi1 = new Equipment("Oven", 1, 1000);
+		
 		
 		// ------ add classes to food truck manager ----
 		ftm.addStaff(s1);
 		ftm.addStaff(s2);
 		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		ftmc.createEquipment("Toaster", 1, 100);
+		
+		
+		ftm.addEquipment(equi1);
 	}
 
 	@After
@@ -79,6 +86,8 @@ public class TestPersistence {
 		assertEquals("Cook", ftm.getStaff(0).getRole());
 		assertEquals("Cashier", ftm.getStaff(1).getRole());
 		
+		assertEquals(2, ftm.getEquipment().size());
+		assertEquals("Oven", ftm.getEquipment(1).getName());
 		// TODO complete with all other classes
 	}
 

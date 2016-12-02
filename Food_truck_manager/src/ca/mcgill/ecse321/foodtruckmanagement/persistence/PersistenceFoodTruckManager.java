@@ -54,6 +54,14 @@ public class PersistenceFoodTruckManager {
 			while (itIt.hasNext()){
 				ftm.addItem(itIt.next());
 			}
+//			itIt = ftm2.getMenu().getItem().iterator();
+//			while (itIt.hasNext()){
+//				ftm.getMenu().addItem(itIt.next());
+//			}
+			Iterator<Order> ordIt = ftm2.getOrder().iterator();
+			while(ordIt.hasNext()){
+				ftm.addOrder(ordIt.next());
+			}
 		}
 	}
 	public static void modifyFileName(String x){

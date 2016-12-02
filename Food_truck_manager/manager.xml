@@ -1,16 +1,27 @@
-<manager id="1">
+<ca.mcgill.ecse321.foodtruckmanagement.model.FoodTruckManager id="1">
   <staff id="2">
-    <staff id="3">
-      <name>Jack</name>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Staff id="3">
+      <name>Erik-Olivier</name>
       <role>Cook</role>
       <shift id="4"/>
-    </staff>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Staff>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Staff id="5">
+      <name>Juan Pedro San Luiz</name>
+      <role>Cashier</role>
+      <shift id="6"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Staff>
   </staff>
-  <ingredients id="5"/>
-  <order id="6"/>
-  <shift id="7"/>
-  <schedule id="8"/>
-  <item id="9"/>
-  <report id="10"/>
-  <equipment id="11"/>
-</manager>
+  <ingredients id="7"/>
+  <order id="8"/>
+  <shift id="9"/>
+  <schedule id="10"/>
+  <item id="11"/>
+  <report id="12"/>
+  <equipment id="13">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Equipment id="14">
+      <name>Toaster</name>
+      <quantity>1.0</quantity>
+      <price>100.0</price>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Equipment>
+  </equipment>
+</ca.mcgill.ecse321.foodtruckmanagement.model.FoodTruckManager>

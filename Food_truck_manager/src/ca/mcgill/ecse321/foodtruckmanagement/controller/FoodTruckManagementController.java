@@ -501,6 +501,8 @@ public class FoodTruckManagementController {
 			}
 		}
 		
+		// create equipment
+		
 		ftm.addEquipment(equipment);
 		
 		PersistenceXStream.saveToXMLwithXStream(ftm);
