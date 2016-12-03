@@ -74,6 +74,8 @@ public class WholePage extends JFrame {
 	
 	private int counter_order = 0;
 	
+	private int counter_program = 0;
+	
 	private String errorStaff = "";
 	private Integer selectedStaff = -1;
 	private Integer selectedStaffShift = -1;
@@ -92,6 +94,11 @@ public class WholePage extends JFrame {
 	private String errorAddIngredientToItem = "";
 	private String errorRemoveIngredientFromItem = "";
 	
+	private int selectedSchedule = -1;
+	private int selectedShift = -1;
+	
+	
+	
 	private Integer selectedIngredientAndItem = -1;
 	
 	
@@ -99,6 +106,7 @@ public class WholePage extends JFrame {
 	private Integer selectedShiftRemoval = -1;
 	private String errorRemovalShift = "";
 	private String errorOrder = "";
+	private HashMap<Integer, Schedule> schedules;
 	
 	private JComboBox<String> addShiftComboBox;
 	private JLabel staffShiftText;
@@ -115,6 +123,8 @@ public class WholePage extends JFrame {
 	private JComboBox<String> removeShiftComboBox;
 	private JLabel errorRemoveShift;
 	
+	private String errorDisplaySchedule ="";
+	private int selectedScheduleDisplay = -1;
 	
 	private int selectedSupplyAddSupply = -1;
 	private int selectedSupplyRemoveSupply = -1;
@@ -123,6 +133,8 @@ public class WholePage extends JFrame {
 	private int selectedItem = -1;
 	private int selectedItemForRemoval = -1;
 	private int selectedItemForOrder = -1;
+	private int selectSchedule = -1;
+	private int selectScheduleRemoveSchedule = -1;
 	
 	private JComboBox<String> ItemNameComboBox;
 	
@@ -491,6 +503,11 @@ public class WholePage extends JFrame {
 		yearScheduleLabel.add(dayScheduleTextField);
 		
 		addScheduleButton = new JButton("Add Schedule");
+		addScheduleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addScheduleActionPerformed(e);
+			}
+		});
 		addScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
 		addScheduleButton.setBackground(Color.LIGHT_GRAY);
 		addScheduleButton.setBounds(9, 449, 164, 23);
@@ -516,6 +533,7 @@ public class WholePage extends JFrame {
 		addShiftToScheduleButton = new JButton("Add Shift Schedule");
 		addShiftToScheduleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				addShiftScheduleActionPerformed(arg0);
 			}
 		});
 		addShiftToScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
@@ -548,6 +566,7 @@ public class WholePage extends JFrame {
 		removeShiftFromScheduleButton = new JButton("Remove Shift Schedule");
 		removeShiftFromScheduleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				removeShiftScheduleActionPerformed(e);
 			}
 		});
 		removeShiftFromScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 10));
@@ -571,6 +590,7 @@ public class WholePage extends JFrame {
 		removeScheduleButton = new JButton("Remove Schedule");
 		removeScheduleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				removeScheduleActionPerformed(e);
 			}
 		});
 		removeScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
@@ -592,6 +612,11 @@ public class WholePage extends JFrame {
 		yearScheduleLabel.add(removeScheduleComboBox);
 		
 		DisplayScheduleButton = new JButton("Display Schedule");
+		DisplayScheduleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayScheduleActionPerformed(e);
+			}
+		});
 		DisplayScheduleButton.setFont(new Font("Yu Gothic UI Semilight", Font.BOLD, 13));
 		DisplayScheduleButton.setBackground(Color.LIGHT_GRAY);
 		DisplayScheduleButton.setBounds(209, 473, 186, 23);
@@ -936,6 +961,7 @@ public class WholePage extends JFrame {
 		yearScheduleLabel.add(separator_4);
 		
 		
+		
 		// show initialData
 		initialData();
 	}
@@ -1023,16 +1049,19 @@ public class WholePage extends JFrame {
 		}
 		index = 0;
 		
-		// create order at the beginning
-		FoodTruckManagementController ftmc = new FoodTruckManagementController();
-		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR_OF_DAY, 0);
-		Date date = new Date(c.getTimeInMillis());
-		try {
-			counter_order = ftmc.createOrder(date);
-		} catch (InvalidInputException e) {
-			e.printStackTrace();
+		// show schedule
+		Iterator<Schedule> schIt = ftm.getSchedule().iterator();
+		schedules = new HashMap<Integer, Schedule>();
+		while (schIt.hasNext()){
+			Schedule tempSchedule = schIt.next();
+			schedules.put(index, tempSchedule);
+			selectScheduleToAddShift.addItem(tempSchedule.getWeek().toString());
+			selectScheduleToRemoveShift.addItem(tempSchedule.getWeek().toString());
+			comboBox_8.addItem(tempSchedule.getWeek().toString());
+			removeScheduleComboBox.addItem(tempSchedule.getWeek().toString());
+			index++;
 		}
+		index=0;
 		
 	}
 	private void refreshData()
@@ -1141,6 +1170,62 @@ public class WholePage extends JFrame {
 			addShiftToScheduleComboBox.setSelectedItem(selectedShiftRemoval);
 			removeShiftFromScheduleComboBox.setSelectedItem(selectedShiftRemoval);
 		}
+		
+		// add schedule
+		if (errorAddSchedule.length() == 0){
+			Integer index = 0;
+			Iterator<Schedule> schIt = ftm.getSchedule().iterator();
+			selectScheduleToAddShift.removeAllItems();
+			selectScheduleToRemoveShift.removeAllItems();
+			comboBox_8.removeAllItems();
+			removeScheduleComboBox.removeAllItems();
+			schedules = new HashMap<Integer, Schedule>();
+			while (schIt.hasNext()){
+				Schedule tempSchedule = schIt.next();
+				schedules.put(index, tempSchedule);
+				selectScheduleToAddShift.addItem(tempSchedule.getWeek().toString());
+				selectScheduleToRemoveShift.addItem(tempSchedule.getWeek().toString());
+				comboBox_8.addItem(tempSchedule.getWeek().toString());
+				removeScheduleComboBox.addItem(tempSchedule.getWeek().toString());
+				index++;
+			}
+			selectSchedule = -1;
+			selectScheduleToAddShift.setSelectedItem(selectSchedule);
+			selectScheduleToRemoveShift.setSelectedItem(selectSchedule);
+			comboBox_8.setSelectedItem(selectSchedule);
+			removeScheduleComboBox.setSelectedItem(selectSchedule);
+			
+			
+		}
+		
+		// remove schedule
+		if (errorRemoveSchedule.length() == 0){
+			
+			Integer index = 0;
+			Iterator<Schedule> schIt = ftm.getSchedule().iterator();
+			selectScheduleToAddShift.removeAllItems();
+			selectScheduleToRemoveShift.removeAllItems();
+			comboBox_8.removeAllItems();
+			removeScheduleComboBox.removeAllItems();
+			schedules = new HashMap<Integer, Schedule>();
+			while (schIt.hasNext()){
+				Schedule tempSchedule = schIt.next();
+				schedules.put(index, tempSchedule);
+				selectScheduleToAddShift.addItem(tempSchedule.getWeek().toString());
+				selectScheduleToRemoveShift.addItem(tempSchedule.getWeek().toString());
+				comboBox_8.addItem(tempSchedule.getWeek().toString());
+				removeScheduleComboBox.addItem(tempSchedule.getWeek().toString());
+				index++;
+			}
+			selectSchedule = -1;
+			selectScheduleToAddShift.setSelectedItem(selectSchedule);
+			selectScheduleToRemoveShift.setSelectedItem(selectSchedule);
+			comboBox_8.setSelectedItem(selectSchedule);
+			removeScheduleComboBox.setSelectedItem(selectSchedule);
+			
+		}
+		
+	
 		
 		// remove Supplies
 		if (errorRemoveSupply.length() == 0){
@@ -1525,8 +1610,12 @@ public class WholePage extends JFrame {
 	
 	//Add Item to the Order Button
 	private void addItemCreateOrderButtonActionPerformed(java.awt.event.ActionEvent evt){
-		
 		errorOrder = "";
+
+		if (counter_program == 0){
+			
+
+		}
 		selectedItemForOrder = createOrderItemNamecomboBox.getSelectedIndex();
 		boolean correct_input = true;
 		
@@ -1549,7 +1638,8 @@ public class WholePage extends JFrame {
 			}
 		
 		}
-		selectedItemForOrder = -1;		
+		selectedItemForOrder = -1;
+		counter_program++;
 	}
 
 	//Place and Print Order Button
@@ -1675,43 +1765,50 @@ public class WholePage extends JFrame {
 		errorAddSchedule = "";
 		
 		// check years
-		String year = yearScheduleTextField.getText();
+		String year = yearScheduleTextField.getText().trim();
 		if ( year.length() != 4){
 			errorAddSchedule += "Year in the format YYYY";
+			JOptionPane.showMessageDialog(null, "Year in the format YYYY");
 		}
 		if (errorAddSchedule.length() == 0){
 			for ( int i = 0; i < 4; i++){
 				if (!(year.charAt(i) >= '0' && year.charAt(i) <= '9')){
+					JOptionPane.showMessageDialog(null, "Year should consider only of numerical values");
 					errorAddSchedule += "Year should consider only of numerical values";
 				}
 			}
 		
 			int yearInt = Integer.parseInt(year);
 			// check months
-			String month = monthScheduleLabel.getText();
+			String month = monthScheduleTextField.getText().trim();
 			
-			if ( month.length() != 1 || month.length() != 2){
+			if ( month.length() == 0 || month.length() > 2){
 				errorAddSchedule += "month in the format mm";
+				JOptionPane.showMessageDialog(null, "month in the format mm");
 			}
 			if (errorAddSchedule.length() == 0){
 				for ( int i = 0; i < month.length(); i++){
 					if (!(month.charAt(i) >= '0' && month.charAt(i) <= '9')){
 						errorAddSchedule += "Month should consider only of numerical values";
+						JOptionPane.showMessageDialog(null,"Month should consider only of numerical values");
 					}
 				}
 			
 				int monthInt = Integer.parseInt(month);
 				
 				// check days
-				String day = dayScheduleLabel.getText();
+				String day = dayScheduleTextField.getText().trim();
 				
-				if ( day.length() != 1 || day.length() != 2){
+				if ( day.length() == 0 || day.length() > 2){
 					errorAddSchedule += "Day in the format dd";
+					JOptionPane.showMessageDialog(null,"Day in the format dd");
+
 				}
 				if (errorAddSchedule.length() == 0){
 					for ( int i = 0; i < day.length(); i++){
 						if (!(day.charAt(i) >= '0' && day.charAt(i) <= '9')){
-							errorAddSchedule += "Day should consider only of numerical values";
+							JOptionPane.showMessageDialog(null,"Day in the format dd");
+							errorAddSchedule += "Day in the format dd";
 						}
 					}
 				
@@ -1737,6 +1834,102 @@ public class WholePage extends JFrame {
 		refreshData();
 		
 	}
+	
+	public void addShiftScheduleActionPerformed(java.awt.event.ActionEvent evt){
+		
+		errorAddShiftSchedule = "";
+		// find schedule
+		selectedSchedule = selectScheduleToAddShift.getSelectedIndex();
+		if (selectedSchedule == -1){
+			errorAddShiftSchedule += "Please select a schedule!";
+			JOptionPane.showMessageDialog(null, "Please select a schedule!");
+		}
+		selectedShift = addShiftToScheduleComboBox.getSelectedIndex();
+		if (selectedShift == -1){
+			errorAddShiftSchedule += "Please select a shift!";
+			JOptionPane.showMessageDialog(null, "Please select a shift!");
+		}
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		try {
+			ftmc.addShiftToSchedule(schedules.get(selectedSchedule), shifts.get(selectedShift));
+		} catch (InvalidInputException e) {
+			errorAddShiftSchedule += e.getMessage();
+		}
+	
+		
+		refreshData();
+		selectedShift = -1;
+		selectedSchedule = -1;
+	}
+	
+	public void removeShiftScheduleActionPerformed( java.awt.event.ActionEvent evt){
+		
+		errorRemoveShiftSchedule = "";
+		selectedSchedule = selectScheduleToRemoveShift.getSelectedIndex();
+		if (selectedSchedule == -1){
+			errorAddShiftSchedule += "Please select a schedule!";
+			JOptionPane.showMessageDialog(null, "Please select a schedule!");
+		}
+		selectedShift = removeShiftFromScheduleComboBox.getSelectedIndex();
+		if (selectedShift == -1){
+			errorAddShiftSchedule += "Please select a shift!";
+			JOptionPane.showMessageDialog(null, "Please select a shift!");
+		}
+		
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		try {
+			ftmc.removeShiftFromSchedule(schedules.get(selectedSchedule), shifts.get(selectedShift));
+		} catch (InvalidInputException e) {
+			errorAddShiftSchedule += e.getMessage();
+		}
+	
+		
+		refreshData();
+		selectedShift = -1;
+		selectedSchedule = -1;
+		
+	}
+	
+	public void displayScheduleActionPerformed(java.awt.event.ActionEvent evt){
+		
+		errorDisplaySchedule = "";
+		selectedScheduleDisplay = removeScheduleComboBox.getSelectedIndex();
+		if (selectedScheduleDisplay == -1){
+			errorDisplaySchedule += "Please select a schedule!";
+			JOptionPane.showMessageDialog(null, "Please select a schedule!");
+		}
+		
+		// show all the shifts
+		FoodTruckManager ftm = FoodTruckManager.getInstance();
+		Iterator<Shift> shiftsIt = ftm.getSchedule(selectedScheduleDisplay).getShift().iterator();
+		String text = "";
+		while (shiftsIt.hasNext()){
+			Shift tempShift = shiftsIt.next();
+			text += tempShift.getStaff().getName() + " : " + tempShift.getStartingHour().toString() + " - " +  tempShift.getFinishingHour().toString() + " , " + tempShift.getDay().toString() +  "\n";
+		}
+		JOptionPane.showMessageDialog(null, text);
+	}
+	
+	public void removeScheduleActionPerformed( java.awt.event.ActionEvent evt){
+		errorRemoveSchedule = "";
+		selectScheduleRemoveSchedule = comboBox_8.getSelectedIndex();
+		if (selectScheduleRemoveSchedule == -1){
+			errorRemoveSchedule += "Please select a schedule!";
+			JOptionPane.showMessageDialog(null, "Please select a schedule!");
+		}
+		FoodTruckManagementController ftmc = new FoodTruckManagementController();
+		try {
+			ftmc.deleteSchedule(schedules.get(selectScheduleRemoveSchedule));
+		} catch (InvalidInputException e) {
+			errorRemoveSchedule += e.getMessage();
+		}
+		
+		refreshData();
+		selectScheduleRemoveSchedule = -1;
+
+	}
+	
 	
 	private String checkTimeConditions(){
 		String errors = "";

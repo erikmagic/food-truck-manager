@@ -192,7 +192,7 @@ public class FoodTruckManagementController {
 			throw new InvalidInputException("Date cannot be set to null!");
 		}
 		
-		// find the closest first day of the week to create a new schedule from the new weed
+		// find the closest first day of the week to create a new schedule from the new week
 		
 		Calendar c = Calendar.getInstance();
 		
