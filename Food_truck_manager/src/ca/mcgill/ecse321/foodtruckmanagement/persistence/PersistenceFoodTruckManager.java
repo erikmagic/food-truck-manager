@@ -47,17 +47,17 @@ public class PersistenceFoodTruckManager {
 				ftm.addIngredient(ingIt.next());
 			}
 			Iterator<Equipment> equipIt = ftm2.getEquipment().iterator();
-			while(ingIt.hasNext()){
+			while(equipIt.hasNext()){
 				ftm.addEquipment(equipIt.next());
 			}
 			Iterator<Item> itIt = ftm2.getItem().iterator();
 			while (itIt.hasNext()){
 				ftm.addItem(itIt.next());
 			}
-//			itIt = ftm2.getMenu().getItem().iterator();
-//			while (itIt.hasNext()){
-//				ftm.getMenu().addItem(itIt.next());
-//			}
+			itIt = ftm2.getMenu().getItem().iterator();
+			while (itIt.hasNext()){
+				ftm.getMenu().addItem(itIt.next());
+			}
 			Iterator<Order> ordIt = ftm2.getOrder().iterator();
 			while(ordIt.hasNext()){
 				ftm.addOrder(ordIt.next());

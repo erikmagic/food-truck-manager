@@ -1078,10 +1078,12 @@ public class WholePage extends JFrame {
 		
 		// add Supplies
 		if (errorRemoveSupply.length() == 0){
+			
 			newIngridientRadioButton.setSelected(false);
 			newEquipmentRadioButton.setSelected(false);
 			newSupplyNameTextField.setText("");
 			newSupplyQuantitySpinner.setValue(0);
+			// refresh spinners
 			
 			
 		}

@@ -153,7 +153,7 @@ public class FoodTruckManager
 
   public Menu getMenu()
   {
-    return menu;
+    return Menu.getInstance();
   }
 
   public boolean hasMenu()
