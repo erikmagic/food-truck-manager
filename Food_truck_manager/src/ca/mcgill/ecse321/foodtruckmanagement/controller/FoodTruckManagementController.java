@@ -766,7 +766,7 @@ public class FoodTruckManagementController {
 	 * @throws InvalidInputException 
 	 *
 	 */
-	public void createOrder(Date date) throws InvalidInputException{
+	public int createOrder(Date date) throws InvalidInputException{
 		
 		// load model 
 		FoodTruckManager ftm = FoodTruckManager.getInstance();
@@ -792,6 +792,8 @@ public class FoodTruckManagementController {
 		
 		// save to persistence
 		PersistenceXStream.saveToXMLwithXStream(ftm);
+		
+		return counter;
 				
 	}
 	
