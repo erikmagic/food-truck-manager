@@ -1,0 +1,69 @@
+saved methods from umple
+
+shifts:
+
+  public boolean equals(Shift otherShift){
+	  if (this.startingHour != otherShift.startingHour) return false;
+	  else if ( this.finishingHour != otherShift.finishingHour) return false;
+	  else if ( !this.staff.equals(otherShift.staff)) return false;
+	  else if (this.day != otherShift.day) return false;
+	  else return true;
+  }
+  
+  
+  staffs:
+  
+   public boolean equals(Staff aStaff){
+	  if ( !this.getName().equals(aStaff.getName())) return false;
+	  else if ( !this.getRole().equals(aStaff.getRole())) return false;
+	  else return true;
+  }
+  
+  
+  schedule :
+   
+  public boolean equals(Schedule other){
+	  
+	  if (!this.week.equals(other.getWeek())) return false;
+	  
+	  else return true;
+  }
+  
+  ingredients :
+  
+    public boolean equals(Ingredient otherIngredient){
+	  if ( !this.expirationDate.equals(otherIngredient.expirationDate)) return false;
+	  else if ( !super.getName().equals(otherIngredient.getName())) return false;
+	  else if ( super.getPrice() != otherIngredient.getPrice()) return false;
+	  else if ( super.getQuantity() != otherIngredient.getQuantity()) return false;
+	  else return true;
+	  
+  }
+  
+  equipment :
+  
+    public boolean equals(Equipment otherEquipment){
+	  
+	  if ( !super.getName().equals(otherEquipment.getName())) return false;
+	  else if ( super.getPrice() != otherEquipment.getPrice()) return false;
+	  else if ( super.getQuantity() != otherEquipment.getQuantity()) return false;
+	  else return true;
+  }
+  
+  items :
+  
+    public boolean equals(Item other){
+	  if ( this.availability != other.availability) return false;
+	  else if (!this.name.equals(other.getName())) return false;
+	  else if ( this.price != other.price) return false;
+	  else return true;
+  }
+  
+  
+  -> strategy design pattern
+  
+  -> proxy pattern
+  
+  -> command pattern
+  
+  -> polymorphism

@@ -1,0 +1,30 @@
+package test;
+
+import lejos.hardware.Brick;
+import lejos.hardware.BrickFinder;
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3UltrasonicSensor;
+
+public class sensor {
+	
+	
+	public static void main(String[] args){
+		
+		Brick brick = BrickFinder.getDefault();
+		Port s4 = brick.getPort("S4");
+		
+		 EV3UltrasonicSensor usDetectObject = new EV3UltrasonicSensor(s4);
+		
+		 
+		 USSensor sensor = new USSensor(usDetectObject);
+		 
+		 int distance = 0;
+		 for (int i = 0; i < 1200; i++){
+			 distance = sensor.getValue();
+			 
+		 }
+		
+	}
+	
+	
+}

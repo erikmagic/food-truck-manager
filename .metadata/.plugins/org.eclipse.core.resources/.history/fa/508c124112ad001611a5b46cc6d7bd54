@@ -1,0 +1,30 @@
+package code;
+
+public class Question2 {
+
+	public boolean sumsToLucky(int num){
+		
+		
+	
+		String numAsAString = String.valueOf(num);
+		char[] digits = numAsAString.toCharArray();
+		int sum = 0;
+		for(int j = 0; j < digits.length; j++){
+			sum += digits[j];
+		}
+		if(sum == 7){
+			return true;
+		}
+		if(sum > 10){
+			String newNumAsAString = String.valueOf(sum);
+			char[] newDigits = newNumAsAString.toCharArray();
+			int newSum = 0;
+			for(int k = 0; k < newDigits.length; k++){
+				newSum += newDigits [k];
+			}
+			if(newSum ==7){
+				return true;
+			}
+		}
+	}
+}

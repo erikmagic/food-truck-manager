@@ -1,0 +1,70 @@
+<manager id="1">
+  <staff id="2">
+    <staff id="3">
+      <name>Erik-Olivier</name>
+      <role>Cook</role>
+      <shift id="4"/>
+    </staff>
+    <staff id="5">
+      <name>Juan Pedro San Luiz</name>
+      <role>Cashier</role>
+      <shift id="6"/>
+    </staff>
+  </staff>
+  <ingredients id="7"/>
+  <order id="8">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Order id="9">
+      <totalPrice>0.0</totalPrice>
+      <orderDate id="10">2016-12-02</orderDate>
+      <orderID>0</orderID>
+      <item id="11"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Order>
+  </order>
+  <shift id="12">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="13">
+      <startingHour id="14">10:10:00</startingHour>
+      <finishingHour id="15">18:20:00</finishingHour>
+      <day>MONDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="16">
+      <startingHour id="17">08:08:00</startingHour>
+      <finishingHour id="18">12:12:00</finishingHour>
+      <day>WEDNESDAY</day>
+      <staff reference="5"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+  </shift>
+  <schedule id="19">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Schedule id="20">
+      <week id="21">2017-02-01</week>
+      <shift id="22">
+        <ca.mcgill.ecse321.foodtruckmanagement.model.Shift reference="13"/>
+        <ca.mcgill.ecse321.foodtruckmanagement.model.Shift reference="16"/>
+      </shift>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Schedule>
+  </schedule>
+  <item id="23">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Item id="24">
+      <name>Hamburger</name>
+      <price>4.0</price>
+      <availability>true</availability>
+      <popularity>0</popularity>
+      <Ingredient id="25">
+        <ca.mcgill.ecse321.foodtruckmanagement.model.Ingredient id="26">
+          <name>bread</name>
+          <quantity>3.0</quantity>
+          <price>1.0</price>
+        </ca.mcgill.ecse321.foodtruckmanagement.model.Ingredient>
+      </Ingredient>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Item>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Item id="27">
+      <name>Cheeseburger</name>
+      <price>2.0</price>
+      <availability>true</availability>
+      <popularity>0</popularity>
+      <Ingredient id="28"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Item>
+  </item>
+  <report id="29"/>
+  <equipment id="30"/>
+</manager>

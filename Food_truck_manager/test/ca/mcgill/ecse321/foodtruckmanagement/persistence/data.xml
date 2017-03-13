@@ -1,8 +1,30 @@
 <manager id="1">
-  <staff id="2">
-    <staff id="3">
-      <name>Erik-Olivier</name>
-      <role>Cook</role>
-    </staff>
-  </staff>
+  <staff id="2"/>
+  <ingredients id="3"/>
+  <order id="4">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Order id="5">
+      <totalPrice>4.0</totalPrice>
+      <orderDate id="6">2016-12-02</orderDate>
+      <orderID>0</orderID>
+      <item id="7">
+        <entry>
+          <ca.mcgill.ecse321.foodtruckmanagement.model.Item id="8">
+            <name>Hot Dog</name>
+            <price>4.0</price>
+            <availability>true</availability>
+            <popularity>2</popularity>
+            <Ingredient id="9"/>
+          </ca.mcgill.ecse321.foodtruckmanagement.model.Item>
+          <int>2</int>
+        </entry>
+      </item>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Order>
+  </order>
+  <shift id="10"/>
+  <schedule id="11"/>
+  <item id="12">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Item reference="8"/>
+  </item>
+  <report id="13"/>
+  <equipment id="14"/>
 </manager>

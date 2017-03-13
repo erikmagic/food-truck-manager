@@ -1,8 +1,44 @@
 <manager id="1">
   <staff id="2">
     <staff id="3">
-      <name>Erik-Olivier</name>
-      <role>Cook</role>
+      <name>Henri</name>
+      <role>Cashier</role>
+      <shift id="4"/>
     </staff>
   </staff>
+  <ingredients id="5"/>
+  <order id="6"/>
+  <shift id="7">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="8">
+      <startingHour id="9">09:00:00</startingHour>
+      <finishingHour id="10">10:00:00</finishingHour>
+      <day>MONDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="11">
+      <startingHour reference="9"/>
+      <finishingHour reference="10"/>
+      <day>TUESDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Shift id="12">
+      <startingHour reference="9"/>
+      <finishingHour reference="10"/>
+      <day>WEDNESDAY</day>
+      <staff reference="3"/>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Shift>
+  </shift>
+  <schedule id="13">
+    <ca.mcgill.ecse321.foodtruckmanagement.model.Schedule id="14">
+      <week id="15">2016-05-28</week>
+      <shift id="16">
+        <ca.mcgill.ecse321.foodtruckmanagement.model.Shift reference="8"/>
+        <ca.mcgill.ecse321.foodtruckmanagement.model.Shift reference="11"/>
+        <ca.mcgill.ecse321.foodtruckmanagement.model.Shift reference="12"/>
+      </shift>
+    </ca.mcgill.ecse321.foodtruckmanagement.model.Schedule>
+  </schedule>
+  <item id="17"/>
+  <report id="18"/>
+  <equipment id="19"/>
 </manager>

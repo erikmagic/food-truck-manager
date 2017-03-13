@@ -1,0 +1,135 @@
+namespace ca.mcgill.ecse321.foodtruckmanagement.model;
+
+
+
+class Staff{
+  name;
+  role; 
+  1 -> * Shift shift;
+  
+}
+
+
+class Shift{
+  * -> 1 Staff staff;
+  Time startingHour;
+  Time finishingHour;
+  Day day;
+}
+
+class Schedule{
+  Date week;
+  1 -> * Shift shift;
+}
+
+class FoodTruckManager{
+  singleton;
+  1-> * Staff staff;
+  1 -> * Ingredient ingredients;
+  1 -> * Order order;
+  1 -> 1 Menu menu;
+  1 -> * Shift shift;
+  1 -> * Schedule schedule;
+  1 -> * Item item;
+  1 -> * Report report;
+  1 -> * Equipment equipment;
+  
+}
+      
+class Item{
+   name;                       
+   double price;
+   int popularity;
+   Boolean availability;
+   1 -> * Ingredient Ingredient;  
+  }
+  
+class Menu{
+  singleton;
+  1 -> * Item item;
+}
+  
+
+
+class Supply{
+  name;
+  double quantity;
+  double price;
+}
+
+class Ingredient{
+  isA Supply;
+}
+
+class Equipment{
+  isA Supply;
+}
+
+class Order{
+  double totalPrice;
+  Date orderDate;
+  long orderID;
+  1 -> * Item item;
+}
+
+class Report{
+  Date startingDate;
+  Date endingDate;
+  String reportName;
+  1 -> * Order order;
+} //$?[End_of_model]$?
+
+class Staff
+{
+  position 50 130 109 45;
+}
+
+class Shift
+{
+  position 50 230 109 45;
+}
+
+class Schedule
+{
+  position 50 330 109 45;
+}
+
+class Item
+{
+  position 50 430 109 45;
+}
+
+class Menu
+{
+  position 250 30 109 45;
+}
+
+class Supply
+{
+  position 250 230 109 45;
+}
+
+class Ingredients
+{
+  position 250 330 109 45;
+}
+
+class Equipment
+{
+  position 250 430 109 45;
+}
+
+class Order
+{
+  position 450 30 109 45;
+}
+
+class Report
+{
+  position 450 130 109 45;
+}
+
+class FoodTruckManager
+{
+  position 50 430 109 45;
+}

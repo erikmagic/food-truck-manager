@@ -1,0 +1,124 @@
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+public class Outside {
+
+	
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		
+		 Inside  inside = new Inside();
+		 Logger logMedian = new Logger();
+		 logMedian.setLogWriter("median_data.txt");
+		inside.test_arrayString();
+		System.out.println(inside.hold_data.toString());
+		
+		// print to logger
+		for ( int i = 0; i < inside.hold_data.size(); i++){
+			logMedian.log(Integer.toString(i) + ";" + Double.toString(inside.hold_data.get(i)));
+		}
+		System.out.println(inside.compare_list.toString());
+		inside.compare_list = inside.quicksort(inside.compare_list);
+		System.out.println(inside.compare_list);
+		
+		// print comparison list 
+		Logger logComparison = new Logger();
+		logComparison.setLogWriter("comparison_data.txt");
+		
+		// print to logger 
+		for ( int i = 0; i < inside.compare_list.size(); i++){
+			logComparison.log(Integer.toString(i) + ";" + Double.toString(inside.compare_list.get(i)));
+		}
+	}
+
+	private static class Inside {
+
+		private ArrayList<Double> hold_data = new ArrayList<>();
+		private ArrayList<Double> tempList = new ArrayList<>();
+		private ArrayList<Double> filter_list = new ArrayList<>();
+		private ArrayList<Double> compare_list = new ArrayList<>();
+		private int sensorSize, hold_data_size = 400, filter_list_size = 5, distance;
+		double answer;
+		double temp;
+
+		
+		public void test_arrayString() {
+			
+			double value = 0;
+			for (int out = 0; out < 500; out++) {
+				value = Math.random() * 250;
+				// fill a bit the array at the beginning for median computations to work
+				if ( hold_data.size() < 5){ 
+					hold_data.add(value);
+					compare_list.add(value); 
+				}
+				else {
+						compare_list.add(value);
+						hold_data.add(value);
+						value = filter(hold_data, out-2); // always 3 values behind 
+						hold_data.set(out-2, value);
+						
+					}
+				}
+			}
+		
+
+		public double filter(ArrayList<Double> list, int index) {
+			
+			// make sure values above 250 are 250
+			if (list.get(index) > 250) {
+				list.set(index, 250.0 );
+			}
+			// collect the 2 elements that are under the index and the 2 above
+			for (int i = -2; i <= 2; i++) {
+				filter_list.add(list.get(index + i));
+			}
+			// sort the newly formed list
+			filter_list = quicksort(filter_list);
+			
+			// replace the distance value by the median of the list
+			answer = filter_list.get(2);
+
+			// clears the list
+			filter_list.clear();
+
+			// returns the distance to be changed in the list ArrayList
+			return answer;
+		}
+
+		/**
+		 * Simple bubble sort algorithm, sorts the specified array_list
+		 * 
+		 * @param filter_list2
+		 * 
+		 */
+		private ArrayList<Double> quicksort(ArrayList<Double> list){
+			if ( list.size() <= 1) return list;
+			else {
+				double pivot = list.remove(0);
+				ArrayList<Double> list1 = getLessEqualThan(list, pivot);
+				ArrayList<Double> list2 = getMoreThan(list, pivot);
+				list1 = quicksort(list1);
+				list2 = quicksort(list2);
+				list1.add(pivot);
+				list1.addAll(list2);
+				return list1;
+			}
+		}
+		
+		private ArrayList<Double> getLessEqualThan(ArrayList<Double> list, double pivot){
+			ArrayList<Double> returnedList = new ArrayList<Double>();
+			for ( double element : list){
+				if (element <= pivot) returnedList.add(element);
+			}
+			return returnedList;
+		}
+		private ArrayList<Double> getMoreThan(ArrayList<Double> list, double pivot){
+			ArrayList<Double> returnedList = new ArrayList<Double>();
+			for( double element: list){
+				if (element > pivot) returnedList.add(element);
+			}
+			return returnedList;
+		}
+	}
+}
